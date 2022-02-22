@@ -346,7 +346,7 @@ _0800100E:
 	thumb_func_start sub_0800101C
 sub_0800101C: @ 0x0800101C
 	push {lr}
-	bl sub_0803D380
+	bl VBlankIntrWait
 	movs r1, #0x80
 	lsls r1, r1, #0x13
 	movs r0, #0
@@ -4577,7 +4577,7 @@ sub_08003094: @ 0x08003094
 	ands r0, r1
 	ldr r1, _080030EC @ =gUnknown_03000748
 	ldr r2, _080030F0 @ =0x04000100
-	bl sub_0803D348
+	bl CpuSet
 	ldr r0, _080030F4 @ =gUnknown_02000860
 	bl sub_08003494
 	ldr r0, _080030F8 @ =gUnknown_02001960
@@ -5012,7 +5012,7 @@ sub_08003350: @ 0x08003350
 	ldr r2, _08003464 @ =0x05000040
 	mov r0, sp
 	adds r1, r5, #0
-	bl sub_0803D348
+	bl CpuSet
 	movs r0, #1
 	strb r0, [r5, #1]
 	movs r0, #0x11
@@ -5155,7 +5155,7 @@ _080034BE:
 	ldr r2, _08003578 @ =0x050003EC
 	mov r0, sp
 	adds r1, r5, #0
-	bl sub_0803D348
+	bl CpuSet
 	movs r0, #8
 	strb r0, [r5, #6]
 	movs r0, #0xf
@@ -5446,7 +5446,7 @@ _08003754:
 	adds r1, r2, r0
 	ldr r2, _08003794 @ =0x05000318
 	mov r0, sp
-	bl sub_0803D348
+	bl CpuSet
 _08003774:
 	add sp, #4
 	pop {r0}
@@ -8871,7 +8871,7 @@ _08005084:
 	movs r0, #1
 	bl sub_08000C90
 	movs r0, #0xff
-	bl sub_0803D364
+	bl SoftReset
 	movs r3, #0x80
 	lsls r3, r3, #2
 	add sp, r3
@@ -10529,7 +10529,7 @@ sub_08005DB0: @ 0x08005DB0
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08005DE4
-	bl sub_0803D380
+	bl VBlankIntrWait
 _08005DE4:
 	movs r1, #0x80
 	lsls r1, r1, #0x13
@@ -10542,7 +10542,7 @@ _08005DEC:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08005DFC
-	bl sub_0803D380
+	bl VBlankIntrWait
 _08005DFC:
 	movs r1, #0x80
 	lsls r1, r1, #0x13
@@ -10994,7 +10994,7 @@ sub_08006134: @ 0x08006134
 	adds r0, #0x7c
 	ldrh r0, [r0]
 	ldrb r1, [r4, #5]
-	bl sub_0803D34C
+	bl Div
 	adds r2, r0, #0
 	cmp r6, r2
 	beq _08006158
@@ -11182,7 +11182,7 @@ _08006280:
 _08006282:
 	ldrh r0, [r2]
 	ldrb r1, [r4, #5]
-	bl sub_0803D34C
+	bl Div
 	ldrb r1, [r4, #5]
 	muls r1, r0, r1
 	adds r0, r4, #0
@@ -11267,12 +11267,12 @@ sub_0800630C: @ 0x0800630C
 	adds r6, #0x7c
 	ldrh r0, [r6]
 	ldrb r1, [r4, #5]
-	bl sub_0803D34C
+	bl Div
 	adds r5, r0, #0
 	ldrh r0, [r4]
 	subs r0, #1
 	ldrb r1, [r4, #5]
-	bl sub_0803D34C
+	bl Div
 	mov ip, r0
 	adds r0, r4, #0
 	adds r0, #0x2c
@@ -11644,7 +11644,7 @@ _080065EE:
 	adds r0, #0x82
 	ldrh r0, [r0]
 	movs r1, #6
-	bl sub_0803D350
+	bl DivRem
 	cmp r0, #0
 	bne _0800661C
 	adds r0, r5, #0
@@ -11893,7 +11893,7 @@ _080067AA:
 	beq _080067DE
 	ldrh r0, [r5]
 	ldrb r1, [r4, #5]
-	bl sub_0803D34C
+	bl Div
 	adds r1, r4, #0
 	adds r1, #0x80
 	strh r0, [r1]
@@ -12476,7 +12476,7 @@ sub_08006BA8: @ 0x08006BA8
 	lsls r2, r2, #3
 	adds r1, r4, r2
 	ldr r1, [r1]
-	bl sub_0803D35C
+	bl LZ77UnCompWram
 	ldr r0, _08006BDC @ =0x0000062C
 	adds r4, r4, r0
 	movs r0, #1
@@ -12545,7 +12545,7 @@ sub_08006C4C: @ 0x08006C4C
 	push {r4, lr}
 	adds r4, r0, #0
 	bl sub_08006BA8
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r4, #0
 	bl sub_08006BE0
 	pop {r4}
@@ -12572,7 +12572,7 @@ sub_08006C64: @ 0x08006C64
 	ldr r1, _08006CC4 @ =0x05000380
 	ldr r2, _08006CC8 @ =0x04000010
 	adds r0, r5, #0
-	bl sub_0803D348
+	bl CpuSet
 	adds r5, #0x40
 	ldr r0, _08006CCC @ =0x00000634
 	adds r4, r4, r0
@@ -12583,7 +12583,7 @@ sub_08006C64: @ 0x08006C64
 	strb r6, [r4]
 	adds r0, r5, #0
 	adds r1, r7, #0
-	bl sub_0803D35C
+	bl LZ77UnCompWram
 _08006CA4:
 	movs r2, #0x90
 	lsls r2, r2, #4
@@ -12616,11 +12616,11 @@ sub_08006CD4: @ 0x08006CD4
 	ldr r1, _08006D00 @ =0x05000300
 	ldr r2, _08006D04 @ =0x04000010
 	adds r0, r4, #0
-	bl sub_0803D348
+	bl CpuSet
 	adds r4, #0x40
 	ldr r1, _08006D08 @ =0x06015500
 	adds r0, r4, #0
-	bl sub_0803D358
+	bl LZ77UnCompVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -12641,11 +12641,11 @@ sub_08006D0C: @ 0x08006D0C
 	ldr r1, _08006D38 @ =0x05000340
 	ldr r2, _08006D3C @ =0x04000010
 	adds r0, r4, #0
-	bl sub_0803D348
+	bl CpuSet
 	adds r4, #0x40
 	ldr r1, _08006D40 @ =0x06016400
 	adds r0, r4, #0
-	bl sub_0803D358
+	bl LZ77UnCompVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -12666,11 +12666,11 @@ sub_08006D44: @ 0x08006D44
 	ldr r1, _08006D70 @ =0x050003C0
 	ldr r2, _08006D74 @ =0x04000010
 	adds r0, r4, #0
-	bl sub_0803D348
+	bl CpuSet
 	adds r4, #0x40
 	ldr r1, _08006D78 @ =0x06017C00
 	adds r0, r4, #0
-	bl sub_0803D358
+	bl LZ77UnCompVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -13298,7 +13298,7 @@ _0800723A:
 	mov r0, sp
 	adds r1, r4, #0
 	ldr r2, _08007260 @ =0x050000F0
-	bl sub_0803D348
+	bl CpuSet
 	movs r0, #0xf0
 	lsls r0, r0, #3
 	adds r4, r4, r0
@@ -13340,7 +13340,7 @@ _0800728E:
 	ldr r1, _080072FC @ =0x05000120
 	ldr r2, _08007300 @ =0x04000008
 	adds r0, r6, #0
-	bl sub_0803D348
+	bl CpuSet
 _08007298:
 	cmp r4, #0
 	beq _080072CC
@@ -13356,7 +13356,7 @@ _080072AA:
 	mov r0, sp
 	adds r1, r5, #0
 	ldr r2, _0800730C @ =0x0100000F
-	bl sub_0803D348
+	bl CpuSet
 	adds r5, #0x40
 	adds r4, #1
 	cmp r4, #0x11
@@ -13366,7 +13366,7 @@ _080072AA:
 	ldr r2, _08007314 @ =0x0500001E
 	mov r0, sb
 	adds r1, r5, #0
-	bl sub_0803D348
+	bl CpuSet
 _080072CC:
 	mov r0, r8
 	cmp r0, #2
@@ -13381,7 +13381,7 @@ _080072DC:
 	adds r0, r6, #0
 	adds r1, r5, #0
 	ldr r2, _0800730C @ =0x0100000F
-	bl sub_0803D348
+	bl CpuSet
 	adds r5, #0x40
 	adds r4, #1
 	cmp r4, #0x11
@@ -13411,7 +13411,7 @@ _0800732A:
 	adds r0, r6, #0
 	adds r1, r5, #0
 	movs r2, #0xf
-	bl sub_0803D348
+	bl CpuSet
 	adds r6, #0x1e
 	adds r5, #0x40
 	adds r4, #1
@@ -13453,7 +13453,7 @@ _0800737C:
 	lsls r0, r0, #0x13
 	orrs r2, r0
 	adds r0, r6, #0
-	bl sub_0803D348
+	bl CpuSet
 _0800738C:
 	add sp, #0xc
 	pop {r3, r4}
@@ -13596,7 +13596,7 @@ sub_080074A0: @ 0x080074A0
 	push {r5, r6, r7}
 	sub sp, #8
 	mov r8, r0
-	bl sub_0803D380
+	bl VBlankIntrWait
 	bl sub_0800A110
 	movs r2, #0x80
 	lsls r2, r2, #0x13
@@ -13656,7 +13656,7 @@ _080074E4:
 	add r2, sp, #4
 	adds r3, r5, #0
 	bl sub_08007794
-	bl sub_0803D380
+	bl VBlankIntrWait
 	cmp r6, #0
 	bne _080074E4
 	movs r2, #0x80
@@ -13665,7 +13665,7 @@ _080074E4:
 	ldr r0, _08007558 @ =0xFFFF9FFF
 	ands r0, r1
 	strh r0, [r2]
-	bl sub_0803D380
+	bl VBlankIntrWait
 	add sp, #8
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -13693,7 +13693,7 @@ sub_08007574: @ 0x08007574
 	adds r0, r0, r1
 	ldr r0, [r0]
 	movs r1, #0x18
-	bl sub_0803D350
+	bl DivRem
 	adds r1, r0, #0
 	cmp r5, #0
 	beq _080075C6
@@ -14226,7 +14226,7 @@ _080079AE:
 	ldr r1, _08007A04 @ =gUnknown_0830E9A2
 	movs r2, #3
 	bl sub_0803DEBC
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r4, #0
 	bl sub_08006BE0
 	ldrb r1, [r4]
@@ -14293,7 +14293,7 @@ sub_08007A38: @ 0x08007A38
 	adds r0, r4, r1
 	ldrb r1, [r0]
 	movs r0, #0x18
-	bl sub_0803D34C
+	bl Div
 	adds r6, r0, #0
 	movs r5, #1
 	b _08007A64
@@ -14347,7 +14347,7 @@ _08007AA6:
 	adds r3, r5, #0
 	bl sub_08000CDC
 	adds r4, r0, #0
-	bl sub_0803D380
+	bl VBlankIntrWait
 	rsbs r4, r4, #0
 	strh r4, [r7]
 	cmp r5, r6
@@ -16511,7 +16511,7 @@ _08008BE0:
 	bl sub_0803DF7C
 	asrs r0, r0, #8
 	adds r1, r6, #0
-	bl sub_0803D350
+	bl DivRem
 	adds r1, r4, #1
 	adds r1, r1, r0
 	ldrb r3, [r1]
@@ -16783,7 +16783,7 @@ _08008DC2:
 	ldr r0, _08008E38 @ =gUnknown_083D8534
 	ldr r1, _08008E3C @ =0x05000100
 	ldr r2, _08008E24 @ =0x04000008
-	bl sub_0803D348
+	bl CpuSet
 	ldr r0, _08008E40 @ =0x00000603
 	add r0, r8
 	ldrb r0, [r0]
@@ -16867,7 +16867,7 @@ _08008E98:
 	ldr r2, _08008FCC @ =0x05000200
 	add r0, sp, #4
 	adds r1, r4, #0
-	bl sub_0803D348
+	bl CpuSet
 	movs r3, #0
 	mov sb, r3
 	movs r7, #0
@@ -16904,7 +16904,7 @@ _08008EE0:
 	ldr r1, _08008FD8 @ =0x05000160
 	ldr r2, _08008FDC @ =0x04000008
 	adds r0, r5, #0
-	bl sub_0803D348
+	bl CpuSet
 	ldr r1, _08008FE0 @ =0x0400001A
 	ldr r2, _08008FE4 @ =0x0000FF60
 	adds r0, r2, #0
@@ -17008,7 +17008,7 @@ _08008FF0:
 	bl sub_080074A0
 	b _08009004
 _08008FFE:
-	ldr r0, _08009014 @ =sub_0803D380
+	ldr r0, _08009014 @ =VBlankIntrWait
 	bl sub_0800A1A4
 _08009004:
 	add sp, #0x10
@@ -17020,7 +17020,7 @@ _08009004:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08009014: .4byte sub_0803D380
+_08009014: .4byte VBlankIntrWait
 
 	thumb_func_start sub_08009018
 sub_08009018: @ 0x08009018
@@ -17032,7 +17032,7 @@ sub_08009018: @ 0x08009018
 	lsls r1, r1, #3
 	adds r0, r5, r1
 	ldr r4, [r0]
-	bl sub_0803D380
+	bl VBlankIntrWait
 	bl sub_08000BC0
 	adds r0, r5, #0
 	bl sub_08006BE0
@@ -17365,7 +17365,7 @@ _080092DA:
 	bne _080092EA
 	b _080091C8
 _080092EA:
-	bl sub_0803D380
+	bl VBlankIntrWait
 	movs r0, #0
 	str r0, [sp]
 	adds r0, r5, #0
@@ -17524,7 +17524,7 @@ _08009422:
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08009432
-	ldr r0, _08009468 @ =sub_0803D380
+	ldr r0, _08009468 @ =VBlankIntrWait
 	bl sub_0800A160
 _08009432:
 	ldr r0, _0800946C @ =gUnknown_02001CC0
@@ -17544,7 +17544,7 @@ _08009458: .4byte 0x00000612
 _0800945C: .4byte 0x00000603
 _08009460: .4byte gUnknown_030013B0
 _08009464: .4byte 0x00000606
-_08009468: .4byte sub_0803D380
+_08009468: .4byte VBlankIntrWait
 _0800946C: .4byte gUnknown_02001CC0
 
 	thumb_func_start sub_08009470
@@ -17691,7 +17691,7 @@ _08009576:
 _08009594:
 	add r0, sp, #4
 	bl sub_080067EC
-	bl sub_0803D380
+	bl VBlankIntrWait
 	bl sub_08000BC0
 	movs r0, #0xe0
 	lsls r0, r0, #0x13
@@ -17968,7 +17968,7 @@ _080097C4:
 	mov r0, sp
 	bl sub_080067EC
 _080097CA:
-	bl sub_0803D380
+	bl VBlankIntrWait
 	bl sub_08000BC0
 	movs r0, #0xe0
 	lsls r0, r0, #0x13
@@ -18094,13 +18094,13 @@ sub_08009884: @ 0x08009884
 _080098A0:
 	adds r0, r4, #0
 	movs r1, #0xa
-	bl sub_0803D34C
+	bl Div
 	lsls r1, r0, #4
 	subs r1, r1, r0
 	str r1, [r5]
 	adds r0, r4, #0
 	movs r1, #0xa
-	bl sub_0803D350
+	bl DivRem
 	lsls r0, r0, #1
 	str r0, [r6]
 	movs r0, #0xf
@@ -18237,11 +18237,11 @@ sub_080099AC: @ 0x080099AC
 	ldrb r6, [r4, #8]
 	adds r0, r6, #0
 	movs r1, #0xa
-	bl sub_0803D34C
+	bl Div
 	adds r5, r0, #0
 	ldrb r0, [r4, #8]
 	movs r1, #0xa
-	bl sub_0803D350
+	bl DivRem
 	adds r2, r0, #0
 	ldr r0, _08009A78 @ =gUnknown_02000004
 	ldrh r1, [r0]
@@ -18418,7 +18418,7 @@ _08009B0E:
 	movs r0, #0x53
 	bl sub_080005D8
 _08009B1A:
-	bl sub_0803D380
+	bl VBlankIntrWait
 	bl sub_08000BC0
 	adds r0, r5, #0
 	bl sub_080099AC
@@ -18508,7 +18508,7 @@ _08009BCC: .4byte 0x00001E81
 	thumb_func_start sub_08009BD0
 sub_08009BD0: @ 0x08009BD0
 	push {lr}
-	bl sub_0803D380
+	bl VBlankIntrWait
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -18532,22 +18532,22 @@ sub_08009BE8: @ 0x08009BE8
 	thumb_func_start sub_08009BF4
 sub_08009BF4: @ 0x08009BF4
 	push {lr}
-	ldr r0, _08009C00 @ =sub_0803D380
+	ldr r0, _08009C00 @ =VBlankIntrWait
 	bl sub_0800A160
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08009C00: .4byte sub_0803D380
+_08009C00: .4byte VBlankIntrWait
 
 	thumb_func_start sub_08009C04
 sub_08009C04: @ 0x08009C04
 	push {lr}
-	ldr r0, _08009C10 @ =sub_0803D380
+	ldr r0, _08009C10 @ =VBlankIntrWait
 	bl sub_0800A1A4
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08009C10: .4byte sub_0803D380
+_08009C10: .4byte VBlankIntrWait
 
 	thumb_func_start sub_08009C14
 sub_08009C14: @ 0x08009C14
@@ -19016,7 +19016,7 @@ _08009F4C: .4byte 0x000001FF
 sub_08009F50: @ 0x08009F50
 	push {lr}
 	movs r1, #6
-	bl sub_0803D34C
+	bl Div
 	ldr r2, _08009F68 @ =gUnknown_083E25D0
 	movs r1, #3
 	ands r1, r0
@@ -19119,7 +19119,7 @@ _0800A018:
 	adds r4, r0, #0
 	mov r0, sb
 	adds r1, r4, #0
-	bl sub_0803D358
+	bl LZ77UnCompVram
 	mov r0, r8
 	ldr r1, [sp, #0x20]
 	orrs r0, r1
@@ -19431,7 +19431,7 @@ sub_0800A264: @ 0x0800A264
 	ldrb r1, [r1]
 	cmp r1, #0
 	bne _0800A2BC
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r5, #0
 	movs r1, #0
 	bl sub_0800A240
@@ -19453,7 +19453,7 @@ _0800A28C:
 	movs r4, #2
 	adds r6, r0, #0
 _0800A29A:
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r5, #0
 	movs r1, #0
 	bl sub_0800A240
@@ -19484,7 +19484,7 @@ sub_0800A2CC: @ 0x0800A2CC
 	ldrb r1, [r1]
 	cmp r1, #0
 	beq _0800A32E
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r5, #0
 	movs r1, #1
 	bl sub_0800A240
@@ -19508,7 +19508,7 @@ _0800A2F4:
 	adds r7, r1, #0
 	movs r6, #0x10
 _0800A306:
-	bl sub_0803D380
+	bl VBlankIntrWait
 	adds r0, r5, #0
 	movs r1, #1
 	bl sub_0800A240

@@ -32,7 +32,7 @@ void sub_08000B54(void) {
 void sub_08000B68(u32 arg0) {
 	u32 i;
 	for(i = 0; i < arg0; i++) {
-		sub_0803D380();
+		VBlankIntrWait();
 	}
 }
 
@@ -61,7 +61,7 @@ void sub_08000BC0(void) {
 
 	for(i = 0; i < 6; i++) {
 		if((gUnknown_02000010[i] - 30) >= 0) {
-			if(sub_0803D350(gUnknown_02000010[i] - 30, 6) == 0)
+			if(DivRem(gUnknown_02000010[i] - 30, 6) == 0)
 				temp0 |= 1 << (i + 4);
 		}
 	}
@@ -97,9 +97,9 @@ void sub_08000CC0(u32 arg0) {
 u32 sub_08000CDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	u32 temp = arg1 - arg0;
 	if(arg1 - arg0 >= 0)
-		return arg0 + sub_0803D34C(arg3 * temp, arg2);
+		return arg0 + Div(arg3 * temp, arg2);
 	else
-		return arg0 - sub_0803D34C(arg3 * -temp, arg2);
+		return arg0 - Div(arg3 * -temp, arg2);
 }
 
 #ifdef NONMATCHING
