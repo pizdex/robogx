@@ -29,7 +29,7 @@ _08000776:
 	lsls r0, r4, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r5, #0
-	bl sub_0803D574
+	bl ReadEepromDword
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r5, #8
@@ -78,7 +78,7 @@ _080007CE:
 	lsls r0, r4, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r5, #0
-	bl sub_0803D758
+	bl ProgramEepromDwordEx
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r5, #8
@@ -129,7 +129,7 @@ _0800082A:
 	lsls r0, r4, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, sp
-	bl sub_0803D758
+	bl ProgramEepromDwordEx
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r4, #1
