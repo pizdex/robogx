@@ -234,32 +234,18 @@ SECTIONS {
 . = 0x0003C47C; gUnknown_0203C47C = .;
 . = 0x0003C480; gUnknown_0203C480 = .;
 . = 0x0003C484; gUnknown_0203C484 = .;
-. = 0x0003C488; gUnknown_0203C488 = .;
-. = 0x0003C48C; gUnknown_0203C48C = .;
-. = 0x0003C490; gUnknown_0203C490 = .;
-. = 0x0003C494; gUnknown_0203C494 = .;
-. = 0x0003C498; gUnknown_0203C498 = .;
-. = 0x0003C538; gUnknown_0203C538 = .;
-. = 0x0003C550; gUnknown_0203C550 = .;
+*libc.a:syscalls.o(.bss);
+*libgcc.a:dp-bit.o(.bss);
+*libgcc.a:fp-bit.o(.bss);
 . = 0x0003C560; gUnknown_0203C560 = .;
-. = 0x0003C564; gUnknown_0203C564 = .;
-. = 0x0003C568; gUnknown_0203C568 = .;
-/*. = 0x00580258; gUnknown_02580258 = .;
-. = 0x0060BCD5; gUnknown_0260BCD5 = .;
-. = 0x00E90EDD; gUnknown_02E90EDD = .;*/
+. = 0x0003C564; errno = .;
+. = 0x0003C568; end = .;
 	} >ewram
 
 	iwram (NOLOAD) : ALIGN(4) {
-. = 0x000002EC; gUnknown_030002EC = .;
-. = 0x000002F0; gUnknown_030002F0 = .;
-. = 0x00000304; gUnknown_03000304 = .;
-. = 0x0000030C; gUnknown_0300030C = .;
-. = 0x0000070C; gUnknown_0300070C = .;
-. = 0x00000710; gUnknown_03000710 = .;
-. = 0x00000714; gUnknown_03000714 = .;
-. = 0x00000718; gUnknown_03000718 = .;
-. = 0x0000071C; gUnknown_0300071C = .;
-. = 0x00000720; gUnknown_03000720 = .;
+*libc.a:impure.o(.data);
+*libc.a:locale.o(.data);
+*libc.a:mallocr.o(.data);
 . = 0x00000748; gUnknown_03000748 = .;
 . = 0x00000749; gUnknown_03000749 = .;
 . = 0x00000B50; gUnknown_03000B50 = .;
@@ -293,7 +279,6 @@ SECTIONS {
 . = 0x00007FF0; gUnknown_03007FF0 = .;
 . = 0x00007FF8; gUnknown_03007FF8 = .;
 . = 0x00007FFC; gUnknown_03007FFC = .;
-/*. = 0x00FF03FF; gUnknown_03FF03FF = .;*/
 	} >iwram
 
 	. = 0x08000000;
@@ -306,14 +291,79 @@ SECTIONS {
 		asm/code_08000AF4.o(.text);
 		src/code_0800A3F0.o(.text);
 		asm/code_0800A3F0.o(.text);
+
 		asm/syscall.o(.text);
 		asm/code_0803D388.o(.text);
+
+		*libgcc.a:_call_via_rX.o(.text);
+		*libgcc.a:_divsi3.o(.text);
+		*libgcc.a:_dvmd_tls.o(.text);
+		*libgcc.a:_modsi3.o(.text);
+		*libgcc.a:_muldi3.o(.text);
+		*libgcc.a:_udivdi3.o(.text);
+		*libgcc.a:_udivsi3.o(.text);
+		*libgcc.a:_umodsi3.o(.text);
+
+		*libc.a:memcpy.o(.text);
+		*libc.a:memset.o(.text);
+		*libc.a:rand.o(.text);
+		*libc.a:sprintf.o(.text);
+		*libc.a:strcpy.o(.text);
+		*libc.a:strlen.o(.text);
+		*libc.a:strncat.o(.text);
+		*libc.a:strncmp.o(.text);
+		*libc.a:strncpy.o(.text);
+		*libc.a:vfprintf.o(.text);
+		*libc.a:wsetup.o(.text);
+		*libc.a:dtoa.o(.text);
+		*libc.a:fflush.o(.text);
+		*libc.a:findfp.o(.text);
+		*libc.a:freer.o(.text);
+		*libc.a:fvwrite.o(.text);
+		*libc.a:fwalk.o(.text);
+		*libc.a:locale.o(.text);
+		*libc.a:makebuf.o(.text);
+		*libc.a:mallocr.o(.text);
+		*libc.a:mbtowc_r.o(.text);
+		*libc.a:memchr.o(.text);
+		*libc.a:memmove.o(.text);
+		*libc.a:mlock.o(.text);
+		*libc.a:mprec.o(.text);
+		*libc.a:s_isinf.o(.text);
+		*libc.a:s_isnan.o(.text);
+		*libc.a:sbrkr.o(.text);
+		*libc.a:stdio.o(.text);
+		*libc.a:strcmp.o(.text);
+		*libc.a:syscalls.o(.text);
+		*libc.a:writer.o(.text);
+		*libc.a:callocr.o(.text);
+		*libc.a:closer.o(.text);
+		*libc.a:errno.o(.text);
+		*libc.a:fstatr.o(.text);
+		*libc.a:abort.o(.text);
+		*libc.a:libcfunc.o(.text);
+		*libc.a:lseekr.o(.text);
+		*libc.a:readr.o(.text);
+
+		*libgcc.a:dp-bit.o(.text);
+		*libgcc.a:fp-bit.o(.text);
+		*libgcc.a:_lshrdi3.o(.text);
+		*libgcc.a:_negdi2.o(.text);
 	} >rom
 
 	. = 0x08080000;
 	.data :
 	ALIGN(4) {
 		data/data.o(.rodata);
+		*libgcc.a:_udivdi3.o(.rodata);
+		*libc.a:vfprintf.o(.rodata);
+		*libc.a:dtoa.o(.rodata);
+		*libc.a:impure.o(.rodata);
+		*libc.a:locale.o(.rodata);
+		*libc.a:mprec.o(.rodata);
+		*libc.a:syscalls.o(.rodata);
+		. = ALIGN(4);
+		data/data2.o(.rodata);
 	} >rom
 
 	/* Discard everything not specifically mentioned above. */

@@ -26,7 +26,6 @@ CPPFLAGS := -I tools/agbcc/include -I tools/agbcc -iquote include -Wno-trigraphs
 CFLAGS   := -mthumb-interwork -Wimplicit -Werror -O2 -fhex-asm
 ASFLAGS  := -mcpu=arm7tdmi
 
-
 C_SUBDIR = src
 ASM_SUBDIR = asm
 DATA_ASM_SUBDIR = data
@@ -44,6 +43,7 @@ ELF          := $(ROM:.gba=.elf)
 MAP          := $(ROM:.gba=.map)
 LDSCRIPT     := ldscript.txt
 SYM_FILES    := sym_iwram.txt sym_ewram.txt
+LIB := -L ../tools/agbcc/lib -lc -lgcc
 
 C_SRCS := $(wildcard $(C_SUBDIR)/*.c $(C_SUBDIR)/*/*.c $(C_SUBDIR)/*/*/*.c)
 C_OBJS := $(patsubst $(C_SUBDIR)/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
@@ -63,10 +63,10 @@ SUBDIRS := $(sort $(dir $(ALL_OBJS)))
 $(shell mkdir -p $(SUBDIRS))
 
 $(ROM): $(ELF)
-	$(OBJCOPY) -O binary --pad-to 0x00200000 $< $@
+	$(OBJCOPY) -O binary $< $@
 
 $(ELF): $(ALL_OBJS) $(LDSCRIPT)
-	cd $(BUILD_DIR) && $(LD) -T ../$(LDSCRIPT) -Map ../$(MAP) -o ../$@
+	cd $(BUILD_DIR) && $(LD) -T ../$(LDSCRIPT) -Map ../$(MAP) -o ../$@ $(LIB)
 
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 	$(CPP) $(CPPFLAGS) $< -o $(C_BUILDDIR)/$*.i
