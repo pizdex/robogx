@@ -1,3 +1,4 @@
+.include "asm/gba_constants.inc"
 .include "asm/macro.inc"
 .syntax unified
 
@@ -70,18 +71,18 @@ SetEepromTimerIntr: @ 0x0803D3F0
 	ldr r1, _0803D418 @ =gUnknown_0203C480
 	ldrb r0, [r0]
 	lsls r0, r0, #2
-	ldr r3, _0803D41C @ =0x04000100
+	ldr r3, _0803D41C @ =REG_TM0CNT_L
 	adds r0, r0, r3
 	str r0, [r1]
-	ldr r0, _0803D420 @ =EepromTimerIntr+1
+	ldr r0, _0803D420 @ =EepromTimerIntr
 	str r0, [r2]
 	movs r0, #0
 	b _0803D426
 	.align 2, 0
 _0803D414: .4byte gUnknown_0203C478
 _0803D418: .4byte gUnknown_0203C480
-_0803D41C: .4byte 0x04000100
-_0803D420: .4byte EepromTimerIntr+1
+_0803D41C: .4byte REG_TM0CNT_L
+_0803D420: .4byte EepromTimerIntr
 _0803D424:
 	movs r0, #1
 _0803D426:
@@ -94,7 +95,7 @@ StartEepromTimer: @ 0x0803D428
 	mov r6, r8
 	push {r6, r7}
 	ldr r2, _0803D494 @ =gUnknown_0203C484
-	ldr r1, _0803D498 @ =0x04000208
+	ldr r1, _0803D498 @ =REG_IME
 	mov sb, r1
 	ldrh r1, [r1]
 	strh r1, [r2]
@@ -105,7 +106,7 @@ StartEepromTimer: @ 0x0803D428
 	mov r8, r3
 	ldr r5, [r3]
 	strh r6, [r5, #2]
-	ldr r3, _0803D4A0 @ =0x04000202
+	ldr r3, _0803D4A0 @ =REG_IF
 	ldr r4, _0803D4A4 @ =gUnknown_0203C478
 	ldrb r1, [r4]
 	movs r2, #8
@@ -144,16 +145,16 @@ StartEepromTimer: @ 0x0803D428
 	bx r0
 	.align 2, 0
 _0803D494: .4byte gUnknown_0203C484
-_0803D498: .4byte 0x04000208
+_0803D498: .4byte REG_IME
 _0803D49C: .4byte gUnknown_0203C480
-_0803D4A0: .4byte 0x04000202
+_0803D4A0: .4byte REG_IF
 _0803D4A4: .4byte gUnknown_0203C478
 _0803D4A8: .4byte gUnknown_0203C47C
 _0803D4AC: .4byte gUnknown_0203C47A
 
 	thumb_func_start StopEepromTimer
 StopEepromTimer: @ 0x0803D4B0
-	ldr r3, _0803D4E0 @ =0x04000208
+	ldr r3, _0803D4E0 @ =REG_IME
 	movs r1, #0
 	strh r1, [r3]
 	ldr r2, _0803D4E4 @ =gUnknown_0203C480
@@ -164,7 +165,7 @@ StopEepromTimer: @ 0x0803D4B0
 	strh r1, [r0]
 	subs r0, #2
 	str r0, [r2]
-	ldr r2, _0803D4E8 @ =0x04000200
+	ldr r2, _0803D4E8 @ =REG_IE
 	ldr r0, _0803D4EC @ =gUnknown_0203C478
 	ldrb r0, [r0]
 	movs r1, #8
@@ -177,9 +178,9 @@ StopEepromTimer: @ 0x0803D4B0
 	strh r0, [r3]
 	bx lr
 	.align 2, 0
-_0803D4E0: .4byte 0x04000208
+_0803D4E0: .4byte REG_IME
 _0803D4E4: .4byte gUnknown_0203C480
-_0803D4E8: .4byte 0x04000200
+_0803D4E8: .4byte REG_IE
 _0803D4EC: .4byte gUnknown_0203C478
 _0803D4F0: .4byte gUnknown_0203C484
 
@@ -188,12 +189,12 @@ Dma3Transmit: @ 0x0803D4F4
 	push {r4, r5, r6, lr}
 	lsls r2, r2, #0x10
 	lsrs r2, r2, #0x10
-	ldr r4, _0803D554 @ =0x04000208
+	ldr r4, _0803D554 @ =REG_IME
 	ldrh r3, [r4]
 	adds r6, r3, #0
 	movs r3, #0
 	strh r3, [r4]
-	ldr r5, _0803D558 @ =0x04000204
+	ldr r5, _0803D558 @ =REG_WAITCNT
 	ldrh r4, [r5]
 	ldr r3, _0803D55C @ =0x0000F8FF
 	ands r4, r3
@@ -202,11 +203,11 @@ Dma3Transmit: @ 0x0803D4F4
 	ldrh r3, [r3, #6]
 	orrs r4, r3
 	strh r4, [r5]
-	ldr r3, _0803D564 @ =0x040000D4
+	ldr r3, _0803D564 @ =REG_DMA3SAD_L
 	str r0, [r3]
-	ldr r0, _0803D568 @ =0x040000D8
+	ldr r0, _0803D568 @ =REG_DMA3DAD_L
 	str r1, [r0]
-	ldr r1, _0803D56C @ =0x040000DC
+	ldr r1, _0803D56C @ =REG_DMA3CNT_L
 	movs r0, #0x80
 	lsls r0, r0, #0x18
 	orrs r2, r0
@@ -219,7 +220,7 @@ Dma3Transmit: @ 0x0803D4F4
 	ands r0, r1
 	cmp r0, #0
 	beq _0803D548
-	ldr r2, _0803D570 @ =0x040000DE
+	ldr r2, _0803D570 @ =REG_DMA3CNT_H
 	movs r0, #0x80
 	lsls r0, r0, #8
 	adds r1, r0, #0
@@ -229,20 +230,20 @@ _0803D540:
 	cmp r0, #0
 	bne _0803D540
 _0803D548:
-	ldr r0, _0803D554 @ =0x04000208
+	ldr r0, _0803D554 @ =REG_IME
 	strh r6, [r0]
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
 	.align 2, 0
-_0803D554: .4byte 0x04000208
-_0803D558: .4byte 0x04000204
+_0803D554: .4byte REG_IME
+_0803D558: .4byte REG_WAITCNT
 _0803D55C: .4byte 0x0000F8FF
 _0803D560: .4byte gUnknown_0203C560
-_0803D564: .4byte 0x040000D4
-_0803D568: .4byte 0x040000D8
-_0803D56C: .4byte 0x040000DC
-_0803D570: .4byte 0x040000DE
+_0803D564: .4byte REG_DMA3SAD_L
+_0803D568: .4byte REG_DMA3DAD_L
+_0803D56C: .4byte REG_DMA3CNT_L
+_0803D570: .4byte REG_DMA3CNT_H
 
 	thumb_func_start ReadEepromDword
 ReadEepromDword: @ 0x0803D574

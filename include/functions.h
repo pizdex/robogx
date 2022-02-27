@@ -1226,16 +1226,15 @@ extern void sub_0803D308(void);
 //extern ? sub_0803D320(?);
 //extern ? sub_0803D328(?);
 
-// asm/code_0803D388.s
+// asm/AgbEeprom.s
 
-extern void IdentifyEeprom(u16 arg0);
-extern void SetEepromTimerIntr(u8 arg0, u32 *arg1);
-//extern ? StartEepromTimer(?);
-//extern ? StopEepromTimer(?);
-//extern ? Dma3Transmit(?);
-//extern ? ReadEepromDword(?);
-//extern ? ProgramEepromDword(?);
-//extern ? VerifyEepromDword(?);
-//extern ? ProgramEepromDwordEx(?);
+extern u16 IdentifyEeprom(u16 eeprom_KbitSize);
+//extern u16 SetEepromTimerIntr(u8 timerNo, void (**IntrFunc)(void));
+extern u16 SetEepromTimerIntr(u8 timerNo, u32 *arg1);
+extern void Dma3Transmit(u16 *src, u16 *dst, u16 trmCount);
+extern u16 ReadEepromDword(u16 epAdr, u16 *dst);
+extern u16 ProgramEepromDword(u16 epAdr, u16 *src);
+extern u16 VerifyEepromDword(u16 epAdr, u16 *src);
+extern u16 ProgramEepromDwordEx(u16 epAdr, u16 *src);
 
 #endif // GUARD_FUNCTIONS_H
