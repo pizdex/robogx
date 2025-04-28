@@ -41,6 +41,7 @@ extern u32 gUnknown_0300136C;
 extern u32 gUnknown_03001370[];
 extern void *gUnknown_03002BF0;
 extern void *gUnknown_03003040;
+extern u8 gUnknown_03007700[];
 extern u16 gUnknown_03007FF8;
 extern u32 gUnknown_03007FFC;
 
