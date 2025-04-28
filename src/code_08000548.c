@@ -126,3 +126,196 @@ void sub_08000738(void) {
 	IdentifyEeprom(0x40);
 	SetEepromTimerIntr(3, gUnknown_03001370);
 }
+
+u32 sub_08000750(void* arg0, u32 arg1, u32 arg2, u32 arg3) {
+    u16* dest = arg0;
+    u32 chunkOffset = arg1;
+    register u32 chunkCount asm("r8") = arg2; // fakematch hack
+    u32 temp = arg3;
+
+    u32 i;
+    register u32 result asm("r6"); // fakematch hack
+
+    if (temp) {
+        sub_08000588();
+    }
+
+    chunkOffset /= 8;
+    chunkCount /= 8;
+
+    for (i = 0; i < chunkCount; i++) {
+        result = ReadEepromDword(chunkOffset, dest);
+
+        dest += 4;
+        chunkOffset++;
+        
+        if (result != 0) {
+            break;
+        }
+    }
+
+    if (temp) {
+        sub_080005B4();
+    }
+
+    return result;
+}
+
+u32 sub_080007A8(void* arg0, u32 arg1, u32 arg2, u32 arg3) {
+    u16* dest = arg0;
+    u32 chunkOffset = arg1;
+    register u32 chunkCount asm("r8") = arg2; // fakematch hack
+    u32 temp = arg3;
+
+    u32 i;
+    register u32 result asm("r6"); // fakematch hack
+
+    if (temp) {
+        sub_08000588();
+    }
+
+    chunkOffset /= 8;
+    chunkCount /= 8;
+
+    for (i = 0; i < chunkCount; i++) {
+        result = ProgramEepromDwordEx(chunkOffset, dest);
+
+        dest += 4;
+        chunkOffset++;
+        
+        if (result != 0) {
+            break;
+        }
+    }
+
+    if (temp) {
+        sub_080005B4();
+    }
+
+    return result;
+}
+
+u32 sub_08000800(void* arg0, u32 eepromOffset, u32 fillValue, u32 arg3) {
+    u32 chunkOffset = (u32)arg0;
+    u32 chunkCount = eepromOffset;
+    u32 temp = arg3;
+
+    u32 i;
+    register u32 result asm("r6"); // fakematch hack
+
+    u16 fillPattern[4] = {fillValue, fillValue, fillValue, fillValue};
+
+    if (temp) {
+        sub_08000588();
+    }
+
+    chunkOffset /= 8;
+    chunkCount /= 8;
+
+    for (i = 0; i < chunkCount; i++) {
+        result = ProgramEepromDwordEx(chunkOffset, fillPattern);
+
+        chunkOffset++;
+        
+        if (result != 0) {
+            break;
+        }
+    }
+
+    if (temp) {
+        sub_080005B4();
+    }
+
+    return result;
+}
+
+void sub_0800085C(void) {
+    REG_TM3CNT_L = 0;
+    REG_TM3CNT_H = 1;
+    REG_TM3CNT_H = 0x81;
+}
+
+u32 sub_08000874(void) {
+    u64 scaled = (u64)REG_TM3CNT_L * 10000;
+    u64 result = scaled / 4389;
+    
+    return (u32)result;
+}
+
+void sub_080008A8(void) {
+    gUnknown_02000038 = REG_TM3CNT_L;
+}
+
+void sub_080008BC(u32 arg0) {
+    if (arg0 != 0) {
+        REG_TM3CNT_L = 0;
+        REG_TM3CNT_H = 0;
+        REG_TM3CNT_H = 0x80;
+        REG_KEYCNT = 0x4008;
+    } else {
+        REG_KEYCNT = 0;
+        REG_TM3CNT_H = 0;
+    }
+}
+
+void sub_080008FC(u32 arg0) {
+    (u32)gUnknown_03000B54 = arg0;
+}
+
+void sub_08000908(void) {
+    sub_08002A38();
+    sub_0800142C();
+    
+    if (gUnknown_03000B54 != 0) {
+        ((void (*)(void))gUnknown_03000B54)();
+    }
+    
+    gUnknown_0300136C++;
+    
+    if (gUnknown_02000024 == 0) {
+        u16 keys = REG_KEYINPUT ^ 0x3FF; // Invert button bits
+        
+        // Check for A+B+Select+Start
+        if (keys != 0) {
+            if (keys == 0xF) {
+                sub_08000588();
+            
+                REG_BLDCNT = 0xFF;
+                REG_BLDY = 0x10;
+            
+                sub_08000C90(2);
+                SoftReset(0xFF);
+            }
+        }
+    }
+
+    gUnknown_03007FF8 = 1;
+}
+
+void sub_08000984(void) {
+	sub_0800310C();
+}
+
+void sub_08000990(void) {
+    u32 size;
+    u32 src;
+
+    gUnknown_02000024 = 1;
+
+    src = (u32)sub_080000F0;
+    size = (u32)sub_08000540 - src;
+    CpuCopy32((void *)src, &gUnknown_03002BF0, size);
+
+    src = (u32)sub_08001A18;
+    size = 0x080023D4 - src; // Fixme
+    CpuCopy32((void *)src, &gUnknown_03003040, size);
+
+    gUnknown_03007FFC = (u32)sub_080000F0;
+
+    gUnknown_0300136C = 0;
+    *gUnknown_03000B54 = 0;
+
+    REG_DISPSTAT = 0xa28;
+    REG_IE = 0x3005;
+    REG_IME = 1;
+}

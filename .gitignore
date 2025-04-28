@@ -15,4 +15,5 @@
 *.sg1
 tools/agbcc
 build/
+.vscode/
 *.dump
