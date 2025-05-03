@@ -53,7 +53,7 @@ void sub_0800A4EC(u32 arg0) {
 	u32 idx;
 	if(gUnknown_0200CCC4.unk100 == 0x40)
 		sub_080050A8(gUnknown_0831B010);
-	
+
 	idx = gUnknown_0200CCC4.unk100++;
 	gUnknown_0200CCC4.unk0[idx] = arg0;
 }

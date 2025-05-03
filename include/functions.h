@@ -4,6 +4,7 @@
 // Place all external function declarations in this file
 
 extern void sub_080000F0(void);
+extern void sub_08000498(void *arg0, u32 arg1, u32 arg2);
 extern void sub_08000540(void);
 
 // src/code_08000548.c
@@ -12,33 +13,16 @@ extern void sub_08000548(void);
 extern void sub_08000588(void);
 extern void sub_080005B4(void);
 extern void sub_08000738(void);
-
-// asm/code_08000548.s
-
-//extern ? sub_08000750(?);
-//extern ? sub_080007A8(?);
-//extern ? sub_08000800(?);
-//extern ? sub_0800085C(?);
-//extern ? sub_08000874(?);
-//extern ? sub_080008A8(?);
-//extern ? sub_080008BC(?);
-//extern ? sub_080008FC(?);
-//extern ? sub_08000908(?);
-//extern ? sub_08000984(?);
+extern u32 sub_08000750(void *arg0, u32 arg1, u32 arg2, u32 arg3);
+extern u32 sub_080007A8(void *arg0, u32 arg1, u32 arg2, u32 arg3);
+extern u32 sub_08000800(void *arg0, u32 eepromOffset, u32 fillValue, u32 arg3);
 extern void sub_08000990(void);
 extern void sub_08000A34(void);
 extern void sub_08000A5C(void);
-
-// src/code_08000AF4.c
-
-void sub_08000C90(u32 arg0);
+extern void sub_08000C90(u32 arg0);
 
 // asm/code_08000AF4.s
 
-//extern ? sub_08000DDC(?);
-//extern ? sub_08000E14(?);
-//extern ? sub_08000E54(?);
-//extern ? sub_08000E98(?);
 //extern ? sub_08000EBC(?);
 //extern ? sub_08000EE0(?);
 //extern ? sub_08000F78(?);
@@ -198,8 +182,8 @@ extern void sub_080040C0(struct Unk08045158 *arg0, u32 arg1, u16 arg2);
 //extern ? sub_08004EC0(?);
 //extern ? sub_08004F68(?);
 //extern ? sub_08005028(?);
-extern void sub_080050A8(u8 *arg0);
-//extern ? sub_080050B8(?);
+extern void sub_080050A8(const char* str);
+extern void sub_080050B8(const char* str);
 //extern ? sub_080050C4(?);
 //extern ? sub_080050E4(?);
 //extern ? sub_0800510C(?);
@@ -647,7 +631,7 @@ extern void sub_080051B0(u32 arg0);
 //extern ? sub_080109F0(?);
 //extern ? sub_08010A48(?);
 //extern ? sub_08010A78(?);
-//extern ? sub_08010AF0(?);
+extern void sub_08010AF0(u32 arg0, u32 arg1);
 //extern ? sub_08010B34(?);
 //extern ? sub_08010B8C(?);
 //extern ? sub_08010C14(?);
