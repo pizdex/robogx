@@ -60,14 +60,18 @@ struct Unk080451B8 {
 
 extern struct Unk080451B8 gUnknown_080451B8[];
 
-extern u8 gUnknown_0831AFA0[];
-extern u8 gUnknown_0831AFB8[];
-extern u8 gUnknown_0831AFD8[];
-extern u8 gUnknown_0831AFF0[];
-extern u8 gUnknown_0831B010[];
-extern u8 gUnknown_0831B028[];
-extern char gUnknown_0831B768[];
+extern const char gUnknown_0831AFA0[];
+extern const char gUnknown_0831AFB8[];
+extern const char gUnknown_0831AFD8[];
+extern const char gUnknown_0831AFF0[];
+extern const char gUnknown_0831B010[];
+extern const char gUnknown_0831B028[];
+extern const char gUnknown_0831B768[];
 extern const char gUnknown_0831B780[];
 extern const char gUnknown_0831B7A4[];
+extern const char gUnknown_0831B7C8[];
+
+extern const u8 gUnknown_084B5FA0[];
+extern const u8 gUnknown_085371D8[];
 
 #endif // GUARD_VARIABLES_H

@@ -2,71 +2,6 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_08010848
-sub_08010848: @ 0x08010848
-	push {r4, lr}
-	sub sp, #0x80
-	adds r2, r0, #0
-	cmp r2, #0
-	bne _08010858
-	movs r4, #0x88
-	lsls r4, r4, #2
-	b _08010896
-_08010858:
-	cmp r2, #1
-	bne _08010864
-	ldr r4, _08010860 @ =0x00000A18
-	b _08010896
-	.align 2, 0
-_08010860: .4byte 0x00000A18
-_08010864:
-	cmp r2, #2
-	bne _0801086E
-	movs r4, #0xb8
-	lsls r4, r4, #2
-	b _08010896
-_0801086E:
-	cmp r2, #3
-	bne _0801087C
-	ldr r4, _08010878 @ =0x00000C38
-	b _08010896
-	.align 2, 0
-_08010878: .4byte 0x00000C38
-_0801087C:
-	cmp r2, #4
-	bne _08010888
-	ldr r4, _08010884 @ =0x00000F18
-	b _08010896
-	.align 2, 0
-_08010884: .4byte 0x00000F18
-_08010888:
-	ldr r1, _080108A0 @ =gUnknown_0831B7C8
-	mov r0, sp
-	bl sprintf
-	mov r0, sp
-	bl sub_080050A8
-_08010896:
-	adds r0, r4, #0
-	add sp, #0x80
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_080108A0: .4byte gUnknown_0831B7C8
-
-	thumb_func_start sub_080108A4
-sub_080108A4: @ 0x080108A4
-	ldr r1, _080108B0 @ =gUnknown_084B5FA0
-	ldr r0, _080108B4 @ =gUnknown_085371D8
-	subs r0, r0, r1
-	ldr r1, _080108B8 @ =0x00000F18
-	adds r0, r0, r1
-	bx lr
-	.align 2, 0
-_080108B0: .4byte gUnknown_084B5FA0
-_080108B4: .4byte gUnknown_085371D8
-_080108B8: .4byte 0x00000F18
-
 	thumb_func_start sub_080108BC
 sub_080108BC: @ 0x080108BC
 	push {r4, r5, lr}
@@ -87,7 +22,7 @@ sub_080108BC: @ 0x080108BC
 sub_080108D8: @ 0x080108D8
 	push {r4, lr}
 	adds r4, r1, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r1, r0, #0
 	subs r1, #8
 	lsrs r1, r1, #2
@@ -129,7 +64,7 @@ sub_08010910: @ 0x08010910
 	adds r4, r2, #0
 	adds r7, r3, #0
 	adds r0, r5, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r6, r0, #0
 	adds r0, r5, #0
 	adds r1, r4, #0
@@ -180,10 +115,10 @@ sub_0801097C: @ 0x0801097C
 	adds r6, r0, #0
 	adds r4, r1, #0
 	adds r7, r2, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r5, r0, #0
 	adds r0, r4, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r2, r0, #0
 	adds r0, r7, #0
 	adds r1, r5, #0
@@ -246,7 +181,7 @@ sub_080109F0: @ 0x080109F0
 	bl sub_080108BC
 _08010A04:
 	adds r0, r4, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r6, r0, #0
 	adds r0, r4, #0
 	adds r1, r5, #0
@@ -265,7 +200,7 @@ _08010A04:
 _08010A30:
 	adds r0, r7, #0
 	adds r1, r4, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r1, r5, #0
 	adds r2, r6, #0
 	bl sub_08010770
@@ -310,7 +245,7 @@ sub_08010A78: @ 0x08010A78
 	bl sub_08011124
 	adds r6, r0, #0
 	movs r0, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r4, r0, #0
 	adds r0, r6, #0
 	adds r1, r4, #0
@@ -331,7 +266,7 @@ sub_08010A78: @ 0x08010A78
 	adds r5, r0, #0
 	adds r0, r7, #0
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r6, r0, #0
 	adds r1, r5, #0
 	adds r2, r4, #0
@@ -340,10 +275,10 @@ sub_08010A78: @ 0x08010A78
 _08010AD0:
 	adds r0, r7, #0
 	adds r1, r5, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r4, r0, #0
 	adds r0, r5, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r1, r0, #0
 	adds r0, r4, #0
 	movs r2, #0
@@ -394,7 +329,7 @@ sub_08010B34: @ 0x08010B34
 	bl sub_08011124
 	adds r7, r0, #0
 	movs r0, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r6, r0, #0
 	adds r0, r7, #0
 	adds r1, r6, #0
@@ -415,7 +350,7 @@ sub_08010B34: @ 0x08010B34
 	adds r4, r0, #0
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r7, r0, #0
 	adds r1, r4, #0
 	adds r2, r6, #0
@@ -435,7 +370,7 @@ sub_08010B8C: @ 0x08010B8C
 	mov sb, r1
 	adds r6, r2, #0
 	adds r0, r6, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r7, r0, #0
 	ldr r0, _08010C0C @ =gUnknown_02001CC0
 	adds r1, r7, #0
@@ -443,7 +378,7 @@ sub_08010B8C: @ 0x08010B8C
 	mov r8, r0
 	adds r0, r4, #0
 	adds r1, r6, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r5, r0, #0
 	mov r4, r8
 	adds r0, r4, #0
@@ -469,7 +404,7 @@ _08010BE4:
 	mov r5, r8
 	mov r0, sb
 	adds r1, r6, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r4, r0, #0
 	adds r1, r5, #0
 	adds r2, r7, #0
@@ -539,10 +474,10 @@ sub_08010C64: @ 0x08010C64
 	adds r7, r0, #0
 	mov r0, r8
 	adds r1, r5, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r4, r0, #0
 	adds r0, r5, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r6, r0, #0
 	adds r0, r4, r6
 	adds r4, r0, #0
@@ -684,7 +619,7 @@ sub_08010D88: @ 0x08010D88
 	adds r5, r1, #0
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r6, r0, #0
 	adds r4, r7, r6
 	ldr r0, [r4]
@@ -710,7 +645,7 @@ _08010DC2:
 _08010DC4:
 	adds r0, r5, #0
 	adds r1, r4, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r2, r0, #0
 	adds r2, r7, r2
 	adds r0, r5, #0
@@ -734,7 +669,7 @@ sub_08010DEC: @ 0x08010DEC
 	ldr r4, _08010E3C @ =gUnknown_02017AF0
 	bl sub_08000588
 	movs r0, #4
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r2, r0, #0
 	lsls r2, r2, #1
 	adds r0, r4, #0
@@ -750,7 +685,7 @@ sub_08010DEC: @ 0x08010DEC
 _08010E18:
 	adds r0, r4, #0
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	movs r1, #0
 	movs r2, #0
 	bl sub_080107C4
@@ -1131,13 +1066,13 @@ sub_08011138: @ 0x08011138
 _08011140:
 	adds r0, r6, #0
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r5, r0, #0
 	adds r0, r6, #0
 	bl sub_08011124
 	adds r4, r0, #0
 	movs r0, #0
-	bl sub_08010848
+	bl SceEeprom_GetSubFileSize
 	adds r2, r0, #0
 	adds r0, r4, #0
 	adds r1, r5, #0
@@ -1437,7 +1372,7 @@ sub_08011380: @ 0x08011380
 	mov sb, r0
 	mov r0, sl
 	movs r1, #0
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	mov r8, r0
 	ldr r1, _080113BC @ =gUnknown_0200C1A0
 	subs r0, r6, r1
