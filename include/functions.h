@@ -613,6 +613,7 @@ extern void sub_080051B0(u32 arg0);
 //extern ? sub_080104F0(?);
 //extern ? sub_0801051C(?);
 //extern ? sub_08010580(?);
+
 //extern ? sub_08010738(?);
 //extern ? sub_08010764(?);
 //extern ? sub_08010770(?);
@@ -623,6 +624,7 @@ extern void sub_080051B0(u32 arg0);
 //extern ? SceEeprom_GetSubFileSize(?);
 //extern ? sub_080108A4(?);
 //extern ? sub_080108BC(?);
+
 //extern ? sub_080108D8(?);
 //extern ? sub_08010900(?);
 //extern ? sub_08010910(?);

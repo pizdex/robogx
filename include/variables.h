@@ -70,6 +70,8 @@ extern const char gUnknown_0831B768[];
 extern const char gUnknown_0831B780[];
 extern const char gUnknown_0831B7A4[];
 extern const char gUnknown_0831B7C8[];
+extern const char gUnknown_0831B7F0[];
+extern const char gUnknown_0831B80C[];
 
 extern const u8 gUnknown_084B5FA0[];
 extern const u8 gUnknown_085371D8[];
