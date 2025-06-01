@@ -127,102 +127,85 @@ void sub_08000738(void) {
 	SetEepromTimerIntr(3, gUnknown_03001370);
 }
 
-u32 sub_08000750(void *arg0, u32 arg1, u32 arg2, u32 arg3) {
-	u16 *dest = arg0;
-	u32 chunkOffset = arg1;
-	register u32 chunkCount asm("r8") = arg2; // fakematch hack
-	u32 temp = arg3;
-
+u32 sub_08000750(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
+	u32 result;
 	u32 i;
-	register u32 result asm("r6"); // fakematch hack
 
-	if(temp) {
-		sub_08000588();
+	if(flag) {
+		sub_08000588(); // disable sound?
 	}
 
-	chunkOffset /= 8;
-	chunkCount /= 8;
+	startAddr /= 8;
+	numBytes /= 8;
 
-	for(i = 0; i < chunkCount; i++) {
-		result = ReadEepromDword(chunkOffset, dest);
-
-		dest += 4;
-		chunkOffset++;
+	for(i = 0; i < numBytes; i++) {
+		result = ReadEepromDword(startAddr, buffer);
+		buffer += 8;
+		startAddr++;
 
 		if(result != 0) {
 			break;
 		}
 	}
 
-	if(temp) {
+	if(flag) {
+		sub_080005B4(); // enable sound?
+	}
+
+	return result;
+}
+
+u32 sub_080007A8(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
+	u32 result;
+	u32 i;
+
+	if(flag) {
+		sub_08000588();
+	}
+
+	startAddr /= 8;
+	numBytes /= 8;
+
+	for(i = 0; i < numBytes; i++) {
+		result = ProgramEepromDwordEx(startAddr, buffer);
+		buffer += 8;
+		startAddr++;
+
+		if(result != 0) {
+			break;
+		}
+	}
+
+	if(flag) {
 		sub_080005B4();
 	}
 
 	return result;
 }
 
-u32 sub_080007A8(void *arg0, u32 arg1, u32 arg2, u32 arg3) {
-	u16 *dest = arg0;
-	u32 chunkOffset = arg1;
-	register u32 chunkCount asm("r8") = arg2; // fakematch hack
-	u32 temp = arg3;
-
+u32 sub_08000800(void *buffer, u32 offset, u32 arg2, u32 flag) {
+	u32 currentAddr;
+	u16 result;
 	u32 i;
-	register u32 result asm("r6"); // fakematch hack
 
-	if(temp) {
+	u16 pattern[4] = { arg2, arg2, arg2, arg2 };
+
+	if(flag) {
 		sub_08000588();
 	}
 
-	chunkOffset /= 8;
-	chunkCount /= 8;
+	currentAddr = (u32)buffer >> 3;
+	offset /= 8;
 
-	for(i = 0; i < chunkCount; i++) {
-		result = ProgramEepromDwordEx(chunkOffset, dest);
+	for(i = 0; i < offset; i++) {
+		result = ProgramEepromDwordEx((u16)currentAddr, pattern);
+		currentAddr++;
 
-		dest += 4;
-		chunkOffset++;
-
-		if(result != 0) {
+		if(result != 0)
 			break;
-		}
 	}
 
-	if(temp) {
-		sub_080005B4();
-	}
-
-	return result;
-}
-
-u32 sub_08000800(void *arg0, u32 eepromOffset, u32 fillValue, u32 arg3) {
-	u32 chunkOffset = (u32)arg0;
-	u32 chunkCount = eepromOffset;
-	u32 temp = arg3;
-
-	u32 i;
-	register u32 result asm("r6"); // fakematch hack
-
-	u16 fillPattern[4] = { fillValue, fillValue, fillValue, fillValue };
-
-	if(temp) {
-		sub_08000588();
-	}
-
-	chunkOffset /= 8;
-	chunkCount /= 8;
-
-	for(i = 0; i < chunkCount; i++) {
-		result = ProgramEepromDwordEx(chunkOffset, fillPattern);
-
-		chunkOffset++;
-
-		if(result != 0) {
-			break;
-		}
-	}
-
-	if(temp) {
+	if(flag) {
 		sub_080005B4();
 	}
 
@@ -369,7 +352,7 @@ void sub_08000A5C(void) {
 	sub_08000548();
 	sub_08000990();
 	sub_080012B8();
-	sub_08000FEC(0x7000000, 0x80);
+	sub_08000FEC((u16 *)OAM, 0x80);
 	sub_08000738();
 	srand(0);
 	sub_080005B4();
@@ -378,18 +361,22 @@ void sub_08000A5C(void) {
 void AgbMain(void) {
 	sub_08000A5C();
 	sub_0803D308();
-	for(;;);
+	for(;;)
+		;
 }
 
 void sub_08000B00(u32 arg0) {
 	u32 i;
 	u32 temp = arg0 * 1500;
-	for(i = 0; i < temp; i++);
+	for(i = 0; i < temp; i++)
+		;
 }
 
 void sub_08000B1C(void) {
-	while(REG_VCOUNT != 0x9f);
-	while(REG_VCOUNT <= 0x9f);
+	while(REG_VCOUNT != 0x9f)
+		;
+	while(REG_VCOUNT <= 0x9f)
+		;
 }
 
 void sub_08000B38(u32 arg0) {
@@ -400,7 +387,8 @@ void sub_08000B38(u32 arg0) {
 }
 
 void sub_08000B54(void) {
-	while(REG_VCOUNT > 0x9f);
+	while(REG_VCOUNT > 0x9f)
+		;
 }
 
 void sub_08000B68(u32 arg0) {
@@ -524,9 +512,9 @@ u32 sub_08000D80(u8 *arg0, u8 *arg1) {
 
 /**
  * Compares two null-terminated byte strings lexicographically
- * @param str1 First string to compare
- * @param str2 Second string to compare
- * @return 0 if equal, 1 if str1 > str2, -1 if str1 < str2
+ * @arg str1 First string to compare
+ * @arg str2 Second string to compare
+ * @ret 0 if equal, 1 if str1 > str2, -1 if str1 < str2
  */
 s32 Strcmp_08000DA4(u8 *str1, u8 *str2) {
 	char c1, c2;
@@ -613,7 +601,7 @@ void SafeStrcpy(char *dest, char *src, u32 max_len) {
 
 // Binary search implementation
 // Returns index if found, -1 if not found
-s32 BinarySearch(u8 **array, u32 count, u8 *target) {
+s32 BinarySearchStr(char **array, u32 count, char *target) {
 	s32 low = 0;
 	s32 mid;
 	s32 high = count - 1;
@@ -642,4 +630,265 @@ void sub_08000E98(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
 void sub_08000EBC(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
 	REG_WIN1H = (arg0 << 8) | (arg0 + arg2);
 	REG_WIN1V = (arg1 << 8) | (arg1 + arg3);
+}
+
+void sub_08000EE0(u16 *dst, u32 *src, u32 offset) {
+	u32 count = 0;
+	u32 value, lo, hi;
+
+	do {
+		value = *src++;
+
+		// First 16-bit chunk
+		lo = value & 0xF;
+		value >>= 4;
+		if(lo != 0)
+			lo += offset;
+
+		hi = value & 0xF;
+		value >>= 4;
+		if(hi != 0)
+			hi += offset;
+
+		*dst++ = (hi << 8) | lo;
+
+		// Second 16-bit chunk
+		lo = value & 0xF;
+		value >>= 4;
+		if(lo != 0)
+			lo += offset;
+
+		hi = value & 0xF;
+		value >>= 4;
+		if(hi != 0)
+			hi += offset;
+
+		*dst++ = (hi << 8) | lo;
+
+		// Third 16-bit chunk
+		lo = value & 0xF;
+		value >>= 4;
+		if(lo != 0)
+			lo += offset;
+
+		hi = value & 0xF;
+		value >>= 4;
+		if(hi != 0)
+			hi += offset;
+
+		*dst++ = (hi << 8) | lo;
+
+		// Fourth 16-bit chunk
+		lo = value & 0xF;
+		value >>= 4;
+
+		if(lo != 0)
+			lo += offset;
+
+		hi = value & 0xF;
+		if(hi != 0)
+			hi += offset;
+
+		*dst++ = (hi << 8) | lo;
+
+		count++;
+	} while(count <= 7);
+}
+
+void sub_08000F78(u16 *dest, u32 *src, u32 offset) {
+	u32 count = 0;
+	u32 mask = 0xF;
+	u32 value;
+	u32 lo, hi;
+
+	while(count <= 7) {
+		value = *src++;
+
+		// First pair
+		lo = value & mask;
+		value >>= 4;
+		lo += offset;
+
+		hi = value & mask;
+		value >>= 4;
+		hi += offset;
+
+		*dest++ = (hi << 8) | lo;
+
+		// Second pair
+		lo = value & mask;
+		value >>= 4;
+		lo += offset;
+
+		hi = value & mask;
+		value >>= 4;
+		hi += offset;
+
+		*dest++ = (hi << 8) | lo;
+
+		// Third pair
+		lo = value & mask;
+		value >>= 4;
+		lo += offset;
+
+		hi = value & mask;
+		value >>= 4;
+		hi += offset;
+
+		*dest++ = (hi << 8) | lo;
+
+		// Fourth pair
+		lo = value & mask;
+		value >>= 4;
+		lo += offset;
+
+		hi = value & mask;
+		hi += offset;
+
+		*dest++ = (hi << 8) | lo;
+
+		count++;
+	}
+}
+
+void sub_08000FEC(u16 *arg0, u32 arg1) {
+	u32 i;
+	for(i = 0; i < arg1; i++) {
+		arg0[i * 4] = 0xa0;
+	}
+}
+
+void sub_08001004(void) {
+	u16 *dst = (u16 *)OAM;
+	u32 i;
+	for(i = 0; i < 0x80; i++) {
+		*dst = 0xa0;
+		dst += 4;
+	}
+}
+
+void sub_0800101C(void) {
+	VBlankIntrWait();
+	REG_DISPCNT = 0;
+}
+
+void sub_08001030(u32 value) {
+	u32 color;
+	vu16 *palette;
+
+	REG_DISPCNT = 0;
+	palette = (vu16 *)PLTT;
+
+	color = (((value & 1) << 5) - (value & 1)) << 10;
+	color |= ((((value >> 2) & 1) << 5) - ((value >> 2) & 1)) << 5;
+	color |= (((value >> 1) & 1) << 5) - ((value >> 1) & 1);
+
+	*palette = color;
+}
+
+void sub_08001068(u32 base) {
+	u32 offset;
+	u32 *ptr0, *ptr1, *ptr2, *ptr3;
+
+	ptr3 = (u32 *)(base + 0x7c0);
+	ptr2 = (u32 *)(base + 0x7b8);
+	ptr1 = (u32 *)(base + 0x7bc);
+	ptr0 = (u32 *)(base + 0x7b4);
+
+	*ptr0 = 0;
+	*ptr1 = 0;
+	*ptr2 = 0;
+	ptr3[4] = 0;
+	ptr3[6] = 0;
+	ptr3[5] = 0;
+}
+
+void sub_08001090(u32 value) {
+	REG_RCNT = 0x8000;
+	REG_TM2CNT_H = 0;
+
+	gUnknown_03000B50 = value;
+	gUnknown_03000B58 = 3;
+	gUnknown_03001364 = 0;
+}
+
+u32 sub_080010C4(void) {
+	vu16 *vcount_reg;
+
+	u32 scanline;
+	u32 start_scanline;
+
+	u32 temp1;
+	u32 temp2;
+	u32 temp3;
+
+	u32 siocnt_val;
+	u32 bit19;
+	u32 bit18;
+	u32 mask;
+
+	scanline = REG_VCOUNT;
+	if(scanline < 160) {
+		scanline += 228;
+	}
+	start_scanline = scanline;
+
+	temp1 = 1;
+	temp2 = 1;
+	temp3 = 1;
+	mask = 1;
+	vcount_reg = (vu16 *)REG_ADDR_VCOUNT;
+	goto check_vblank; // hack
+
+	while(1) {
+		siocnt_val = REG_SIOCNT;
+		bit19 = (siocnt_val >> 3) & mask;
+		bit18 = (siocnt_val >> 2) & mask;
+
+		/* Update status flags */
+		if(!bit19)
+			temp1 = 0;
+		if(!bit18)
+			temp3 = 0;
+		if(bit18 == 1)
+			temp2 = 0;
+
+	check_vblank:
+		scanline = *vcount_reg;
+		if(scanline < 160) {
+			scanline += 228;
+		}
+
+		if((scanline - start_scanline) > 3)
+			break;
+	}
+
+	if(!temp1) {
+		return 0;
+	}
+	if(temp2 == 1) {
+		return 2;
+	}
+	if(temp3 == 1) {
+		return 3;
+	}
+	return 1;
+}
+
+u32 sub_08001138(void) {
+	u32 i;
+	u32 result;
+
+	for(i = 0; i <= 2; i++) {
+		result = sub_080010C4();
+
+		if(result == 2) {
+			return 2;
+		}
+		if(result == 3) {
+			return 3;
+		}
+	}
+
+	return 0;
 }
