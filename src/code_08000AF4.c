@@ -157,48 +157,48 @@ void sub_08000D48(u8 *arg0, u8 *arg1, u32 arg2) {
 }
 
 void sub_08000D68(u8 *arg0, u32 arg1) {
-    u32 i;
-    for(i = 0; i < arg1; i++) {
-        *arg0++ = 0;
-    }
+	u32 i;
+	for(i = 0; i < arg1; i++) {
+		*arg0++ = 0;
+	}
 }
 
 u32 sub_08000D80(u8 *arg0, u8 *arg1) {
-    for(;;) {
-        if(*arg0 == 0) {
-            if(*arg1 == 0)
-                return 1;
-            else
-                return 0;
-        }
-        if(*arg0 == *arg1) {
-            arg0++;
-            arg1++;
-        } else
-            return 0;
-    }
+	for(;;) {
+		if(*arg0 == 0) {
+			if(*arg1 == 0)
+				return 1;
+			else
+				return 0;
+		}
+		if(*arg0 == *arg1) {
+			arg0++;
+			arg1++;
+		} else
+			return 0;
+	}
 }
 
 u32 sub_08000DA4(u8 *arg0, u8 *arg1) {
-    u8 temp0, temp1;
-    for(;;) {
-        temp0 = *arg0;
-        temp1 = *arg1;
-        if(temp0 == 0) {
-            if(temp1 == 0)
-                return 0;
-            else
-                return -1;
-        }
-        if(temp1 == 0)
-            return 1;
-        if(temp0 > temp1)
-            return 1;
-        if(temp0 < temp1)
-            return -1;
-        else {
-            arg0++;
-            arg1++;
-        }
-    }
+	u8 temp0, temp1;
+	for(;;) {
+		temp0 = *arg0;
+		temp1 = *arg1;
+		if(temp0 == 0) {
+			if(temp1 == 0)
+				return 0;
+			else
+				return -1;
+		}
+		if(temp1 == 0)
+			return 1;
+		if(temp0 > temp1)
+			return 1;
+		if(temp0 < temp1)
+			return -1;
+		else {
+			arg0++;
+			arg1++;
+		}
+	}
 }

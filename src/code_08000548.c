@@ -85,10 +85,10 @@ void sub_080006F8(void) {
 
 #ifdef NONMATCHING
 void sub_08000704(u32 arg0) {
-    u32 i;
-    for(i = 0; i < arg0; ++i) {
-        sub_080032B0(gUnknown_08045158[i * 3], arg0);
-    }
+	u32 i;
+	for(i = 0; i < arg0; ++i) {
+		sub_080032B0(gUnknown_08045158[i * 3], arg0);
+	}
 }
 #else
 NAKED
@@ -123,6 +123,6 @@ _08000734: .4byte gUnknown_08045158");
 #endif // NONMATCHING
 
 void sub_08000738(void) {
-    sub_0803D388(0x40);
-    sub_0803D3F0(3, gUnknown_03001370);
+	sub_0803D388(0x40);
+	sub_0803D3F0(3, gUnknown_03001370);
 }
