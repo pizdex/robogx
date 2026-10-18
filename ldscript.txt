@@ -1,0 +1,29 @@
+OUTPUT_ARCH(arm)
+
+MEMORY {
+	ewram (w!x) : ORIGIN = 0x02000000, LENGTH = 256K
+	iwram (w!x) : ORIGIN = 0x03000000, LENGTH = 32K
+	rom (rx) : ORIGIN = 0x08000000, LENGTH = 32M
+}
+
+SECTIONS {
+	. = 0x02000000;
+
+	. = 0x08000000;
+	.text :
+	ALIGN(4) {
+		asm/crt0.o(.text);
+		asm/code_08000548.o(.text);
+	} >rom
+
+	. = 0x08080000;
+	.data :
+	ALIGN(4) {
+		data/data.o(.rodata);
+	} >rom
+
+	/* Discard everything not specifically mentioned above. */
+	/DISCARD/ : {
+		*(*);
+	}
+}
