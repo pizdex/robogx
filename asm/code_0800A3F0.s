@@ -12688,7 +12688,7 @@ _080102F4: .4byte 0xFFFFE338
 _080102F8:
 	adds r0, r6, #0
 	movs r1, #3
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	adds r1, r0, #0
 	movs r0, #0x88
 	lsls r0, r0, #2
@@ -13063,7 +13063,7 @@ sub_08010580: @ 0x08010580
 _0801059A:
 	ldr r0, [sp]
 	movs r1, #2
-	bl sub_080107DC
+	bl SceEeprom_GetSubFileAdr
 	mov sb, r0
 	movs r1, #0xb8
 	lsls r1, r1, #2
