@@ -1,7 +1,11 @@
 #ifndef GUARD_GLOBAL_H
 #define GUARD_GLOBAL_H
 
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
 #include <stdlib.h>
+
 #include "gba/gba.h"
 #include "variables.h"
 #include "functions.h"

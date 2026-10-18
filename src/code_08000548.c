@@ -86,7 +86,7 @@ void sub_080006F8(void) {
 #ifdef NONMATCHING
 void sub_08000704(u32 arg0) {
 	u32 i;
-	for(i = 0; i < arg0; ++i) {
+	for(i = 0; i < 8; ++i) {
 		sub_080032B0(gUnknown_08045158[i * 3], arg0);
 	}
 }
@@ -127,169 +127,169 @@ void sub_08000738(void) {
 	SetEepromTimerIntr(3, gUnknown_03001370);
 }
 
-u32 sub_08000750(void* arg0, u32 arg1, u32 arg2, u32 arg3) {
-    u16* dest = arg0;
-    u32 chunkOffset = arg1;
-    register u32 chunkCount asm("r8") = arg2; // fakematch hack
-    u32 temp = arg3;
+u32 sub_08000750(void *arg0, u32 arg1, u32 arg2, u32 arg3) {
+	u16 *dest = arg0;
+	u32 chunkOffset = arg1;
+	register u32 chunkCount asm("r8") = arg2; // fakematch hack
+	u32 temp = arg3;
 
-    u32 i;
-    register u32 result asm("r6"); // fakematch hack
+	u32 i;
+	register u32 result asm("r6"); // fakematch hack
 
-    if (temp) {
-        sub_08000588();
-    }
+	if(temp) {
+		sub_08000588();
+	}
 
-    chunkOffset /= 8;
-    chunkCount /= 8;
+	chunkOffset /= 8;
+	chunkCount /= 8;
 
-    for (i = 0; i < chunkCount; i++) {
-        result = ReadEepromDword(chunkOffset, dest);
+	for(i = 0; i < chunkCount; i++) {
+		result = ReadEepromDword(chunkOffset, dest);
 
-        dest += 4;
-        chunkOffset++;
-        
-        if (result != 0) {
-            break;
-        }
-    }
+		dest += 4;
+		chunkOffset++;
 
-    if (temp) {
-        sub_080005B4();
-    }
+		if(result != 0) {
+			break;
+		}
+	}
 
-    return result;
+	if(temp) {
+		sub_080005B4();
+	}
+
+	return result;
 }
 
-u32 sub_080007A8(void* arg0, u32 arg1, u32 arg2, u32 arg3) {
-    u16* dest = arg0;
-    u32 chunkOffset = arg1;
-    register u32 chunkCount asm("r8") = arg2; // fakematch hack
-    u32 temp = arg3;
+u32 sub_080007A8(void *arg0, u32 arg1, u32 arg2, u32 arg3) {
+	u16 *dest = arg0;
+	u32 chunkOffset = arg1;
+	register u32 chunkCount asm("r8") = arg2; // fakematch hack
+	u32 temp = arg3;
 
-    u32 i;
-    register u32 result asm("r6"); // fakematch hack
+	u32 i;
+	register u32 result asm("r6"); // fakematch hack
 
-    if (temp) {
-        sub_08000588();
-    }
+	if(temp) {
+		sub_08000588();
+	}
 
-    chunkOffset /= 8;
-    chunkCount /= 8;
+	chunkOffset /= 8;
+	chunkCount /= 8;
 
-    for (i = 0; i < chunkCount; i++) {
-        result = ProgramEepromDwordEx(chunkOffset, dest);
+	for(i = 0; i < chunkCount; i++) {
+		result = ProgramEepromDwordEx(chunkOffset, dest);
 
-        dest += 4;
-        chunkOffset++;
-        
-        if (result != 0) {
-            break;
-        }
-    }
+		dest += 4;
+		chunkOffset++;
 
-    if (temp) {
-        sub_080005B4();
-    }
+		if(result != 0) {
+			break;
+		}
+	}
 
-    return result;
+	if(temp) {
+		sub_080005B4();
+	}
+
+	return result;
 }
 
-u32 sub_08000800(void* arg0, u32 eepromOffset, u32 fillValue, u32 arg3) {
-    u32 chunkOffset = (u32)arg0;
-    u32 chunkCount = eepromOffset;
-    u32 temp = arg3;
+u32 sub_08000800(void *arg0, u32 eepromOffset, u32 fillValue, u32 arg3) {
+	u32 chunkOffset = (u32)arg0;
+	u32 chunkCount = eepromOffset;
+	u32 temp = arg3;
 
-    u32 i;
-    register u32 result asm("r6"); // fakematch hack
+	u32 i;
+	register u32 result asm("r6"); // fakematch hack
 
-    u16 fillPattern[4] = {fillValue, fillValue, fillValue, fillValue};
+	u16 fillPattern[4] = { fillValue, fillValue, fillValue, fillValue };
 
-    if (temp) {
-        sub_08000588();
-    }
+	if(temp) {
+		sub_08000588();
+	}
 
-    chunkOffset /= 8;
-    chunkCount /= 8;
+	chunkOffset /= 8;
+	chunkCount /= 8;
 
-    for (i = 0; i < chunkCount; i++) {
-        result = ProgramEepromDwordEx(chunkOffset, fillPattern);
+	for(i = 0; i < chunkCount; i++) {
+		result = ProgramEepromDwordEx(chunkOffset, fillPattern);
 
-        chunkOffset++;
-        
-        if (result != 0) {
-            break;
-        }
-    }
+		chunkOffset++;
 
-    if (temp) {
-        sub_080005B4();
-    }
+		if(result != 0) {
+			break;
+		}
+	}
 
-    return result;
+	if(temp) {
+		sub_080005B4();
+	}
+
+	return result;
 }
 
 void sub_0800085C(void) {
-    REG_TM3CNT_L = 0;
-    REG_TM3CNT_H = 1;
-    REG_TM3CNT_H = 0x81;
+	REG_TM3CNT_L = 0;
+	REG_TM3CNT_H = 1;
+	REG_TM3CNT_H = 0x81;
 }
 
 u32 sub_08000874(void) {
-    u64 scaled = (u64)REG_TM3CNT_L * 10000;
-    u64 result = scaled / 4389;
-    
-    return (u32)result;
+	u64 scaled = (u64)REG_TM3CNT_L * 10000;
+	u64 result = scaled / 4389;
+
+	return (u32)result;
 }
 
 void sub_080008A8(void) {
-    gUnknown_02000038 = REG_TM3CNT_L;
+	gUnknown_02000038 = REG_TM3CNT_L;
 }
 
 void sub_080008BC(u32 arg0) {
-    if (arg0 != 0) {
-        REG_TM3CNT_L = 0;
-        REG_TM3CNT_H = 0;
-        REG_TM3CNT_H = 0x80;
-        REG_KEYCNT = 0x4008;
-    } else {
-        REG_KEYCNT = 0;
-        REG_TM3CNT_H = 0;
-    }
+	if(arg0 != 0) {
+		REG_TM3CNT_L = 0;
+		REG_TM3CNT_H = 0;
+		REG_TM3CNT_H = 0x80;
+		REG_KEYCNT = 0x4008;
+	} else {
+		REG_KEYCNT = 0;
+		REG_TM3CNT_H = 0;
+	}
 }
 
 void sub_080008FC(u32 arg0) {
-    (u32)gUnknown_03000B54 = arg0;
+	(u32) gUnknown_03000B54 = arg0;
 }
 
 void sub_08000908(void) {
-    sub_08002A38();
-    sub_0800142C();
-    
-    if (gUnknown_03000B54 != 0) {
-        ((void (*)(void))gUnknown_03000B54)();
-    }
-    
-    gUnknown_0300136C++;
-    
-    if (gUnknown_02000024 == 0) {
-        u16 keys = REG_KEYINPUT ^ 0x3FF; // Invert button bits
-        
-        // Check for A+B+Select+Start
-        if (keys != 0) {
-            if (keys == 0xF) {
-                sub_08000588();
-            
-                REG_BLDCNT = 0xFF;
-                REG_BLDY = 0x10;
-            
-                sub_08000C90(2);
-                SoftReset(0xFF);
-            }
-        }
-    }
+	sub_08002A38();
+	sub_0800142C();
 
-    gUnknown_03007FF8 = 1;
+	if(gUnknown_03000B54 != 0) {
+		((void (*)(void))gUnknown_03000B54)();
+	}
+
+	gUnknown_0300136C++;
+
+	if(gUnknown_02000024 == 0) {
+		u16 keys = REG_KEYINPUT ^ 0x3FF; // Invert button bits
+
+		// Check for A+B+Select+Start
+		if(keys != 0) {
+			if(keys == 0xF) {
+				sub_08000588();
+
+				REG_BLDCNT = 0xFF;
+				REG_BLDY = 0x10;
+
+				sub_08000C90(2);
+				SoftReset(0xFF);
+			}
+		}
+	}
+
+	gUnknown_03007FF8 = 1;
 }
 
 void sub_08000984(void) {
@@ -297,39 +297,39 @@ void sub_08000984(void) {
 }
 
 void sub_08000990(void) {
-    u32 size;
-    u32 src;
+	u32 size;
+	u32 src;
 
-    gUnknown_02000024 = 1;
+	gUnknown_02000024 = 1;
 
-    src = (u32)sub_080000F0;
-    size = (u32)sub_08000540 - src;
-    CpuCopy32((void *)src, &gUnknown_03002BF0, size);
+	src = (u32)sub_080000F0;
+	size = (u32)sub_08000540 - src;
+	CpuCopy32((void *)src, &gUnknown_03002BF0, size);
 
-    src = (u32)sub_08001A18;
-    size = 0x080023D4 - src; // Fixme
-    CpuCopy32((void *)src, &gUnknown_03003040, size);
+	src = (u32)sub_08001A18;
+	size = 0x080023D4 - src; // Fixme
+	CpuCopy32((void *)src, &gUnknown_03003040, size);
 
-    gUnknown_03007FFC = (u32)sub_080000F0;
+	gUnknown_03007FFC = (u32)sub_080000F0;
 
-    gUnknown_0300136C = 0;
-    *gUnknown_03000B54 = 0;
+	gUnknown_0300136C = 0;
+	*gUnknown_03000B54 = 0;
 
-    REG_DISPSTAT = 0xa28;
-    REG_IE = 0x3005;
-    REG_IME = 1;
+	REG_DISPSTAT = 0xa28;
+	REG_IE = 0x3005;
+	REG_IME = 1;
 }
 
 #ifdef NONMATCHING
 void sub_08000A34(void) {
-    void *src = gUnknown_08043864;
-    void *dest = (void*)IWRAM_START;
-    DmaCopy32(3, src, dest, 0x738);
+	void *src = gUnknown_08043864;
+	void *dest = (void *)IWRAM_START;
+	DmaCopy32(3, src, dest, 0x738);
 }
 #else
 NAKED
 void sub_08000A34(void) {
-    asm_unified("\n\
+	asm_unified("\n\
     ldr r0, _08000A50\n\
     movs r3, #0xc0\n\
     lsls r3, r3, #0x12\n\
@@ -352,27 +352,27 @@ _08000A58: .4byte 0x040000d4");
 #endif // NONMATCHING
 
 void sub_08000A5C(void) {
-    u32 temp;
-    u32 size;
-    
-    REG_BLDCNT = 0xBF;
-    REG_BLDY = 0x10;
-    REG_DISPCNT = 0;
+	u32 temp;
+	u32 size;
 
-    temp = IWRAM_START;
-    size = (u32)gUnknown_03007700;
-    DmaFill32(3, 0, (void*)temp, size - temp);
-    DmaFill32(3, 0, (void*)EWRAM_START, (EWRAM_END - EWRAM_START));
+	REG_BLDCNT = 0xBF;
+	REG_BLDY = 0x10;
+	REG_DISPCNT = 0;
 
-    sub_08000A34();
-    REG_WAITCNT = 0x4014;
-    sub_08000548();
-    sub_08000990();
-    sub_080012B8();
-    sub_08000FEC(0x7000000, 0x80);
-    sub_08000738();
-    srand(0);
-    sub_080005B4();
+	temp = IWRAM_START;
+	size = (u32)gUnknown_03007700;
+	DmaFill32(3, 0, (void *)temp, size - temp);
+	DmaFill32(3, 0, (void *)EWRAM_START, (EWRAM_END - EWRAM_START));
+
+	sub_08000A34();
+	REG_WAITCNT = 0x4014;
+	sub_08000548();
+	sub_08000990();
+	sub_080012B8();
+	sub_08000FEC(0x7000000, 0x80);
+	sub_08000738();
+	srand(0);
+	sub_080005B4();
 }
 
 void AgbMain(void) {
@@ -456,8 +456,10 @@ void sub_08000C90(u32 arg0) {
 	for(;;) {
 		temp = REG_KEYINPUT ^ 0x3ff;
 		i++;
-		if(temp) i = 0;
-		if(i >= arg0) break;
+		if(temp)
+			i = 0;
+		if(i >= arg0)
+			break;
 		sub_08000B1C();
 	}
 }
@@ -476,51 +478,18 @@ u32 sub_08000CDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 		return arg0 - Div(arg3 * -temp, arg2);
 }
 
-#ifdef NONMATCHING
-u32 sub_08000D04(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, u32 arg5, u32 arg6) {
-	u32 temp = 0x20 - arg6;
-	// maybe another time :)
+u16 BlendRGB555(u32 r1, u32 g1, u32 b1, u32 r2, u32 g2, u32 b2, u32 weight) {
+	u32 inv_weight = 32 - weight;
+
+	u32 r = (r1 * inv_weight) + (r2 * weight);
+	u32 g = (g1 * inv_weight) + (g2 * weight);
+	u32 b = (b1 * inv_weight) + (b2 * weight);
+
+	// Convert to 5-bit components and pack into RGB555
+	return ((b >> 8) & 0x1F) << 10 |
+		   ((g >> 8) & 0x1F) << 5 |
+		   ((r >> 8) & 0x1F);
 }
-#else
-NAKED
-u32 sub_08000D04(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, u32 arg5, u32 arg6) {
-	asm_unified("\n\
-	push {r4, r5, r6, r7, lr}\n\
-	ldr r7, [sp, #0x14]\n\
-	ldr r6, [sp, #0x1c]\n\
-	movs r4, #0x20\n\
-	subs r4, r4, r6\n\
-	adds r5, r0, #0\n\
-	muls r5, r4, r5\n\
-	adds r0, r3, #0\n\
-	muls r0, r6, r0\n\
-	adds r5, r5, r0\n\
-	muls r1, r4, r1\n\
-	adds r0, r7, #0\n\
-	muls r0, r6, r0\n\
-	adds r1, r1, r0\n\
-	adds r0, r2, #0\n\
-	muls r0, r4, r0\n\
-	ldr r3, [sp, #0x18]\n\
-	adds r2, r3, #0\n\
-	muls r2, r6, r2\n\
-	adds r0, r0, r2\n\
-	lsrs r0, r0, #8\n\
-	movs r2, #0x1f\n\
-	ands r0, r2\n\
-	lsls r0, r0, #0xa\n\
-	lsrs r1, r1, #8\n\
-	ands r1, r2\n\
-	lsls r1, r1, #5\n\
-	orrs r0, r1\n\
-	lsrs r5, r5, #8\n\
-	ands r5, r2\n\
-	orrs r0, r5\n\
-	pop {r4, r5, r6, r7}\n\
-	pop {r1}\n\
-	bx r1");
-}
-#endif // NONMATCHING
 
 void sub_08000D48(u8 *arg0, u8 *arg1, u32 arg2) {
 	u32 i, temp;
@@ -553,26 +522,124 @@ u32 sub_08000D80(u8 *arg0, u8 *arg1) {
 	}
 }
 
-u32 sub_08000DA4(u8 *arg0, u8 *arg1) {
-	u8 temp0, temp1;
+/**
+ * Compares two null-terminated byte strings lexicographically
+ * @param str1 First string to compare
+ * @param str2 Second string to compare
+ * @return 0 if equal, 1 if str1 > str2, -1 if str1 < str2
+ */
+s32 Strcmp_08000DA4(u8 *str1, u8 *str2) {
+	char c1, c2;
+
 	for(;;) {
-		temp0 = *arg0;
-		temp1 = *arg1;
-		if(temp0 == 0) {
-			if(temp1 == 0)
+		c1 = *str1;
+		c2 = *str2;
+
+		if(c1 == '\0') {
+			if(c2 == '\0')
 				return 0;
 			else
 				return -1;
 		}
-		if(temp1 == 0)
+
+		if(c2 == '\0')
 			return 1;
-		if(temp0 > temp1)
+		if(c1 > c2)
 			return 1;
-		if(temp0 < temp1)
+		if(c1 < c2)
 			return -1;
-		else {
-			arg0++;
-			arg1++;
+
+		str1++;
+		str2++;
+	}
+}
+
+// Checks if 'str2' appears anywhere in 'str1'
+// Returns 1 if found, 0 if not
+u32 FindSubstring(char *str1, char *str2) {
+	char *s2 = str2;
+	char *s1 = str1;
+	char first_char = *s2;
+
+	while(*s1 != '\0') {
+		if(*s1 == first_char) {
+			char *cmp1 = s1;
+			char *cmp2 = s2;
+
+			while(1) {
+				if(*cmp2 == '\0') {
+					return 1;
+				}
+				if(*cmp1 != *cmp2) {
+					break;
+				}
+				cmp1++;
+				cmp2++;
+			}
+		}
+		s1++;
+	}
+
+	return 0;
+}
+
+// Copy string from src to dest, checking both null byte and the max length
+void SafeStrcpy(char *dest, char *src, u32 max_len) {
+	u32 i = 0;
+	char current_char = *src++;
+
+	if(current_char != '\0') {
+		while(1) {
+			if(i == max_len - 1) {
+				*dest = '\0';
+				return;
+			}
+
+			*dest++ = current_char;
+			i++;
+
+			current_char = *src++;
+			if(current_char == '\0') {
+				break;
+			}
 		}
 	}
+
+	while(i < max_len) {
+		*dest++ = '\0';
+		i++;
+	}
+}
+
+// Binary search implementation
+// Returns index if found, -1 if not found
+s32 BinarySearch(u8 **array, u32 count, u8 *target) {
+	s32 low = 0;
+	s32 mid;
+	s32 high = count - 1;
+	s32 cmp;
+
+	while(low <= high) {
+		mid = (low + high) >> 1;
+		cmp = Strcmp_08000DA4(target, array[mid]);
+
+		if(cmp == 0)
+			return mid; // Match found
+		if(cmp == 1)
+			low = mid + 1; // Search right half
+		else
+			high = mid - 1; // Search left half
+	}
+
+	return -1;
+}
+
+void sub_08000E98(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
+	REG_WIN0H = (arg0 << 8) | (arg0 + arg2);
+	REG_WIN0V = (arg1 << 8) | (arg1 + arg3);
+}
+
+void sub_08000EBC(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
+	REG_WIN1H = (arg0 << 8) | (arg0 + arg2);
+	REG_WIN1V = (arg1 << 8) | (arg1 + arg3);
 }

@@ -30,6 +30,8 @@ struct Unk0200CCC4 {
 };
 extern struct Unk0200CCC4 gUnknown_0200CCC4;
 
+extern u32 gUnknown_0200E200;
+
 struct Unk0200E930 {
 	u32 unk0[0x8];
 	u8 unk20;
@@ -64,5 +66,8 @@ extern u8 gUnknown_0831AFD8[];
 extern u8 gUnknown_0831AFF0[];
 extern u8 gUnknown_0831B010[];
 extern u8 gUnknown_0831B028[];
+extern char gUnknown_0831B768[];
+extern const char gUnknown_0831B780[];
+extern const char gUnknown_0831B7A4[];
 
 #endif // GUARD_VARIABLES_H
