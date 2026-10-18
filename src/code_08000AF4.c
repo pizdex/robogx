@@ -2,7 +2,7 @@
 #include "gba/io_reg.h"
 #include "gba/syscall.h"
 
-void sub_08000AF4(void) {
+void AgbMain(void) {
 	sub_08000A5C();
 	sub_0803D308();
 	for(;;);

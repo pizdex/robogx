@@ -1,3 +1,4 @@
+.include "asm/gba_constants.inc"
 .include "asm/macro.inc"
 .syntax unified
 
@@ -45,7 +46,7 @@ ObjAffineSet: @ 0x0803D360
 
 	thumb_func_start SoftReset
 SoftReset: @ 0x0803D364
-	ldr r3, _0803D374 @ =0x04000208
+	ldr r3, _0803D374 @ =REG_IME
 	movs r2, #0
 	strb r2, [r3]
 	ldr r1, _0803D378 @ =gUnknown_03007F00
@@ -54,7 +55,7 @@ SoftReset: @ 0x0803D364
 	svc #0
 	movs r0, r0
 	.align 2, 0
-_0803D374: .4byte 0x04000208
+_0803D374: .4byte REG_IME
 _0803D378: .4byte gUnknown_03007F00
 
 	thumb_func_start Sqrt

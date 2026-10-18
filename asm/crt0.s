@@ -1,3 +1,4 @@
+.include "asm/gba_constants.inc"
 .include "asm/macro.inc"
 .syntax unified
 
@@ -20,14 +21,14 @@ sub_080000C8: @ 0x080000C8
 	mov r0, #0x1f
 	msr cpsr_fc, r0
 	ldr sp, _08000518 @ =gUnknown_03007800
-	ldr r1, _0800051C @ =sub_08000AF4
+	ldr r1, _0800051C @ =AgbMain
 	mov lr, pc
 	bx r1
 	b sub_080000C8
 
 	arm_func_start sub_080000F0
 sub_080000F0: @ 0x080000F0
-	ldr r3, _08000520 @ =0x04000200
+	ldr r3, _08000520 @ =REG_IE
 	ldr r2, [r3]
 	and r1, r2, r2, lsr #16
 	ands r0, r1, #4
@@ -96,7 +97,7 @@ _0800019C:
 	orr r0, r0, #0x92
 	msr cpsr_fc, r0
 	pop {r0, r1, r2, lr}
-	ldr r3, _08000520 @ =0x04000200
+	ldr r3, _08000520 @ =REG_IE
 	strh r2, [r3]
 	strh r1, [r3, #8]
 	msr spsr_fc, r0
@@ -124,13 +125,13 @@ _08000208:
 	orr r0, r0, #0x92
 	msr cpsr_fc, r0
 	pop {r0, r1, r2, lr}
-	ldr r3, _08000520 @ =0x04000200
+	ldr r3, _08000520 @ =REG_IE
 	strh r2, [r3]
 	strh r1, [r3, #8]
 	msr spsr_fc, r0
 	bx lr
 _08000274:
-	ldr r0, _0800053C @ =0x04000084
+	ldr r0, _0800053C @ =REG_SOUNDCNT_X
 	mov r1, #0
 	strh r1, [r0]
 	b _08000284
@@ -358,15 +359,15 @@ _080004C8:
 	.align 2, 0
 _08000514: .4byte gUnknown_03007FA0
 _08000518: .4byte gUnknown_03007800
-_0800051C: .4byte sub_08000AF4
-_08000520: .4byte 0x04000200
+_0800051C: .4byte AgbMain
+_08000520: .4byte REG_IE
 _08000524: .4byte 0x0000FFFF
 _08000528: .4byte gUnknown_03000B60
 _0800052C: .4byte gUnknown_03001370
 _08000530: .4byte sub_080008A8
 _08000534: .4byte sub_08000908
 _08000538: .4byte sub_08000984
-_0800053C: .4byte 0x04000084
+_0800053C: .4byte REG_SOUNDCNT_X
 
 _08000540: .byte 0x68, 0x46, 0x70, 0x47
 _08000544: .byte 0x70, 0x46, 0x70, 0x47
