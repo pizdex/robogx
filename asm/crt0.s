@@ -16,11 +16,11 @@ Init: @ 0x080000C0
 sub_080000C8: @ 0x080000C8
 	mov r0, #0x12
 	msr cpsr_fc, r0
-	ldr sp, _08000514 @ =0x03007FA0
+	ldr sp, _08000514 @ =gUnknown_03007FA0
 	mov r0, #0x1f
 	msr cpsr_fc, r0
-	ldr sp, _08000518 @ =0x03007800
-	ldr r1, _0800051C @ =0x08000AF5
+	ldr sp, _08000518 @ =gUnknown_03007800
+	ldr r1, _0800051C @ =sub_08000AF4
 	mov lr, pc
 	bx r1
 	b sub_080000C8
@@ -47,7 +47,7 @@ sub_080000F0: @ 0x080000F0
 	bx lr
 _08000138:
 	strh r0, [r3, #2]
-	ldr r0, _08000528 @ =0x03000B60
+	ldr r0, _08000528 @ =gUnknown_03000B60
 	ldr r1, [r0]
 	add r2, r0, #4
 	ldr r2, [r2, r1, lsl #2]
@@ -58,7 +58,7 @@ _08000138:
 	bx lr
 _08000160:
 	strh r0, [r3, #2]
-	ldr r0, _0800052C @ =0x03001370
+	ldr r0, _0800052C @ =gUnknown_03001370
 	ldr r0, [r0]
 	stmdb sp!, {lr}
 	mov lr, pc
@@ -67,7 +67,7 @@ _08000160:
 	bx lr
 _08000180:
 	strh r0, [r3, #2]
-	ldr r0, _08000530 @ =0x080008A9
+	ldr r0, _08000530 @ =sub_080008A8
 	stmdb sp!, {lr}
 	mov lr, pc
 	bx r0
@@ -87,7 +87,7 @@ _0800019C:
 	orr r0, r0, #0x1f
 	msr cpsr_fc, r0
 	stmdb sp!, {lr}
-	ldr r0, _08000534 @ =0x08000909
+	ldr r0, _08000534 @ =sub_08000908
 	mov lr, pc
 	bx r0
 	ldm sp!, {lr}
@@ -115,7 +115,7 @@ _08000208:
 	orr r0, r0, #0x1f
 	msr cpsr_fc, r0
 	stmdb sp!, {lr}
-	ldr r0, _08000538 @ =0x08000985
+	ldr r0, _08000538 @ =sub_08000984
 	mov lr, pc
 	bx r0
 	ldm sp!, {lr}
@@ -158,10 +158,10 @@ sub_080002A8: @ 0x080002A8
 
 	thumb_func_start sub_080002C4
 sub_080002C4: @ 0x080002C4
-	ldr r3, _080002D0 @ =0x03002DD4
+	ldr r3, _080002D0 @ =gUnknown_03002DD4
 	bx r3
 	.align 4, 0
-_080002D0: .4byte 0x03002DD4
+_080002D0: .4byte gUnknown_03002DD4
 
 	arm_func_start sub_080002D4
 sub_080002D4: @ 0x080002D4
@@ -175,10 +175,10 @@ _080002D8:
 
 	thumb_func_start sub_080002EC
 sub_080002EC: @ 0x080002EC
-	ldr r3, _080002F0 @ =0x03002DF4
+	ldr r3, _080002F0 @ =gUnknown_03002DF4
 	bx r3
 	.align 2, 0
-_080002F0: .4byte 0x03002DF4
+_080002F0: .4byte gUnknown_03002DF4
 
 	arm_func_start sub_080002F4
 sub_080002F4: @ 0x080002F4
@@ -194,10 +194,10 @@ _080002F8:
 
 	thumb_func_start sub_08000314
 sub_08000314: @ 0x08000314
-	ldr r3, _08000320 @ =0x03002E24
+	ldr r3, _08000320 @ =gUnknown_03002E24
 	bx r3
 	.align 4, 0
-_08000320: .4byte 0x03002E24
+_08000320: .4byte gUnknown_03002E24
 
 	arm_func_start sub_08000324
 sub_08000324: @ 0x08000324
@@ -241,10 +241,10 @@ _08000328:
 
 	thumb_func_start sub_080003B4
 sub_080003B4: @ 0x080003B4
-	ldr r3, _080003C0 @ =0x03002EC4
+	ldr r3, _080003C0 @ =gUnknown_03002EC4
 	bx r3
 	.align 4, 0
-_080003C0: .4byte 0x03002EC4
+_080003C0: .4byte gUnknown_03002EC4
 
 	arm_func_start sub_080003C4
 sub_080003C4: @ 0x080003C4
@@ -291,10 +291,10 @@ _080003D0:
 	thumb_func_start sub_0800045C
 sub_0800045C: @ 0x0800045C
 	push {r4, r5}
-	ldr r4, _08000470 @ =0x03002F74
+	ldr r4, _08000470 @ =gUnknown_03002F74
 	bx r4
 	.align 4, 0
-_08000470: .4byte 0x03002F74
+_08000470: .4byte gUnknown_03002F74
 
 	arm_func_start sub_08000474
 sub_08000474: @ 0x08000474
@@ -311,10 +311,10 @@ _08000478:
 
 	thumb_func_start sub_08000498
 sub_08000498: @ 0x08000498
-	ldr r3, _080004A0 @ =0x03002FA4
+	ldr r3, _080004A0 @ =gUnknown_03002FA4
 	bx r3
 	.align 4, 0
-_080004A0: .4byte 0x03002FA4
+_080004A0: .4byte gUnknown_03002FA4
 
 	arm_func_start sub_080004A4
 sub_080004A4: @ 0x080004A4
@@ -327,10 +327,10 @@ _080004A8:
 
 	thumb_func_start sub_080004B8
 sub_080004B8: @ 0x080004B8
-	ldr r3, _080004C0 @ =0x03002FC4
+	ldr r3, _080004C0 @ =gUnknown_03002FC4
 	bx r3
 	.align 4, 0
-_080004C0: .4byte 0x03002FC4
+_080004C0: .4byte gUnknown_03002FC4
 
 	arm_func_start sub_080004C4
 sub_080004C4: @ 0x080004C4
@@ -356,16 +356,17 @@ _080004C8:
 	bne _080004C8
 	bx lr
 	.align 2, 0
-_08000514: .4byte 0x03007FA0
-_08000518: .4byte 0x03007800
-_0800051C: .4byte 0x08000AF5
+_08000514: .4byte gUnknown_03007FA0
+_08000518: .4byte gUnknown_03007800
+_0800051C: .4byte sub_08000AF4
 _08000520: .4byte 0x04000200
 _08000524: .4byte 0x0000FFFF
-_08000528: .4byte 0x03000B60
-_0800052C: .4byte 0x03001370
-_08000530: .4byte 0x080008A9
-_08000534: .4byte 0x08000909
-_08000538: .4byte 0x08000985
+_08000528: .4byte gUnknown_03000B60
+_0800052C: .4byte gUnknown_03001370
+_08000530: .4byte sub_080008A8
+_08000534: .4byte sub_08000908
+_08000538: .4byte sub_08000984
 _0800053C: .4byte 0x04000084
+
 _08000540: .byte 0x68, 0x46, 0x70, 0x47
 _08000544: .byte 0x70, 0x46, 0x70, 0x47
