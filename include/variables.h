@@ -10,6 +10,7 @@ extern u16 gUnknown_02000010[];
 extern u16 gUnknown_02000020;
 extern u16 gUnknown_02000024;
 extern u16 gUnknown_02000034;
+extern u16 gUnknown_02000038;
 
 struct Unk0200C1A0 {
     u8 filler0[0xc24];
@@ -35,7 +36,13 @@ struct Unk0200E930 {
 };
 extern struct Unk0200E930 gUnknown_0200E930;
 
+extern void **gUnknown_03000B54;
+extern u32 gUnknown_0300136C;
 extern u32 gUnknown_03001370[];
+extern void *gUnknown_03002BF0;
+extern void *gUnknown_03003040;
+extern u16 gUnknown_03007FF8;
+extern u32 gUnknown_03007FFC;
 
 struct Unk08045158 {
 	u32 unk0;

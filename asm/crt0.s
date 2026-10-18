@@ -369,5 +369,14 @@ _08000534: .4byte sub_08000908
 _08000538: .4byte sub_08000984
 _0800053C: .4byte REG_SOUNDCNT_X
 
-_08000540: .byte 0x68, 0x46, 0x70, 0x47
-_08000544: .byte 0x70, 0x46, 0x70, 0x47
+	arm_func_start sub_08000540
+sub_08000540: @ 0x08000540
+.thumb // hack
+	mov r0, sp
+	bx lr
+
+	arm_func_start sub_08000544
+sub_08000544: @ 0x08000544
+.thumb // hack
+	mov	r0, lr
+	bx lr

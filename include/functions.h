@@ -3,6 +3,9 @@
 
 // Place all external function declarations in this file
 
+extern void sub_080000F0(void);
+extern void sub_08000540(void);
+
 // src/code_08000548.c
 
 extern void sub_08000588(void);
@@ -25,6 +28,7 @@ extern void sub_08000A5C(void);
 
 // src/code_08000AF4.c
 
+void sub_08000C90(u32 arg0);
 
 // asm/code_08000AF4.s
 
@@ -47,8 +51,8 @@ extern void sub_08000A5C(void);
 //extern ? sub_0800134C(?);
 //extern ? sub_080013A8(?);
 //extern ? sub_080013F8(?);
-//extern ? sub_0800142C(?);
-//extern ? sub_08001A18(?);
+extern void sub_0800142C(void);
+extern void sub_08001A18(void);
 //extern ? sub_08001A1A(?);
 //extern ? sub_08001A20(?);
 //extern ? sub_08001A28(?);
@@ -68,7 +72,7 @@ extern void sub_08000A5C(void);
 //extern ? sub_080022C0(?);
 //extern ? sub_080022F0(?);
 //extern ? sub_08002340(?);
-//extern ? sub_080023D4(?);
+extern void sub_080023D4(void);
 //extern ? sub_080023E4(?);
 //extern ? sub_08002468(?);
 //extern ? sub_08002806(?);
@@ -96,7 +100,7 @@ extern void sub_08000A5C(void);
 //extern ? sub_080029F4(?);
 //extern ? sub_08002A0C(?);
 //extern ? sub_08002A20(?);
-//extern ? sub_08002A38(?);
+extern void sub_08002A38(void);
 //extern ? sub_08002A84(?);
 //extern ? sub_08002CDC(?);
 //extern ? sub_08002CEC(?);
@@ -111,7 +115,7 @@ extern void sub_08000A5C(void);
 //extern ? sub_08003058(?);
 //extern ? sub_08003074(?);
 extern void sub_08003094(void);
-//extern ? sub_0800310C(?);
+extern void sub_0800310C(void);
 extern void sub_08003118(u32 arg0);
 //extern ? sub_08003144(?);
 //extern ? sub_08003190(?);

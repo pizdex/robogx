@@ -1649,7 +1649,10 @@ _08001A0C: .4byte sub_08001D40
 _08001A10: .4byte 0x08001A18
 _08001A14: .4byte gUnknown_03003040
 
-_08001A18: .byte 0x00, 0x47
+	arm_func_start sub_08001A18
+sub_08001A18: @ 0x08001A18
+.thumb // hack
+	bx r0
 
 	non_word_aligned_thumb_func_start sub_08001A1A
 sub_08001A1A: @ 0x08001A1A
