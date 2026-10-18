@@ -8,40 +8,40 @@ void sub_08010738(u32 arg0) {
 	sub_08000498(&gUnknown_0200E200, 0x2e0, 0);
 }
 
-void sub_08010764(void *arg0, u32 arg1, u32 arg2) {
-	sub_08000750(arg0, arg1, arg2, 0);
+void sub_08010764(void *buffer, u32 eepromAddr, u32 size) {
+	sub_08000750(buffer, eepromAddr, size, 0);
 }
 
-void sub_08010770(u32 arg0, void *arg1, u32 arg2) {
+void sub_08010770(u32 eepromAddr, void *data, u32 size) {
 	u32 result;
-	result = sub_080007A8(arg1, arg0, arg2, 0);
+	result = sub_080007A8(data, eepromAddr, size, 0);
 
 	if(result != 0) {
 		sub_080050B8(gUnknown_0831B768); // "EEPROMに書き込めません" ("Unable to write to EEPROM")
 	}
 }
 
-void sub_08010790(void *arg0, u32 arg1, u32 arg2) {
+void sub_08010790(void *data, u32 eepromAddr, u32 size) {
 	u32 result;
-	result = sub_08000800(arg0, arg1, arg2, 0);
+	result = sub_08000800(data, eepromAddr, size, 0);
 
 	if(result != 0) {
 		sub_080050B8(gUnknown_0831B768); // "EEPROMに書き込めません" ("Unable to write to EEPROM")
 	}
 }
 
-u64 sub_080107AC(u32 input) {
+u64 sub_080107AC(u32 eepromAddr) {
 	u8 buffer[8];
-	sub_08010764(buffer, input, 8);
+	sub_08010764(buffer, eepromAddr, 8);
 	return *(u64 *)buffer;
 }
 
-void sub_080107C4(u32 arg0, u32 arg1, u32 arg2) {
+void sub_080107C4(u32 eepromAddr, u32 value1, u32 value2) {
 	u32 temp_buffer[2];
-	temp_buffer[0] = arg2;
-	temp_buffer[1] = arg1;
+	temp_buffer[0] = value2;
+	temp_buffer[1] = value1;
 
-	sub_08010770(arg0, temp_buffer, 8);
+	sub_08010770(eepromAddr, temp_buffer, 8);
 }
 
 u32 SceEeprom_GetSubFileAdr(u32 file, u32 type) {
@@ -168,4 +168,37 @@ void sub_0801097C(u32 file_num, u32 file_type, u32 *dest_buffer) {
 	if(file_type == 0 && *dest_buffer != 2) {
 		sub_080050A8(gUnknown_0831B80C); // "無効なファイルを読み込もうとした" ("Attempted to read an invalid file")
 	}
+}
+
+void sub_080109C0(u32 file_num, u32 file_type, u32 *dest_buffer) {
+	if(file_type == 3) {
+		sub_0801097C(file_num, 0, dest_buffer);
+		dest_buffer += 0x88;
+		sub_0801097C(file_num, 1, dest_buffer);
+	} else {
+		sub_0801097C(file_num, file_type, dest_buffer);
+	}
+}
+
+void sub_080109F0(u32 file, u32 type, void *buffer) {
+	u32 size;
+	u32 result;
+	void *file_data;
+	u32 eeprom_addr;
+
+	if(type == 0) {
+		sub_080108BC(buffer, 2);
+	}
+
+	size = SceEeprom_GetSubFileSize(type);
+	result = sub_080108D8(type, buffer);
+	sub_08010900(buffer, size, result);
+
+	if(type == 0) {
+		file_data = sub_08011124(file);
+		sub_080002C4(file_data, buffer, size);
+	}
+
+	eeprom_addr = SceEeprom_GetSubFileAdr(file, type);
+	sub_08010770(eeprom_addr, buffer, size);
 }

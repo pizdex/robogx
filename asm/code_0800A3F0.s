@@ -6963,7 +6963,7 @@ sub_0800D8A4: @ 0x0800D8A4
 	ldr r0, _0800D8C0 @ =gUnknown_083E3E74
 	movs r1, #0x36
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -7213,7 +7213,7 @@ sub_0800DA88: @ 0x0800DA88
 	ldr r0, _0800DAA4 @ =gUnknown_083E3F4C
 	movs r1, #0x1f
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -7657,7 +7657,7 @@ sub_0800DDF4: @ 0x0800DDF4
 	ldr r0, _0800DE14 @ =gUnknown_083E4120
 	movs r1, #0x25
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -7674,7 +7674,7 @@ _0800DE1C:
 	ldr r0, _0800DE44 @ =gUnknown_083E411C
 	movs r1, #1
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -8887,7 +8887,7 @@ sub_0800E6E8: @ 0x0800E6E8
 	ldr r0, _0800E704 @ =gUnknown_083E3FC8
 	movs r1, #0x37
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -9152,7 +9152,7 @@ sub_0800E8F4: @ 0x0800E8F4
 	ldr r0, _0800E910 @ =gUnknown_083E40A4
 	movs r1, #0x1e
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -9338,7 +9338,7 @@ sub_0800EA64: @ 0x0800EA64
 	ldr r0, _0800EA80 @ =gUnknown_083E41B4
 	movs r1, #0x2d
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -10755,7 +10755,7 @@ sub_0800F4BC: @ 0x0800F4BC
 	adds r1, r0, #0
 	adds r0, r4, #0
 	adds r2, r5, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r4, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0

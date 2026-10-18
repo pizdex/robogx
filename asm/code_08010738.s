@@ -2,73 +2,6 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_080109C0
-sub_080109C0: @ 0x080109C0
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	adds r4, r2, #0
-	cmp r1, #3
-	bne _080109E2
-	movs r1, #0
-	bl sub_0801097C
-	movs r0, #0x88
-	lsls r0, r0, #2
-	adds r4, r4, r0
-	adds r0, r5, #0
-	movs r1, #1
-	adds r2, r4, #0
-	bl sub_0801097C
-	b _080109EA
-_080109E2:
-	adds r0, r5, #0
-	adds r2, r4, #0
-	bl sub_0801097C
-_080109EA:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-
-	thumb_func_start sub_080109F0
-sub_080109F0: @ 0x080109F0
-	push {r4, r5, r6, r7, lr}
-	adds r7, r0, #0
-	adds r4, r1, #0
-	adds r5, r2, #0
-	cmp r4, #0
-	bne _08010A04
-	adds r0, r5, #0
-	movs r1, #2
-	bl sub_080108BC
-_08010A04:
-	adds r0, r4, #0
-	bl SceEeprom_GetSubFileSize
-	adds r6, r0, #0
-	adds r0, r4, #0
-	adds r1, r5, #0
-	bl sub_080108D8
-	adds r2, r0, #0
-	adds r0, r5, #0
-	adds r1, r6, #0
-	bl sub_08010900
-	cmp r4, #0
-	bne _08010A30
-	adds r0, r7, #0
-	bl sub_08011124
-	adds r1, r5, #0
-	adds r2, r6, #0
-	bl sub_080002C4
-_08010A30:
-	adds r0, r7, #0
-	adds r1, r4, #0
-	bl SceEeprom_GetSubFileAdr
-	adds r1, r5, #0
-	adds r2, r6, #0
-	bl sub_08010770
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-
 	thumb_func_start sub_08010A48
 sub_08010A48: @ 0x08010A48
 	push {r4, r5, lr}
@@ -1698,7 +1631,7 @@ sub_080117CC: @ 0x080117CC
 	lsls r1, r1, #1
 	ldr r0, _080117F4 @ =gUnknown_083E42A0
 	adds r2, r4, #0
-	bl BinarySearch
+	bl BinarySearchStr
 	adds r1, r0, #0
 	movs r0, #1
 	rsbs r0, r0, #0
