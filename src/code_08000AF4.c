@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gba/io_reg.h"
+#include "gba/syscall.h"
 
 void sub_08000AF4(void) {
 	sub_08000A5C();

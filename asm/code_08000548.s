@@ -173,10 +173,10 @@ sub_08000874: @ 0x08000874
 	movs r1, #0
 	ldr r2, _08000898 @ =0x00002710
 	ldr r3, _0800089C @ =0x00000000
-	bl sub_0803D93C
+	bl __muldi3
 	ldr r2, _080008A0 @ =0x00001125
 	ldr r3, _080008A4 @ =0x00000000
-	bl sub_0803D9AC
+	bl __udivdi3
 	pop {r1}
 	bx r1
 	.align 2, 0
@@ -248,7 +248,7 @@ sub_08000908: @ 0x08000908
 	ldr r0, [r0]
 	cmp r0, #0
 	beq _0800091E
-	bl sub_0803D798
+	bl _call_via_r0
 _0800091E:
 	ldr r1, _0800096C @ =gUnknown_0300136C
 	ldr r0, [r1]
@@ -440,7 +440,7 @@ sub_08000A5C: @ 0x08000A5C
 	bl sub_08000FEC
 	bl sub_08000738
 	movs r0, #0
-	bl sub_0803DF70
+	bl srand
 	bl sub_080005B4
 	add sp, #4
 	pop {r4}
