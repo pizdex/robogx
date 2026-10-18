@@ -8,7 +8,10 @@ extern void sub_08000540(void);
 
 // src/code_08000548.c
 
+extern void sub_08000548(void);
 extern void sub_08000588(void);
+extern void sub_080005B4(void);
+extern void sub_08000738(void);
 
 // asm/code_08000548.s
 
@@ -22,8 +25,8 @@ extern void sub_08000588(void);
 //extern ? sub_080008FC(?);
 //extern ? sub_08000908(?);
 //extern ? sub_08000984(?);
-//extern ? sub_08000990(?);
-//extern ? sub_08000A34(?);
+extern void sub_08000990(void);
+extern void sub_08000A34(void);
 extern void sub_08000A5C(void);
 
 // src/code_08000AF4.c
@@ -39,7 +42,7 @@ void sub_08000C90(u32 arg0);
 //extern ? sub_08000EBC(?);
 //extern ? sub_08000EE0(?);
 //extern ? sub_08000F78(?);
-//extern ? sub_08000FEC(?);
+extern void sub_08000FEC(u32 arg0, u32 arg1);
 //extern ? sub_08001004(?);
 //extern ? sub_0800101C(?);
 //extern ? sub_08001068(?);
@@ -47,7 +50,7 @@ void sub_08000C90(u32 arg0);
 //extern ? sub_080010C4(?);
 //extern ? sub_08001138(?);
 //extern ? sub_08001160(?);
-//extern ? sub_080012B8(?);
+extern void sub_080012B8(void);
 //extern ? sub_0800134C(?);
 //extern ? sub_080013A8(?);
 //extern ? sub_080013F8(?);
