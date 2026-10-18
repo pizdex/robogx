@@ -1000,7 +1000,7 @@ sub_0800AC68: @ 0x0800AC68
 	rsbs r0, r0, #0
 	strh r0, [r1, #2]
 	strh r0, [r1, #4]
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1040,7 +1040,7 @@ sub_0800ACB0: @ 0x0800ACB0
 	adds r1, r0, #0
 	ldr r4, _0800ACC8 @ =gUnknown_0200E594
 	movs r0, #0
-	bl sub_08000694
+	bl FadeOutMusicPlayer
 	ldr r0, _0800ACCC @ =0x0000FFFF
 	strh r0, [r4]
 	pop {r4}
@@ -1072,7 +1072,7 @@ _0800ACEC:
 	beq _0800ACFE
 	movs r0, #0
 	adds r1, r4, #0
-	bl sub_08000634
+	bl StartSongOnPlayer
 	strh r4, [r5]
 _0800ACFE:
 	pop {r4, r5}
@@ -1084,7 +1084,7 @@ sub_0800AD04: @ 0x0800AD04
 	push {r4, lr}
 	ldr r4, _0800AD20 @ =gUnknown_0200E594
 	movs r0, #0
-	bl sub_0800065C
+	bl StopMusicPlayer
 	ldrh r0, [r4]
 	strh r0, [r4, #2]
 	ldr r2, _0800AD24 @ =0x0000FFFF
@@ -1109,7 +1109,7 @@ sub_0800AD28: @ 0x0800AD28
 	cmp r1, r0
 	bne _0800AD42
 	movs r0, #0
-	bl sub_08000678
+	bl ContinueMusicPlayer
 	ldrh r0, [r4, #2]
 	strh r0, [r4]
 _0800AD42:
@@ -1134,7 +1134,7 @@ sub_0800AD4C: @ 0x0800AD4C
 	adds r0, r2, r0
 	ldrb r1, [r0]
 	movs r0, #0
-	bl sub_08000694
+	bl FadeOutMusicPlayer
 	ldr r0, _0800AD7C @ =0x0000FFFF
 	strh r0, [r4]
 _0800AD6E:
@@ -1161,7 +1161,7 @@ sub_0800AD80: @ 0x0800AD80
 _0800AD96:
 	adds r1, r0, #0
 	movs r0, #0
-	bl sub_080006B4
+	bl SetMusicPlayerVolume
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1201,7 +1201,7 @@ sub_0800ADD8: @ 0x0800ADD8
 	adds r4, r0, #0
 	movs r0, #1
 	adds r1, r4, #0
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r0, _0800ADF4 @ =gUnknown_0200C1A0
 	ldr r1, _0800ADF8 @ =0x000023F8
 	adds r0, r0, r1
@@ -1217,7 +1217,7 @@ _0800ADF8: .4byte 0x000023F8
 sub_0800ADFC: @ 0x0800ADFC
 	push {lr}
 	movs r0, #1
-	bl sub_0800065C
+	bl StopMusicPlayer
 	ldr r0, _0800AE14 @ =gUnknown_0200C1A0
 	ldr r1, _0800AE18 @ =0x000023F8
 	adds r0, r0, r1
@@ -1237,7 +1237,7 @@ sub_0800AE20: @ 0x0800AE20
 	adds r0, r0, r1
 	ldrb r1, [r0]
 	movs r0, #1
-	bl sub_08000694
+	bl FadeOutMusicPlayer
 	ldr r0, _0800AE40 @ =gUnknown_0200C1A0
 	ldr r1, _0800AE44 @ =0x000023F8
 	adds r0, r0, r1
@@ -1284,7 +1284,7 @@ sub_0800AE7C: @ 0x0800AE7C
 	push {lr}
 	adds r1, r0, #0
 	movs r0, #2
-	bl sub_08000634
+	bl StartSongOnPlayer
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1293,7 +1293,7 @@ sub_0800AE7C: @ 0x0800AE7C
 sub_0800AE8C: @ 0x0800AE8C
 	push {lr}
 	movs r0, #2
-	bl sub_0800065C
+	bl StopMusicPlayer
 	pop {r0}
 	bx r0
 
@@ -1304,7 +1304,7 @@ sub_0800AE98: @ 0x0800AE98
 	adds r0, r0, r1
 	ldrb r1, [r0]
 	movs r0, #2
-	bl sub_08000694
+	bl FadeOutMusicPlayer
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1314,9 +1314,9 @@ _0800AEAC: .4byte gUnknown_083E7C5C
 sub_0800AEB0: @ 0x0800AEB0
 	push {r4, lr}
 	ldr r4, _0800AED8 @ =gUnknown_0200E594
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	movs r0, #0
-	bl sub_0800065C
+	bl StopMusicPlayer
 	ldrh r0, [r4]
 	strh r0, [r4, #2]
 	ldr r2, _0800AEDC @ =0x0000FFFF
@@ -1340,7 +1340,7 @@ sub_0800AEE0: @ 0x0800AEE0
 	ldr r1, _0800AF04 @ =gUnknown_083E7C5C
 	adds r0, r0, r1
 	ldrb r0, [r0]
-	bl sub_08000704
+	bl FadeOutAllMusicPlayers
 	ldr r0, _0800AF08 @ =0x0000FFFF
 	strh r0, [r4]
 	movs r0, #1
@@ -11202,9 +11202,9 @@ sub_0800F800: @ 0x0800F800
 	bl sub_0801E5A4
 	bl sub_0800FA04
 	bl sub_08011E44
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	movs r0, #0
-	bl sub_0800056C
+	bl SetSoundFrequency
 	ldr r0, [sp, #0x18]
 	ldr r1, _0800F8AC @ =gUnknown_0831AD10
 	bl sub_08000D80
@@ -11332,9 +11332,9 @@ _0800F956:
 	bne _0800F964
 	bl sub_08011E44
 _0800F964:
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	movs r0, #0
-	bl sub_0800056C
+	bl SetSoundFrequency
 	cmp r7, #1
 	bne _0800F97C
 	ldrb r0, [r5]
@@ -12669,7 +12669,7 @@ sub_080102C8: @ 0x080102C8
 	adds r6, r0, #0
 	adds r4, r1, #0
 	ldr r5, _080102F0 @ =gUnknown_0200E088
-	bl sub_08000588
+	bl SuspendSound
 	cmp r4, #0
 	beq _080102F8
 	ldr r0, _080102F4 @ =0xFFFFE338
@@ -12707,7 +12707,7 @@ _08010318:
 	adds r0, r6, #0
 	movs r1, #2
 	bl sub_080109C0
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
@@ -13070,7 +13070,7 @@ _0801059A:
 	ldr r0, _080105E4 @ =gUnknown_02001CC0
 	bl sub_0800459C
 	mov r8, r0
-	bl sub_08000588
+	bl SuspendSound
 	ldr r0, [sp]
 	movs r1, #2
 	mov r2, r8
@@ -13232,7 +13232,7 @@ _080106F6:
 	adds r1, r2, #0
 	movs r2, #3
 	bl sub_08011380
-	bl sub_080005B4
+	bl ResumeSound
 	ldr r0, _08010734 @ =gUnknown_02001CC0
 	bl sub_08004604
 	bl sub_08010470

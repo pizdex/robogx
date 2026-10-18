@@ -1121,9 +1121,11 @@ _08001A0C: .4byte sub_08001D40
 _08001A10: .4byte 0x08001A18
 _08001A14: .4byte gUnknown_03003040
 
-	arm_func_start sub_08001A18
+	.global gRamCodeBlock2Start
+gRamCodeBlock2Start:
+
+	thumb_func_start sub_08001A18
 sub_08001A18: @ 0x08001A18
-.thumb // hack
 	bx r0
 
 	non_word_aligned_thumb_func_start sub_08001A1A
@@ -2363,3 +2365,6 @@ _08002396:
 	pop {r0}
 	bx r0
 	.align 2, 0
+
+	.global gRamCodeBlock2End
+gRamCodeBlock2End:

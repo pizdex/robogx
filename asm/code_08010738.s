@@ -97,7 +97,7 @@ _08010DE4:
 sub_08010DEC: @ 0x08010DEC
 	push {r4, lr}
 	ldr r4, _08010E3C @ =gUnknown_02017AF0
-	bl sub_08000588
+	bl SuspendSound
 	movs r0, #4
 	bl SceEeprom_GetSubFileSize
 	adds r2, r0, #0
@@ -139,7 +139,7 @@ _08010E48:
 	movs r1, #1
 	bl sub_08010D88
 _08010E58:
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -299,7 +299,7 @@ sub_08010F64: @ 0x08010F64
 	adds r1, r4, r0
 	movs r0, #1
 	strb r0, [r1]
-	bl sub_08000588
+	bl SuspendSound
 	adds r0, r6, #0
 	bl sub_08010D20
 	adds r0, r6, #0
@@ -309,7 +309,7 @@ sub_08010F64: @ 0x08010F64
 	adds r0, r6, #0
 	movs r1, #2
 	bl sub_08010AF0
-	bl sub_080005B4
+	bl ResumeSound
 	mov r0, r8
 	bl sub_08004604
 	pop {r3}
@@ -359,7 +359,7 @@ _0801100C:
 	adds r2, #1
 	cmp r2, #0x2d
 	bls _0801100C
-	bl sub_08000588
+	bl SuspendSound
 	adds r0, r4, #0
 	bl sub_08010D20
 	adds r0, r4, #0
@@ -373,7 +373,7 @@ _0801100C:
 	movs r2, #2
 	bl sub_08010C14
 _0801103C:
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
@@ -390,13 +390,13 @@ sub_08011058: @ 0x08011058
 	bl sub_08011C70
 	movs r0, #0
 	bl sub_08011D8C
-	bl sub_08000588
+	bl SuspendSound
 	ldr r4, _08011098 @ =gUnknown_0200C1A0
 	adds r0, r7, #0
 	movs r1, #3
 	adds r2, r4, #0
 	bl sub_080109C0
-	bl sub_080005B4
+	bl ResumeSound
 	movs r5, #0
 	ldr r0, _0801109C @ =0x00000C28
 	adds r6, r4, r0
@@ -447,12 +447,12 @@ sub_080110DC: @ 0x080110DC
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	adds r5, r1, #0
-	bl sub_08000588
+	bl SuspendSound
 	adds r0, r4, #0
 	adds r1, r5, #0
 	movs r2, #4
 	bl sub_08010C14
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -462,7 +462,7 @@ sub_080110DC: @ 0x080110DC
 sub_080110FC: @ 0x080110FC
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_08000588
+	bl SuspendSound
 	adds r0, r4, #0
 	movs r1, #0
 	bl sub_08010AF0
@@ -470,7 +470,7 @@ sub_080110FC: @ 0x080110FC
 	adds r1, r4, #0
 	bl sub_08010CBC
 	bl sub_08010D08
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -491,7 +491,7 @@ _08011134: .4byte gUnknown_0200DA18
 	thumb_func_start sub_08011138
 sub_08011138: @ 0x08011138
 	push {r4, r5, r6, lr}
-	bl sub_08000588
+	bl SuspendSound
 	movs r6, #0
 _08011140:
 	adds r0, r6, #0
@@ -511,7 +511,7 @@ _08011140:
 	cmp r6, #1
 	bls _08011140
 	bl sub_08010CF0
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
@@ -591,14 +591,14 @@ _080111EE:
 	str r7, [sp, #0x34]
 	bl sub_08011CD8
 	str r0, [sp, #0x10]
-	bl sub_08000588
+	bl SuspendSound
 	adds r0, r6, #0
 	bl sub_08010D20
 	adds r0, r6, #0
 	movs r1, #0
 	mov r2, sp
 	bl sub_08010A48
-	bl sub_080005B4
+	bl ResumeSound
 	movs r3, #0x8a
 	lsls r3, r3, #2
 	add sp, r3
@@ -617,12 +617,12 @@ sub_08011234: @ 0x08011234
 	movs r0, #0
 	adds r1, r4, #0
 	bl sub_08010CBC
-	bl sub_08000588
+	bl SuspendSound
 	ldr r2, _08011258 @ =gUnknown_0200C1A0
 	adds r0, r4, #0
 	movs r1, #0
 	bl sub_080109C0
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -883,7 +883,7 @@ sub_08011438: @ 0x08011438
 	adds r5, r0, #0
 	adds r6, r1, #0
 	ldr r7, _080114EC @ =gUnknown_0200C1A0
-	bl sub_08000588
+	bl SuspendSound
 	bl sub_08011CD8
 	str r0, [r7, #0x10]
 	cmp r6, #0
@@ -952,7 +952,7 @@ _080114CE:
 	movs r2, #7
 	bl sub_08011380
 _080114E2:
-	bl sub_080005B4
+	bl ResumeSound
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
@@ -7090,7 +7090,7 @@ sub_08014BB4: @ 0x08014BB4
 	beq _08014BD6
 	movs r0, #1
 	movs r1, #0x50
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #2
 	rsbs r0, r0, #0
@@ -7104,7 +7104,7 @@ _08014BD6:
 	beq _08014BF2
 	movs r0, #1
 	movs r1, #0x78
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #3
 	rsbs r0, r0, #0
@@ -7118,7 +7118,7 @@ _08014BF2:
 	beq _08014C0E
 	movs r0, #1
 	movs r1, #0x79
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #5
 	rsbs r0, r0, #0
@@ -7132,7 +7132,7 @@ _08014C0E:
 	beq _08014C2A
 	movs r0, #1
 	movs r1, #0x52
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #9
 	rsbs r0, r0, #0
@@ -7146,7 +7146,7 @@ _08014C2A:
 	beq _08014C46
 	movs r0, #1
 	movs r1, #0x7b
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #0x11
 	rsbs r0, r0, #0
@@ -7160,7 +7160,7 @@ _08014C46:
 	beq _08014C62
 	movs r0, #1
 	movs r1, #0x7c
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldrb r1, [r4]
 	movs r0, #0x21
 	rsbs r0, r0, #0
@@ -12190,7 +12190,7 @@ _0801736C:
 _08017386:
 	movs r0, #1
 	movs r1, #0x78
-	bl sub_08000634
+	bl StartSongOnPlayer
 	movs r7, #0
 	movs r0, #0xa
 	mov r8, r0
@@ -13505,14 +13505,14 @@ sub_08017CCC: @ 0x08017CCC
 	beq _08017D08
 	movs r0, #1
 	movs r1, #0x78
-	bl sub_08000634
+	bl StartSongOnPlayer
 	b _08017D10
 	.align 2, 0
 _08017D04: .4byte gUnknown_02000020
 _08017D08:
 	movs r0, #1
 	movs r1, #0x50
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08017D10:
 	movs r0, #1
 	b _08017D16
@@ -13562,14 +13562,14 @@ sub_08017D1C: @ 0x08017D1C
 	beq _08017D74
 	movs r0, #1
 	movs r1, #0x78
-	bl sub_08000634
+	bl StartSongOnPlayer
 	b _08017D7C
 	.align 2, 0
 _08017D70: .4byte gUnknown_02000020
 _08017D74:
 	movs r0, #1
 	movs r1, #0x50
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08017D7C:
 	movs r0, #1
 	b _08017D82
@@ -13638,7 +13638,7 @@ _08017DE8:
 _08017DEC:
 	movs r0, #1
 	movs r1, #0x50
-	bl sub_08000634
+	bl StartSongOnPlayer
 	movs r0, #1
 _08017DF6:
 	pop {r3, r4}
@@ -13672,7 +13672,7 @@ _08017E24:
 	strb r3, [r2, #3]
 	movs r0, #1
 	movs r1, #0x79
-	bl sub_08000634
+	bl StartSongOnPlayer
 	movs r0, #1
 _08017E30:
 	pop {r1}
@@ -17090,7 +17090,7 @@ _08019718:
 	str r0, [r5]
 	movs r0, #1
 	movs r1, #0x80
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08019748:
 	adds r0, r6, #0
 	add sp, #4
@@ -26100,7 +26100,7 @@ _0801DBCC:
 	cmp r0, #0
 	bne _0801DBDA
 	movs r0, #6
-	bl sub_08000704
+	bl FadeOutAllMusicPlayers
 _0801DBDA:
 	ldr r0, _0801DC3C @ =gUnknown_0203A444
 	movs r5, #0
@@ -26304,7 +26304,7 @@ sub_0801DD7C: @ 0x0801DD7C
 	adds r4, r0, #0
 	movs r0, #0
 	movs r1, #0x6e
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r3, _0801DDC8 @ =gUnknown_02038BE0
 	adds r0, r3, #0
 	adds r0, #0x54
@@ -26357,7 +26357,7 @@ sub_0801DDD4: @ 0x0801DDD4
 	bne _0801DED0
 	movs r0, #0
 	movs r1, #0x6f
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r0, _0801E0F8 @ =0x05000200
 	ldr r3, _0801E0FC @ =gUnknown_0831E360
 	ldr r4, _0801E100 @ =gUnknown_02038BE0
@@ -26733,7 +26733,7 @@ _0801DEDC:
 	ldr r0, _0801E0F4 @ =gUnknown_020132F8
 	str r3, [r0]
 	movs r0, #2
-	bl sub_08000704
+	bl FadeOutAllMusicPlayers
 	b _0801E1A6
 	.align 2, 0
 _0801E0F4: .4byte gUnknown_020132F8
@@ -26828,7 +26828,7 @@ sub_0801E1C4: @ 0x0801E1C4
 	bne _0801E2B6
 	movs r0, #0
 	movs r1, #0x6f
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r0, _0801E4D8 @ =0x05000200
 	ldr r3, _0801E4DC @ =gUnknown_0831E360
 	ldr r4, _0801E4E0 @ =gUnknown_02038BE0
@@ -27195,7 +27195,7 @@ _0801E2C2:
 	ldr r0, _0801E4D4 @ =gUnknown_020132F8
 	str r3, [r0]
 	movs r0, #2
-	bl sub_08000704
+	bl FadeOutAllMusicPlayers
 	b _0801E586
 	.align 2, 0
 _0801E4D4: .4byte gUnknown_020132F8
@@ -27301,9 +27301,9 @@ sub_0801E5A4: @ 0x0801E5A4
 	adds r1, #4
 	movs r0, #0x10
 	strh r0, [r1]
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	movs r0, #1
-	bl sub_0800056C
+	bl SetSoundFrequency
 	ldr r0, _0801E6C0 @ =gUnknown_020132F0
 	movs r1, #0
 	str r1, [r0]
@@ -27388,7 +27388,7 @@ _0801E660:
 	ldr r1, _0801E704 @ =gUnknown_0203A444
 	movs r0, #5
 	strh r0, [r1]
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 _0801E68A:
 	bl sub_0801E82C
 	bl sub_0801E9B0
@@ -27878,7 +27878,7 @@ sub_0801EA90: @ 0x0801EA90
 	cmp r0, #0
 	bne _0801EAC0
 	movs r0, #0x67
-	bl sub_080005E8
+	bl StartSong2
 	b _0801EACA
 	.align 2, 0
 _0801EABC: .4byte gUnknown_0831BB88
@@ -27886,7 +27886,7 @@ _0801EAC0:
 	lsls r0, r5, #2
 	add r0, sp
 	ldr r0, [r0]
-	bl sub_080005E8
+	bl StartSong2
 _0801EACA:
 	add sp, #0x64
 	pop {r4, r5}
@@ -47336,7 +47336,7 @@ sub_08028928: @ 0x08028928
 	adds r6, r2, #0
 	adds r0, r5, #0
 	adds r1, r6, #0
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r0, _0802894C @ =gUnknown_02039BC4
 	lsls r4, r4, #1
 	adds r0, r4, r0
@@ -67340,7 +67340,7 @@ _08032352:
 	strh r0, [r1]
 	movs r0, #0
 	movs r1, #0x6d
-	bl sub_08000634
+	bl StartSongOnPlayer
 	ldr r1, _080324B8 @ =gUnknown_02038BB8
 	ldrh r0, [r1]
 	adds r0, #1
@@ -69797,7 +69797,7 @@ _080337EC:
 	bne _08033808
 	movs r0, #4
 	movs r1, #0x46
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08033808:
 	ldr r1, _080338EC @ =REG_BLDCNT
 	movs r0, #0
@@ -69838,7 +69838,7 @@ _0803383C:
 	bl sub_0801EA90
 	movs r0, #4
 	movs r1, #0x48
-	bl sub_08000634
+	bl StartSongOnPlayer
 _0803385A:
 	ldrh r1, [r4]
 	ldr r3, _08033904 @ =0xFFFFFEC4
@@ -75897,7 +75897,7 @@ _080368F4:
 	bl sub_08036330
 	ldr r7, _08036910 @ =gUnknown_0203A444
 	strh r4, [r7]
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	b _08036E9E
 	.align 2, 0
 _0803690C: .4byte gUnknown_020132FC
@@ -76362,7 +76362,7 @@ _08036C54:
 	bne _08036CB6
 	bl sub_080013F8
 _08036CB6:
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	ldr r1, _08036CE8 @ =gUnknown_02038BB8
 	movs r0, #0x13
 	strh r0, [r1]
@@ -80002,7 +80002,7 @@ _0803898E:
 	ldr r1, _080389B0 @ =gUnknown_0203A444
 	movs r0, #5
 	strh r0, [r1]
-	bl sub_080006F8
+	bl StopAllMusicPlayers
 	b _08038B72
 	.align 2, 0
 _080389A8: .4byte gUnknown_03000B50
@@ -80423,7 +80423,7 @@ _08038CE8:
 	beq _08038D02
 	ldrh r0, [r4]
 	ldrh r1, [r1]
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08038D02:
 	adds r4, #2
 	adds r5, #1
@@ -80592,7 +80592,7 @@ _08038E4C:
 	beq _08038E66
 	ldrh r0, [r4]
 	ldrh r1, [r1]
-	bl sub_08000634
+	bl StartSongOnPlayer
 _08038E66:
 	adds r4, #2
 	adds r5, #1
@@ -80735,7 +80735,7 @@ _08038F6C:
 	cmp r0, #0
 	bne _08038F7A
 	movs r0, #6
-	bl sub_08000704
+	bl FadeOutAllMusicPlayers
 _08038F7A:
 	ldr r1, _08039074 @ =gUnknown_0203A444
 	movs r0, #0

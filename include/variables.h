@@ -59,19 +59,6 @@ extern u8 gUnknown_03007700[];
 extern u16 gUnknown_03007FF8;
 extern u32 gUnknown_03007FFC;
 
-struct Unk08045158 {
-	u32 unk0;
-	u32 unk4;
-};
-extern struct Unk08045158 *gUnknown_08045158[];
-
-struct Unk080451B8 {
-	u32 unk0;
-	u16 unk4;
-};
-
-extern struct Unk080451B8 gUnknown_080451B8[];
-
 extern const char gUnknown_0831AFA0[];
 extern const char gUnknown_0831AFB8[];
 extern const char gUnknown_0831AFD8[];
@@ -88,5 +75,8 @@ extern const char gUnknown_0831B830[];
 
 extern const u8 gUnknown_084B5FA0[];
 extern const u8 gUnknown_085371D8[];
+
+extern u8 gRamCodeBlock1End[];
+extern u8 gRamCodeBlock2Start[], gRamCodeBlock2End[];
 
 #endif // GUARD_VARIABLES_H

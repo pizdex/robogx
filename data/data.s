@@ -40,12 +40,12 @@ gUnknown_08044220:
 gUnknown_08044254:
 	.incbin "baserom.gba", 0x00044254, 0xF04
 
-	.global gUnknown_08045158
-gUnknown_08045158:
+	.global gMusicPlayerTable
+gMusicPlayerTable:
 	.incbin "baserom.gba", 0x00045158, 0x60
 
-	.global gUnknown_080451B8
-gUnknown_080451B8:
+	.global gSongTable
+gSongTable:
 	.incbin "baserom.gba", 0x000451B8, 0x2C3A8C
 
 	.global gUnknown_08308C44

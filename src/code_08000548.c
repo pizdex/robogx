@@ -1,126 +1,95 @@
 #include "global.h"
 #include "gba/io_reg.h"
+#include "AgbSound.h"
 
-extern char g217[];
+extern char gNumSongs[]; // 217
+#define NUM_SONGS ((u16)gNumSongs)
 
-#define UNK_217 ((u16)g217)
-
-void sub_08000548(void) {
-	sub_08003094();
-	sub_08003630(0x60000);
-	sub_08000588();
+void InitSound(void) {
+	m4aSoundInit();
+	SoundMode_rev01(0x60000);
+	SuspendSound();
 }
 
-u16 sub_08000560(void) {
-	return UNK_217;
+u16 GetNumSongs(void) {
+	return NUM_SONGS;
 }
 
-void sub_0800056C(u32 arg0) {
-	if(arg0 == 0) {
-		sub_08003630(0x60000);
+void SetSoundFrequency(u32 freq) {
+	if(freq == 0) {
+		SoundMode_rev01(SOUND_MODE_FREQ_18157);
 	} else {
-		sub_08003630(0x30000);
+		SoundMode_rev01(SOUND_MODE_FREQ_10512);
 	}
 }
 
-void sub_08000588(void) {
+void SuspendSound(void) {
 	gUnknown_02000024 = 1;
 	gUnknown_02000034 = REG_SOUNDCNT_L;
-	sub_0800371C();
+	SoundVSyncOff_rev01();
 	REG_SOUNDCNT_L = 0;
 }
 
-void sub_080005B4(void) {
+void ResumeSound(void) {
 	REG_SOUNDCNT_L = gUnknown_02000034;
-	sub_08003798();
+	SoundVSyncOn_rev01();
 	gUnknown_02000024 = 0;
 }
 
-void sub_080005D8(u16 arg0) {
-	sub_08003118(arg0);
+void StartSong(u16 songNum) {
+	m4aSongNumStart(songNum);
 }
 
-void sub_080005E8(u16 arg0) {
-	sub_08003118(arg0);
+void StartSong2(u16 songNum) {
+	m4aSongNumStart(songNum);
 }
 
-void sub_080005F8(u16 arg0) {
-	sub_080031E4(arg0);
+void StopSong(u16 songNum) {
+	m4aSongNumStop(songNum);
 }
 
-void sub_08000608(u32 arg0, u32 arg1) {
-	u32 temp = gUnknown_080451B8[arg0].unk4;
-	sub_080032B0(gUnknown_08045158[temp * 3], arg1);
+void FadeOutSongPlayer(u32 songNum, u32 speed) {
+	u32 playerNum = gSongTable[songNum].ms;
+	m4aMPlayFadeOut(gMusicPlayerTable[playerNum].ma, speed);
 }
 
-void sub_08000634(u32 arg0, u32 arg1) {
-	sub_0800384C(gUnknown_08045158[arg0 * 3], gUnknown_080451B8[arg1].unk0);
+void StartSongOnPlayer(u32 playerNum, u32 songNum) {
+	MPlayStart_rev01(gMusicPlayerTable[playerNum].ma, gSongTable[songNum].header);
 }
 
-void sub_0800065C(u32 arg0) {
-	sub_08003930(gUnknown_08045158[arg0 * 3]);
+void StopMusicPlayer(u32 playerNum) {
+	MPlayStop_rev01(gMusicPlayerTable[playerNum].ma);
 }
 
-void sub_08000678(u32 arg0) {
-	sub_08003278(gUnknown_08045158[arg0 * 3]);
+void ContinueMusicPlayer(u32 playerNum) {
+	m4aMPlayContinue(gMusicPlayerTable[playerNum].ma);
 }
 
-void sub_08000694(u32 arg0, u32 arg1) {
-	sub_080032B0(gUnknown_08045158[arg0 * 3], arg1);
+void FadeOutMusicPlayer(u32 playerNum, u32 speed) {
+	m4aMPlayFadeOut(gMusicPlayerTable[playerNum].ma, speed);
 }
 
-void sub_080006B4(u32 arg0, u32 arg1) {
-	sub_080040C0(gUnknown_08045158[arg0 * 3], 0xFFFF, arg1);
+void SetMusicPlayerVolume(u32 playerNum, u32 volume) {
+	MPlayVolumeControl(gMusicPlayerTable[playerNum].ma, 0xFFFF, volume);
 }
 
 u32 sub_080006DC(u32 arg0) {
-	u32 unk4 = gUnknown_08045158[arg0 * 3]->unk4;
+	u32 unk4 = gMusicPlayerTable[arg0].ma->stat;
 	u32 one = 1;
 	return (unk4 >> 31) ^ one;
 }
 
-void sub_080006F8(void) {
-	sub_0800324C();
+void StopAllMusicPlayers(void) {
+	m4aMPlayAllStop();
 }
 
-#ifdef NONMATCHING
-void sub_08000704(u32 arg0) {
+void FadeOutAllMusicPlayers(u32 speed) {
 	u32 i;
-	for(i = 0; i < 8; ++i) {
-		sub_080032B0(gUnknown_08045158[i * 3], arg0);
-	}
+	u16 n = NUM_MUSIC_PLAYERS;
+
+	for(i = 0; i < n; i++)
+		m4aMPlayFadeOut(gMusicPlayerTable[i].ma, speed);
 }
-#else
-NAKED
-void sub_08000704(u32 arg0) {
-	asm_unified("\n\
-	push {r4, r5, r6, r7, lr}\n\
-	adds r1, r0, #0\n\
-	ldr r0, _08000730 @ =0x00000008\n\
-	lsls r0, r0, #0x10\n\
-	lsrs r6, r0, #0x10\n\
-	movs r4, #0\n\
-	cmp r4, r6\n\
-	bhs _08000728\n\
-	ldr r5, _08000734 @ =gUnknown_08045158\n\
-	lsls r7, r1, #0x10\n\
-_08000718:\n\
-	ldr r0, [r5]\n\
-	lsrs r1, r7, #0x10\n\
-	bl sub_080032B0\n\
-	adds r5, #0xc\n\
-	adds r4, #1\n\
-	cmp r4, r6\n\
-	blo _08000718\n\
-_08000728:\n\
-	pop {r4, r5, r6, r7}\n\
-	pop {r0}\n\
-	bx r0\n\
-	.align 2, 0\n\
-_08000730: .4byte 0x00000008\n\
-_08000734: .4byte gUnknown_08045158");
-}
-#endif // NONMATCHING
 
 void sub_08000738(void) {
 	IdentifyEeprom(0x40);
@@ -132,7 +101,7 @@ u32 sub_08000750(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
 	u32 i;
 
 	if(flag) {
-		sub_08000588(); // disable sound?
+		SuspendSound();
 	}
 
 	startAddr /= 8;
@@ -149,7 +118,7 @@ u32 sub_08000750(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
 	}
 
 	if(flag) {
-		sub_080005B4(); // enable sound?
+		ResumeSound();
 	}
 
 	return result;
@@ -160,7 +129,7 @@ u32 sub_080007A8(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
 	u32 i;
 
 	if(flag) {
-		sub_08000588();
+		SuspendSound();
 	}
 
 	startAddr /= 8;
@@ -177,7 +146,7 @@ u32 sub_080007A8(void *buffer, u32 startAddr, u32 numBytes, u32 flag) {
 	}
 
 	if(flag) {
-		sub_080005B4();
+		ResumeSound();
 	}
 
 	return result;
@@ -191,7 +160,7 @@ u32 sub_08000800(void *buffer, u32 offset, u32 arg2, u32 flag) {
 	u16 pattern[4] = { arg2, arg2, arg2, arg2 };
 
 	if(flag) {
-		sub_08000588();
+		SuspendSound();
 	}
 
 	currentAddr = (u32)buffer >> 3;
@@ -206,7 +175,7 @@ u32 sub_08000800(void *buffer, u32 offset, u32 arg2, u32 flag) {
 	}
 
 	if(flag) {
-		sub_080005B4();
+		ResumeSound();
 	}
 
 	return result;
@@ -246,7 +215,7 @@ void sub_080008FC(u32 arg0) {
 }
 
 void sub_08000908(void) {
-	sub_08002A38();
+	SoundVSync_rev01();
 	sub_0800142C();
 
 	if(gUnknown_03000B54 != 0) {
@@ -261,7 +230,7 @@ void sub_08000908(void) {
 		// Check for A+B+Select+Start
 		if(keys != 0) {
 			if(keys == 0xF) {
-				sub_08000588();
+				SuspendSound();
 
 				REG_BLDCNT = 0xFF;
 				REG_BLDY = 0x10;
@@ -276,7 +245,7 @@ void sub_08000908(void) {
 }
 
 void sub_08000984(void) {
-	sub_0800310C();
+	m4aSoundMain();
 }
 
 void sub_08000990(void) {
@@ -285,12 +254,12 @@ void sub_08000990(void) {
 
 	gUnknown_02000024 = 1;
 
-	src = (u32)sub_080000F0;
-	size = (u32)sub_08000540 - src;
+	src = (u32)sub_080000F0;			 // arm function
+	size = (u32)gRamCodeBlock1End - src; // 0x08000540 - 0x080000F0
 	CpuCopy32((void *)src, &gUnknown_03002BF0, size);
 
-	src = (u32)sub_08001A18;
-	size = 0x080023D4 - src; // Fixme
+	src = (u32)gRamCodeBlock2Start;		 // 0x08001A18
+	size = (u32)gRamCodeBlock2End - src; // 0x080023D4 - 0x08001A18
 	CpuCopy32((void *)src, &gUnknown_03003040, size);
 
 	gUnknown_03007FFC = (u32)sub_080000F0;
@@ -298,8 +267,8 @@ void sub_08000990(void) {
 	gUnknown_0300136C = 0;
 	*gUnknown_03000B54 = 0;
 
-	REG_DISPSTAT = 0xa28;
-	REG_IE = 0x3005;
+	REG_DISPSTAT = DISPSTAT_VBLANK_INTR | DISPSTAT_VCOUNT_INTR | (10 << 8);				 // 0x0A28
+	REG_IE = INTR_FLAG_VBLANK | INTR_FLAG_VCOUNT | INTR_FLAG_KEYPAD | INTR_FLAG_GAMEPAK; // 0x3005
 	REG_IME = 1;
 }
 
@@ -349,13 +318,13 @@ void sub_08000A5C(void) {
 
 	sub_08000A34();
 	REG_WAITCNT = 0x4014;
-	sub_08000548();
+	InitSound();
 	sub_08000990();
 	sub_080012B8();
 	sub_08000FEC((u16 *)OAM, 0x80);
 	sub_08000738();
 	srand(0);
-	sub_080005B4();
+	ResumeSound();
 }
 
 void AgbMain(void) {
@@ -510,12 +479,8 @@ u32 sub_08000D80(u8 *arg0, u8 *arg1) {
 	}
 }
 
-/**
- * Compares two null-terminated byte strings lexicographically
- * @arg str1 First string to compare
- * @arg str2 Second string to compare
- * @ret 0 if equal, 1 if str1 > str2, -1 if str1 < str2
- */
+// Compares two byte strings
+// ret 0 if equal, 1 if str1 > str2, -1 if str1 < str2
 s32 Strcmp_08000DA4(u8 *str1, u8 *str2) {
 	char c1, c2;
 

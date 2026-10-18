@@ -369,14 +369,15 @@ _08000534: .4byte sub_08000908
 _08000538: .4byte sub_08000984
 _0800053C: .4byte REG_SOUNDCNT_X
 
-	arm_func_start sub_08000540
+	.global gRamCodeBlock1End
+gRamCodeBlock1End:
+
+	thumb_func_start sub_08000540
 sub_08000540: @ 0x08000540
-.thumb // hack
 	mov r0, sp
 	bx lr
 
-	arm_func_start sub_08000544
+	thumb_func_start sub_08000544
 sub_08000544: @ 0x08000544
-.thumb // hack
 	mov	r0, lr
 	bx lr

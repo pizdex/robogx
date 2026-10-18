@@ -6,7 +6,8 @@ MEMORY {
 	rom (rx) : ORIGIN = 0x08000000, LENGTH = 32M
 }
 
-g217 = 0xd9;
+gNumSongs = 217;
+gNumMusicPlayers = 8;
 
 SECTIONS {
 	ewram (NOLOAD) : ALIGN(4) {
@@ -287,7 +288,9 @@ SECTIONS {
 		asm/crt0.o(.text);
 		src/code_08000548.o(.text);
 		asm/code_08000AF4.o(.text);
-		asm/code_080023D4.o(.text);
+		asm/m4a_1.o(.text);
+		asm/m4a.o(.text);
+		asm/code_08004588.o(.text);
 		src/code_0800A3F0.o(.text);
 		asm/code_0800A3F0.o(.text);
 		src/code_08010738.o(.text);

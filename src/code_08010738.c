@@ -2,9 +2,9 @@
 #include "code_08010738.h"
 
 void sub_08010738(u32 arg0) {
-	sub_08000588();
+	SuspendSound();
 	sub_08010AF0(arg0, 2);
-	sub_080005B4();
+	ResumeSound();
 	sub_08000498(&gUnknown_0200E200, 0x2e0, 0);
 }
 
@@ -268,90 +268,91 @@ void sub_08010B34(u32 file) {
 }
 
 void sub_08010B8C(u32 src, u32 dst, u32 type) {
-    u32 size;
-    u32 *buf;
-    u32 *tmp1;
-    u32 tmp2;
+	u32 size;
+	u32 *buf;
+	u32 *tmp1;
+	u32 tmp2;
 
-    size = SceEeprom_GetSubFileSize(type);
-    buf = sub_0800459C(&gUnknown_02001CC0, size);
+	size = SceEeprom_GetSubFileSize(type);
+	buf = sub_0800459C(&gUnknown_02001CC0, size);
 
-    tmp2 = SceEeprom_GetSubFileAdr(src, type);
-    tmp1 = buf;
-    sub_08010764(tmp1, tmp2, size);
+	tmp2 = SceEeprom_GetSubFileAdr(src, type);
+	tmp1 = buf;
+	sub_08010764(tmp1, tmp2, size);
 
-    if (type == 0) {
-        if (*tmp1 != 2)
-            sub_080050A8(gUnknown_0831B830);
-        tmp2 = (u32)tmp1;
-        tmp1 = sub_08011124(dst);
-        sub_080002C4(tmp1, (void *)tmp2, size);
-    }
+	if(type == 0) {
+		if(*tmp1 != 2)
+			sub_080050A8(gUnknown_0831B830);
+		tmp2 = (u32)tmp1;
+		tmp1 = sub_08011124(dst);
+		sub_080002C4(tmp1, (void *)tmp2, size);
+	}
 
-    tmp2 = (u32)buf;
-    tmp1 = (u32 *)SceEeprom_GetSubFileAdr(dst, type);
-    sub_08010770((u32)tmp1, (void *)tmp2, size);
-    sub_08004604(&gUnknown_02001CC0);
+	tmp2 = (u32)buf;
+	tmp1 = (u32 *)SceEeprom_GetSubFileAdr(dst, type);
+	sub_08010770((u32)tmp1, (void *)tmp2, size);
+	sub_08004604(&gUnknown_02001CC0);
 }
 
 void sub_08010C14(u32 src, u32 dst, u32 type) {
-    if (type == 3) {
-        sub_08010B8C(src, dst, 0);
-        sub_08010B8C(src, dst, 1);
-    } else if (type == 4) {
-        sub_08010B8C(src, dst, 0);
-        sub_08010B8C(src, dst, 1);
-        sub_08010B8C(src, dst, 2);
-    } else {
-        sub_08010B8C(src, dst, type);
-    }
+	if(type == 3) {
+		sub_08010B8C(src, dst, 0);
+		sub_08010B8C(src, dst, 1);
+	} else if(type == 4) {
+		sub_08010B8C(src, dst, 0);
+		sub_08010B8C(src, dst, 1);
+		sub_08010B8C(src, dst, 2);
+	} else {
+		sub_08010B8C(src, dst, type);
+	}
 }
 
 void sub_08010C64(u32 file, u32 type, u32 *data) {
-    u32 checksum, size;
-    u8 *ptr, *temp;
+	u32 checksum, size;
+	u8 *ptr, *temp;
 
-    checksum = sub_080108D8(type, data);
-    temp = (u8 *)SceEeprom_GetSubFileAdr(file, type);
-    size = SceEeprom_GetSubFileSize(type);
-    temp = (temp + size) - 8;
-    sub_080107C4((u32)temp, 0, checksum);
+	checksum = sub_080108D8(type, data);
+	temp = (u8 *)SceEeprom_GetSubFileAdr(file, type);
+	size = SceEeprom_GetSubFileSize(type);
+	temp = (temp + size) - 8;
+	sub_080107C4((u32)temp, 0, checksum);
 
-    if (type == 0) {
-        temp = sub_08011124(file);
-        ptr = temp + size;
-        temp = ptr - 8;
-        *(u32 *)temp = checksum;
-        temp = ptr - 4;
-        *(u32 *)temp = 0;
-    }
+	if(type == 0) {
+		temp = sub_08011124(file);
+		ptr = temp + size;
+		temp = ptr - 8;
+		*(u32 *)temp = checksum;
+		temp = ptr - 4;
+		*(u32 *)temp = 0;
+	}
 }
 
 void sub_08010CBC(u32 mode, u32 slot) {
-    struct Unk0200E080 *p = &gUnknown_0200E080;
-    u32 next;
+	struct Unk0200E080 *p = &gUnknown_0200E080;
+	u32 next;
 
-    if (mode == 0) {
-        *p = (struct Unk0200E080){ slot, 0 };
-    }
-    if (mode == 1) {
-        next = slot + 1;
-        if (next > 1) next = 0;
-        *p = (struct Unk0200E080){ next, 0 };
-    }
+	if(mode == 0) {
+		*p = (struct Unk0200E080){ slot, 0 };
+	}
+	if(mode == 1) {
+		next = slot + 1;
+		if(next > 1)
+			next = 0;
+		*p = (struct Unk0200E080){ next, 0 };
+	}
 }
 
 void sub_08010CF0(void) {
-    u32 eepromAddr = 0x1FF8;
-    sub_08010764(&gUnknown_0200E080, eepromAddr, 8);
+	u32 eepromAddr = 0x1FF8;
+	sub_08010764(&gUnknown_0200E080, eepromAddr, 8);
 }
 
 void sub_08010D08(void) {
-    void *data = &gUnknown_0200E080;
-    sub_08010770(0x1FF8, data, 8);
+	void *data = &gUnknown_0200E080;
+	sub_08010770(0x1FF8, data, 8);
 }
 
 void sub_08010D20(u32 arg) {
-    sub_08010CBC(0, arg);
-    sub_08010D08();
+	sub_08010CBC(0, arg);
+	sub_08010D08();
 }
