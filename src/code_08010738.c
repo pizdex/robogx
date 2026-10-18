@@ -1,4 +1,5 @@
 #include "global.h"
+#include "code_08010738.h"
 
 void sub_08010738(u32 arg0) {
 	sub_08000588();
@@ -96,4 +97,75 @@ u32 sub_080108A4(void) {
 	u32 temp1 = (u32)gUnknown_085371D8;
 	u32 size = temp1 - temp2; // 0x81238
 	return size + 0xF18;	  // 0x82150
+}
+
+u32 sub_080108BC(Unk080108BC *arg0, u32 arg1) {
+	arg0->unk0 = arg1;
+	arg0->unk4 = 0;
+	arg0->unk8 = sub_080108A4();
+	arg0->unkC = 0;
+}
+
+u32 sub_080108D8(u32 type, u32 *data_ptr) {
+	u32 temp, sum, i;
+
+	temp = (SceEeprom_GetSubFileSize(type) - 8);
+	temp /= 4;
+	sum = 0;
+	i = 0;
+
+	while(i < temp) {
+		sum += *data_ptr++;
+		i++;
+	}
+	return sum;
+}
+
+void sub_08010900(void *buffer, u32 size, u32 value) {
+	u8 *ptr = buffer + size;
+	u8 *temp;
+
+	temp = ptr - 8;
+	*((u32 *)(temp)) = value;
+	temp = ptr - 4;
+	*((u32 *)(temp)) = 0;
+}
+
+u32 sub_08010910(u32 file_num, u32 arg1, u32 *arg2, u32 arg3) {
+	u8 buffer[128];
+	u32 file_size = SceEeprom_GetSubFileSize(arg1);
+	u32 temp1 = sub_080108D8(arg1, arg2);
+
+	u32 field8 = *(u32 *)((u8 *)arg2 + file_size - 8);
+	u32 *field4 = (u32 *)((u8 *)arg2 + file_size - 4);
+
+	u32 temp2 = (-(*field4) | *field4) >> 31;
+
+	if(temp1 != field8) {
+		temp2 = 1;
+	}
+
+	if(temp2) {
+		if(arg3) {
+			sprintf(buffer, gUnknown_0831B7F0, file_num + 1); // "ファイル%dが壊れています" ("File %d is corrupted")
+			sub_080050B8(buffer);
+		}
+		return 1;
+	}
+
+	return 0;
+}
+
+void sub_0801097C(u32 file_num, u32 file_type, u32 *dest_buffer) {
+	u32 file_addr = SceEeprom_GetSubFileAdr(file_num, file_type);
+	u32 file_size = SceEeprom_GetSubFileSize(file_type);
+	u32 temp;
+
+	sub_08010764(dest_buffer, file_addr, file_size);
+
+	temp = sub_08010910(file_num, file_type, dest_buffer, 1);
+
+	if(file_type == 0 && *dest_buffer != 2) {
+		sub_080050A8(gUnknown_0831B80C); // "無効なファイルを読み込もうとした" ("Attempted to read an invalid file")
+	}
 }
