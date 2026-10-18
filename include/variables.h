@@ -12,6 +12,8 @@ extern u16 gUnknown_02000024;
 extern u16 gUnknown_02000034;
 extern u16 gUnknown_02000038;
 
+extern u8 gUnknown_02001CC0[];
+
 struct Unk0200C1A0 {
 	u8 pad0[0xc24];
 	u8 unkC24;
@@ -29,6 +31,13 @@ struct Unk0200CCC4 {
 	u8 unk100;
 };
 extern struct Unk0200CCC4 gUnknown_0200CCC4;
+
+struct Unk0200E080 {
+    u32 slot;
+    u32 unk4;
+};
+
+extern struct Unk0200E080 gUnknown_0200E080;
 
 extern u32 gUnknown_0200E200;
 
@@ -75,6 +84,7 @@ extern const char gUnknown_0831B7A4[];
 extern const char gUnknown_0831B7C8[];
 extern const char gUnknown_0831B7F0[];
 extern const char gUnknown_0831B80C[];
+extern const char gUnknown_0831B830[];
 
 extern const u8 gUnknown_084B5FA0[];
 extern const u8 gUnknown_085371D8[];

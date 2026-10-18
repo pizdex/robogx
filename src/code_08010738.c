@@ -202,3 +202,156 @@ void sub_080109F0(u32 file, u32 type, void *buffer) {
 	eeprom_addr = SceEeprom_GetSubFileAdr(file, type);
 	sub_08010770(eeprom_addr, buffer, size);
 }
+
+void sub_08010A48(u32 file, u32 type, void *buffer) {
+	if(type == 3) {
+		sub_080109F0(file, 0, buffer);
+		buffer += 0x220;
+		sub_080109F0(file, 1, buffer);
+	} else {
+		sub_080109F0(file, type, buffer);
+	}
+}
+
+void sub_08010A78(u32 file, u32 mode) {
+	u32 buffer_size;
+	u32 buffer;
+	u32 processed_size;
+	u32 load_size;
+
+	if(mode == 0) {
+		buffer = (u32)sub_08011124(file);
+		buffer_size = SceEeprom_GetSubFileSize(0);
+
+		sub_08000498((void *)buffer, buffer_size, 0);
+		sub_080108BC((void *)buffer, 0);
+		processed_size = sub_080108D8(0, (u32 *)buffer);
+		sub_08010900((void *)buffer, buffer_size, processed_size);
+		mode = (u32)sub_08011124(file);
+		buffer = SceEeprom_GetSubFileAdr(file, 0);
+		sub_08010770(buffer, (void *)mode, buffer_size);
+	} else {
+		sub_08010790((void *)SceEeprom_GetSubFileAdr(file, mode), SceEeprom_GetSubFileSize(mode), 0);
+	}
+}
+
+void sub_08010AF0(u32 file, u32 mode) {
+	if(mode == 3) {
+		sub_08010A78(file, 0);
+		sub_08010A78(file, 1);
+	} else if(mode == 4) {
+		sub_08010A78(file, 0);
+		sub_08010A78(file, 1);
+		sub_08010A78(file, 2);
+	} else {
+		sub_08010A78(file, mode);
+	}
+}
+
+void sub_08010B34(u32 file) {
+	u32 buffer;
+	u32 buffer_size;
+	u32 buffer2;
+	u32 temp;
+
+	buffer = (u32)sub_08011124(file);
+	buffer_size = SceEeprom_GetSubFileSize(0);
+
+	sub_08000498((void *)buffer, buffer_size, 0);
+	sub_080108BC((void *)buffer, 2);
+	temp = sub_080108D8(0, (u32 *)buffer);
+	sub_08010900((void *)buffer, buffer_size, temp);
+
+	buffer2 = (u32)sub_08011124(file);
+	buffer = SceEeprom_GetSubFileAdr(file, 0);
+	sub_08010770(buffer, (void *)buffer2, buffer_size);
+}
+
+void sub_08010B8C(u32 src, u32 dst, u32 type) {
+    u32 size;
+    u32 *buf;
+    u32 *tmp1;
+    u32 tmp2;
+
+    size = SceEeprom_GetSubFileSize(type);
+    buf = sub_0800459C(&gUnknown_02001CC0, size);
+
+    tmp2 = SceEeprom_GetSubFileAdr(src, type);
+    tmp1 = buf;
+    sub_08010764(tmp1, tmp2, size);
+
+    if (type == 0) {
+        if (*tmp1 != 2)
+            sub_080050A8(gUnknown_0831B830);
+        tmp2 = (u32)tmp1;
+        tmp1 = sub_08011124(dst);
+        sub_080002C4(tmp1, (void *)tmp2, size);
+    }
+
+    tmp2 = (u32)buf;
+    tmp1 = (u32 *)SceEeprom_GetSubFileAdr(dst, type);
+    sub_08010770((u32)tmp1, (void *)tmp2, size);
+    sub_08004604(&gUnknown_02001CC0);
+}
+
+void sub_08010C14(u32 src, u32 dst, u32 type) {
+    if (type == 3) {
+        sub_08010B8C(src, dst, 0);
+        sub_08010B8C(src, dst, 1);
+    } else if (type == 4) {
+        sub_08010B8C(src, dst, 0);
+        sub_08010B8C(src, dst, 1);
+        sub_08010B8C(src, dst, 2);
+    } else {
+        sub_08010B8C(src, dst, type);
+    }
+}
+
+void sub_08010C64(u32 file, u32 type, u32 *data) {
+    u32 checksum, size;
+    u8 *ptr, *temp;
+
+    checksum = sub_080108D8(type, data);
+    temp = (u8 *)SceEeprom_GetSubFileAdr(file, type);
+    size = SceEeprom_GetSubFileSize(type);
+    temp = (temp + size) - 8;
+    sub_080107C4((u32)temp, 0, checksum);
+
+    if (type == 0) {
+        temp = sub_08011124(file);
+        ptr = temp + size;
+        temp = ptr - 8;
+        *(u32 *)temp = checksum;
+        temp = ptr - 4;
+        *(u32 *)temp = 0;
+    }
+}
+
+void sub_08010CBC(u32 mode, u32 slot) {
+    struct Unk0200E080 *p = &gUnknown_0200E080;
+    u32 next;
+
+    if (mode == 0) {
+        *p = (struct Unk0200E080){ slot, 0 };
+    }
+    if (mode == 1) {
+        next = slot + 1;
+        if (next > 1) next = 0;
+        *p = (struct Unk0200E080){ next, 0 };
+    }
+}
+
+void sub_08010CF0(void) {
+    u32 eepromAddr = 0x1FF8;
+    sub_08010764(&gUnknown_0200E080, eepromAddr, 8);
+}
+
+void sub_08010D08(void) {
+    void *data = &gUnknown_0200E080;
+    sub_08010770(0x1FF8, data, 8);
+}
+
+void sub_08010D20(u32 arg) {
+    sub_08010CBC(0, arg);
+    sub_08010D08();
+}
