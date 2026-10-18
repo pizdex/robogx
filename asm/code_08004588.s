@@ -2,22 +2,6 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_08004588
-sub_08004588: @ 0x08004588
-	str r1, [r0]
-	adds r1, r1, r2
-	str r1, [r0, #4]
-	movs r1, #0
-	strh r1, [r0, #8]
-	bx lr
-
-	thumb_func_start sub_08004594
-sub_08004594: @ 0x08004594
-	movs r1, #0
-	strh r1, [r0, #8]
-	bx lr
-	.align 2, 0
-
 	thumb_func_start sub_0800459C
 sub_0800459C: @ 0x0800459C
 	push {r4, r5, lr}

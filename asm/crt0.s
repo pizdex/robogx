@@ -2,19 +2,19 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	arm_func_start Start
-Start: @ 0x08000000
-	b Init
+	arm_func_start _entry
+_entry: @ 0x08000000
+	b Start
 
 .include "asm/rom_header.inc"
 
-	arm_func_start Init
-Init: @ 0x080000C0
-	b sub_080000C8
-	.byte 0x00, 0x00, 0x00, 0x00
+	arm_func_start Start
+Start: @ 0x080000C0
+	b Init
+	.word 0
 
-	arm_func_start sub_080000C8
-sub_080000C8: @ 0x080000C8
+	arm_func_start Init
+Init: @ 0x080000C8
 	mov r0, #0x12
 	msr cpsr_fc, r0
 	ldr sp, _08000514 @ =gUnknown_03007FA0
@@ -24,10 +24,10 @@ sub_080000C8: @ 0x080000C8
 	ldr r1, _0800051C @ =AgbMain
 	mov lr, pc
 	bx r1
-	b sub_080000C8
+	b Init
 
-	arm_func_start sub_080000F0
-sub_080000F0: @ 0x080000F0
+	arm_func_start IntrMain
+IntrMain: @ 0x080000F0
 	ldr r3, _08000520 @ =REG_IE
 	ldr r2, [r3]
 	and r1, r2, r2, lsr #16
@@ -371,13 +371,3 @@ _0800053C: .4byte REG_SOUNDCNT_X
 
 	.global gRamCodeBlock1End
 gRamCodeBlock1End:
-
-	thumb_func_start sub_08000540
-sub_08000540: @ 0x08000540
-	mov r0, sp
-	bx lr
-
-	thumb_func_start sub_08000544
-sub_08000544: @ 0x08000544
-	mov	r0, lr
-	bx lr

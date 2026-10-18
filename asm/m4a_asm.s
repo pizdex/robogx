@@ -14,7 +14,7 @@ __umul3232H32: @ 0x080023D8
 
 	thumb_func_start SoundMain
 SoundMain: @ 0x080023E4
-	ldr r0, _08002450 @ =gUnknown_03007FF0
+	ldr r0, _08002450 @ =i_SOUND_AREA_ADR
 	ldr r0, [r0]
 	ldr r2, _08002454 @ =0x68736D53
 	ldr r3, [r0]
@@ -71,7 +71,7 @@ _08002446:
 	ldr r3, _08002458 @ =gUnknown_03000749
 	bx r3
 	.align 2, 0
-_08002450: .4byte gUnknown_03007FF0
+_08002450: .4byte i_SOUND_AREA_ADR
 _08002454: .4byte 0x68736D53
 _08002458: .4byte gUnknown_03000749
 _0800245C: .4byte REG_VCOUNT
@@ -82,13 +82,11 @@ _08002464: .4byte 0x00000630
 SoundMainRAM: @ 0x08002468
 	ldrb r3, [r0, #5]
 	cmp r3, #0
-	beq sub_080024C8
-	add r1, pc, #0x4 @ =sub_08002474
+	beq SoundMainRAM_NoReverb
+	add r1, pc, #0x4 @ =SoundMainRAM_Reverb
 	bx r1
-	.align 2, 0
-
-	arm_func_start sub_08002474
-sub_08002474: @ 0x08002474
+	.arm
+SoundMainRAM_Reverb: @ 0x08002474
 	cmp r4, #2
 	addeq r7, r0, #0x350
 	addne r7, r5, r8
@@ -111,24 +109,23 @@ _08002484:
 	bgt _08002484
 	add r0, pc, #0x2F @ =sub_080024F6
 	bx r0
-
-	thumb_func_start sub_080024C8
-sub_080024C8: @ 0x080024C8
+	.thumb
+SoundMainRAM_NoReverb: @ 0x080024C8
 	movs r0, #0
 	mov r1, r8
 	adds r6, r6, r5
 	lsrs r1, r1, #3
-	blo _080024D6
+	blo SoundMainRAM_NoReverb_Ok
 	stm r5!, {r0}
 	stm r6!, {r0}
-_080024D6:
+SoundMainRAM_NoReverb_Ok:
 	lsrs r1, r1, #1
-	blo _080024E2
+	blo SoundMainRAM_NoReverb_Loop
 	stm r5!, {r0}
 	stm r6!, {r0}
 	stm r5!, {r0}
 	stm r6!, {r0}
-_080024E2:
+SoundMainRAM_NoReverb_Loop:
 	stm r5!, {r0}
 	stm r6!, {r0}
 	stm r5!, {r0}
@@ -138,16 +135,15 @@ _080024E2:
 	stm r5!, {r0}
 	stm r6!, {r0}
 	subs r1, #1
-	bgt _080024E2
-
-	non_word_aligned_thumb_func_start sub_080024F6
-sub_080024F6: @ 0x080024F6
+	bgt SoundMainRAM_NoReverb_Loop
+_080024F6:
 	ldr r4, [sp, #0x18]
 	ldr r0, [r4, #0x18]
 	mov ip, r0
 	ldrb r0, [r4, #6]
 	adds r4, #0x50
-_08002500:
+
+SoundMainRAM_ChanLoop:
 	str r0, [sp, #4]
 	ldr r3, [r4, #0x24]
 	ldr r0, [sp, #0x14]
@@ -164,12 +160,13 @@ _08002514:
 	b _080027F2
 	.align 2, 0
 _0800251C: .4byte REG_VCOUNT
+
 _08002520:
 	ldrb r6, [r4]
 	movs r0, #0xc7
 	tst r0, r6
 	bne _0800252A
-	b sub_080027E8
+	b _080027E8
 _0800252A:
 	movs r0, #0x80
 	tst r0, r6
@@ -207,7 +204,7 @@ _0800255A:
 _0800256A:
 	movs r0, #0
 	strb r0, [r4]
-	b sub_080027E8
+	b _080027E8
 _08002570:
 	movs r0, #0x40
 	tst r0, r6
@@ -284,12 +281,10 @@ _080025F4:
 	ldr r5, [sp, #8]
 	ldr r2, [r4, #0x18]
 	ldr r3, [r4, #0x28]
-	add r0, pc, #0x4 @ =sub_08002600
+	add r0, pc, #0x4 @ =_08002600
 	bx r0
-	.align 2, 0
-
-	arm_func_start sub_08002600
-sub_08002600: @ 0x08002600
+	.arm
+_08002600: @ 0x08002600
 	str r8, [sp]
 	ldrb sl, [r4, #0xa]
 	ldrb fp, [r4, #0xb]
@@ -428,16 +423,15 @@ _080027D4:
 	str r3, [r4, #0x28]
 _080027DC:
 	ldr r8, [sp]
-	add r0, pc, #0x1 @ =sub_080027E8
+	add r0, pc, #0x1 @ =_080027E8
 	bx r0
-
-	thumb_func_start sub_080027E8
-sub_080027E8: @ 0x080027E8
+	.thumb
+_080027E8: @ 0x080027E8
 	ldr r0, [sp, #4]
 	subs r0, #1
 	ble _080027F2
 	adds r4, #0x40
-	b _08002500
+	b SoundMainRAM_ChanLoop
 _080027F2:
 	ldr r0, [sp, #0x18]
 	ldr r3, _08002808 @ =0x68736D53
@@ -454,8 +448,8 @@ _08002806: @ 0x08002806
 	.align 2, 0
 _08002808: .4byte 0x68736D53
 
-	thumb_func_start SoundMainBTM
-SoundMainBTM: @ 0x0800280C
+	thumb_func_start RealClear64byte
+RealClear64byte: @ 0x0800280C
 	mov ip, r4
 	movs r1, #0
 	movs r2, #0
@@ -469,8 +463,8 @@ SoundMainBTM: @ 0x0800280C
 	bx lr
 	.align 2, 0
 
-	thumb_func_start ClearChain
-ClearChain: @ 0x08002824
+	thumb_func_start RealClearChain
+RealClearChain: @ 0x08002824
 	ldr r3, [r0, #0x2c]
 	cmp r3, #0
 	beq _08002842
@@ -491,7 +485,9 @@ _0800283E:
 	str r1, [r0, #0x2c]
 _08002842:
 	bx lr
-_08002844:
+
+	thumb_func_start ply_fine
+ply_fine: @ 0x08002844
 	push {r4, r5, lr}
 	adds r5, r1, #0
 	ldr r4, [r5, #0x20]
@@ -507,7 +503,7 @@ _0800284E:
 	strb r1, [r4]
 _0800285C:
 	adds r0, r4, #0
-	bl ClearChain
+	bl RealClearChain
 	ldr r4, [r4, #0x34]
 	cmp r4, #0
 	bne _0800284E
@@ -557,15 +553,15 @@ _080028A4: .4byte gUnknown_08043FAC
 	thumb_func_start ld_r3_tp_adr_i
 ld_r3_tp_adr_i: @ 0x080028A8
 	ldr r2, [r1, #0x40]
-
-	non_word_aligned_thumb_func_start ld_r3_r2_i_sub
-ld_r3_r2_i_sub: @ 0x080028AA
+_080028AA:
 	adds r3, r2, #1
 	str r3, [r1, #0x40]
 	ldrb r3, [r2]
 	b _0800288E
 	.align 2, 0
-_080028B4:
+
+	thumb_func_start ply_goto
+ply_goto: @ 0x080028A8
 	push {lr}
 _080028B6:
 	ldr r2, [r1, #0x40]
@@ -596,9 +592,9 @@ ply_patt: @ 0x080028D4
 	ldrb r2, [r1, #2]
 	adds r2, #1
 	strb r2, [r1, #2]
-	b _080028B4
+	b ply_goto
 _080028EC:
-	b _08002844
+	b ply_fine
 	.align 2, 0
 
 	thumb_func_start ply_pend
@@ -790,15 +786,15 @@ ply_port: @ 0x08002A20
 	adds r2, #1
 	ldr r0, _08002A34 @ =REG_SOUND1CNT_L
 	adds r0, r0, r3
-	bl ld_r3_r2_i_sub
+	bl _080028AA
 	strb r3, [r0]
 	bx ip
 	.align 2, 0
 _08002A34: .4byte REG_SOUND1CNT_L
 
-	thumb_func_start SoundVSync_rev01
-SoundVSync_rev01: @ 0x08002A38
-	ldr r0, _08002CE4 @ =gUnknown_03007FF0
+	thumb_func_start SoundVSync
+SoundVSync: @ 0x08002A38
+	ldr r0, _08002CE4 @ =i_SOUND_AREA_ADR
 	ldr r0, [r0]
 	ldr r2, _08002CE8 @ =0x68736D53
 	ldr r3, [r0]
@@ -838,8 +834,8 @@ _08002A78:
 _08002A7C: .4byte REG_DMA1SAD_L
 _08002A80: .4byte 0x84400004
 
-	thumb_func_start MPlayMain_rev01
-MPlayMain_rev01: @ 0x08002A84
+	thumb_func_start MPlayMain
+MPlayMain: @ 0x08002A84
 	ldr r2, _08002CE8 @ =0x68736D53
 	ldr r3, [r0, #0x34]
 	cmp r2, r3
@@ -853,7 +849,7 @@ _08002A8E:
 	cmp r3, #0
 	beq _08002AA0
 	ldr r0, [r0, #0x3c]
-	bl sub_08002CDC
+	bl call_r3
 _08002AA0:
 	pop {r0}
 	push {r4, r5, r6, r7}
@@ -868,11 +864,11 @@ _08002AA0:
 	bge _08002AB8
 	b _08002CCC
 _08002AB8:
-	ldr r0, _08002CE4 @ =gUnknown_03007FF0
+	ldr r0, _08002CE4 @ =i_SOUND_AREA_ADR
 	ldr r0, [r0]
 	mov r8, r0
 	adds r0, r7, #0
-	bl FadeOutBody_rev01
+	bl FadeOutBody
 	ldr r0, [r7, #4]
 	cmp r0, #0
 	bge _08002ACC
@@ -917,7 +913,7 @@ _08002AF2:
 	b _08002B14
 _08002B0E:
 	adds r0, r4, #0
-	bl ClearChain_rev
+	bl ClearChain
 _08002B14:
 	ldr r4, [r4, #0x34]
 	cmp r4, #0
@@ -928,7 +924,7 @@ _08002B1A:
 	tst r0, r3
 	beq _08002B98
 	adds r0, r5, #0
-	bl Clear64byte_rev
+	bl Clear64byte
 	movs r0, #0x80
 	strb r0, [r5]
 	movs r0, #2
@@ -963,7 +959,7 @@ _08002B56:
 	subs r0, #0xcf
 	adds r1, r7, #0
 	adds r2, r5, #0
-	bl sub_08002CDC
+	bl call_r3
 	b _08002B98
 _08002B6C:
 	cmp r1, #0xb0
@@ -977,7 +973,7 @@ _08002B6C:
 	ldr r3, [r3, r0]
 	adds r0, r7, #0
 	adds r1, r5, #0
-	bl sub_08002CDC
+	bl call_r3
 	ldrb r0, [r5]
 	cmp r0, #0
 	beq _08002BF4
@@ -1083,7 +1079,7 @@ _08002C28:
 	mov sb, r2
 	adds r0, r7, #0
 	adds r1, r5, #0
-	bl TrkVolPitSet_rev01
+	bl TrkVolPitSet
 	ldr r4, [r5, #0x20]
 	cmp r4, #0
 	beq _08002CB8
@@ -1093,7 +1089,7 @@ _08002C46:
 	tst r0, r1
 	bne _08002C56
 	adds r0, r4, #0
-	bl ClearChain_rev
+	bl ClearChain
 	b _08002CB2
 _08002C56:
 	ldrb r0, [r4, #1]
@@ -1129,7 +1125,7 @@ _08002C88:
 	adds r1, r2, #0
 	ldrb r2, [r5, #9]
 	adds r0, r6, #0
-	bl sub_08002CDC
+	bl call_r3
 	str r0, [r4, #0x20]
 	ldrb r0, [r4, #0x1d]
 	movs r1, #2
@@ -1168,16 +1164,16 @@ _08002CCC:
 	mov fp, r3
 	pop {r3}
 
-	thumb_func_start sub_08002CDC
-sub_08002CDC: @ 0x08002CDC
+call_r3: @ 0x08002CDC
 	bx r3
+
 	.align 2, 0
 _08002CE0: .4byte gUnknown_08044220
-_08002CE4: .4byte gUnknown_03007FF0
+_08002CE4: .4byte i_SOUND_AREA_ADR
 _08002CE8: .4byte 0x68736D53
 
-	thumb_func_start TrackStop_rev01
-TrackStop_rev01: @ 0x08002CEC
+	thumb_func_start TrackStop
+TrackStop: @ 0x08002CEC
 	push {r4, r5, r6, lr}
 	adds r5, r1, #0
 	ldrb r1, [r5]
@@ -1196,10 +1192,10 @@ _08002D00:
 	movs r3, #7
 	ands r0, r3
 	beq _08002D18
-	ldr r3, _08002D2C @ =gUnknown_03007FF0
+	ldr r3, _08002D2C @ =i_SOUND_AREA_ADR
 	ldr r3, [r3]
 	ldr r3, [r3, #0x2c]
-	bl sub_08002CDC
+	bl call_r3
 _08002D18:
 	strb r6, [r4]
 _08002D1A:
@@ -1214,7 +1210,7 @@ _08002D24:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08002D2C: .4byte gUnknown_03007FF0
+_08002D2C: .4byte i_SOUND_AREA_ADR
 
 	thumb_func_start ChnVolSetAsm
 ChnVolSetAsm: @ 0x08002D30
@@ -1245,8 +1241,8 @@ _08002D5C:
 	strb r0, [r4, #3]
 	bx lr
 
-	thumb_func_start ply_note_rev01
-ply_note_rev01: @ 0x08002D60
+	thumb_func_start ply_note
+ply_note: @ 0x08002D60
 	push {r4, r5, r6, r7, lr}
 	mov r4, r8
 	mov r5, sb
@@ -1256,7 +1252,7 @@ ply_note_rev01: @ 0x08002D60
 	sub sp, #0x18
 	str r1, [sp]
 	adds r5, r2, #0
-	ldr r1, _08002F58 @ =gUnknown_03007FF0
+	ldr r1, _08002F58 @ =i_SOUND_AREA_ADR
 	ldr r1, [r1]
 	str r1, [sp, #4]
 	ldr r1, _08002F5C @ =gUnknown_08044220
@@ -1428,7 +1424,7 @@ _08002E94:
 	beq _08002F46
 _08002EA0:
 	adds r0, r4, #0
-	bl ClearChain_rev
+	bl ClearChain
 	movs r1, #0
 	str r1, [r4, #0x30]
 	ldr r3, [r5, #0x20]
@@ -1448,7 +1444,7 @@ _08002EB4:
 _08002EC6:
 	ldr r0, [sp]
 	adds r1, r5, #0
-	bl TrkVolPitSet_rev01
+	bl TrkVolPitSet
 	ldr r0, [r5, #4]
 	str r0, [r4, #0x10]
 	ldr r0, [sp, #0x10]
@@ -1496,7 +1492,7 @@ _08002F1C:
 	ldr r0, [sp, #0xc]
 	ldr r3, [sp, #4]
 	ldr r3, [r3, #0x30]
-	bl sub_08002CDC
+	bl call_r3
 	b _08002F38
 _08002F2E:
 	ldrb r2, [r5, #9]
@@ -1521,11 +1517,11 @@ _08002F46:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08002F58: .4byte gUnknown_03007FF0
+_08002F58: .4byte i_SOUND_AREA_ADR
 _08002F5C: .4byte gUnknown_08044220
 
-	thumb_func_start ply_endtie_rev01
-ply_endtie_rev01: @ 0x08002F60
+	thumb_func_start ply_endtie
+ply_endtie: @ 0x08002F60
 	push {r4, r5}
 	ldr r2, [r1, #0x40]
 	ldrb r3, [r2]
@@ -1583,8 +1579,8 @@ _08002FB2:
 	bx lr
 	.align 2, 0
 
-	thumb_func_start ld_r3_tp_adr_i_rev
-ld_r3_tp_adr_i_rev: @ 0x08002FBC
+	thumb_func_start ld_r3_tp_adr_i_unchecked
+ld_r3_tp_adr_i_unchecked: @ 0x08002FBC
 	ldr r2, [r1, #0x40]
 	adds r3, r2, #1
 	str r3, [r1, #0x40]
@@ -1592,10 +1588,10 @@ ld_r3_tp_adr_i_rev: @ 0x08002FBC
 	bx lr
 	.align 2, 0
 
-	thumb_func_start ply_lfos_rev01
-ply_lfos_rev01: @ 0x08002FC8
+	thumb_func_start ply_lfos
+ply_lfos: @ 0x08002FC8
 	mov ip, lr
-	bl ld_r3_tp_adr_i_rev
+	bl ld_r3_tp_adr_i_unchecked
 	strb r3, [r1, #0x19]
 	cmp r3, #0
 	bne _08002FD8
@@ -1604,10 +1600,10 @@ _08002FD8:
 	bx ip
 	.align 2, 0
 
-	thumb_func_start ply_mod_rev01
-ply_mod_rev01: @ 0x08002FDC
+	thumb_func_start ply_mod
+ply_mod: @ 0x08002FDC
 	mov ip, lr
-	bl ld_r3_tp_adr_i_rev
+	bl ld_r3_tp_adr_i_unchecked
 	strb r3, [r1, #0x17]
 	cmp r3, #0
 	bne _08002FEC

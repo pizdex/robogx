@@ -8,7 +8,7 @@ extern u16 gUnknown_02000004;
 extern u16 gUnknown_02000008;
 extern u16 gUnknown_02000010[];
 extern u16 gUnknown_02000020;
-extern u16 gUnknown_02000024;
+extern u16 gSoundSuspended;
 extern u16 gUnknown_02000034;
 extern u16 gUnknown_02000038;
 

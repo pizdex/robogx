@@ -16,7 +16,7 @@ SECTIONS {
 . = 0x00000008; gUnknown_02000008 = .;
 . = 0x00000010; gUnknown_02000010 = .;
 . = 0x00000020; gUnknown_02000020 = .;
-. = 0x00000024; gUnknown_02000024 = .;
+. = 0x00000024; gSoundSuspended = .;
 . = 0x00000034; gUnknown_02000034 = .;
 . = 0x00000038; gUnknown_02000038 = .;
 . = 0x00000860; gUnknown_02000860 = .;
@@ -277,7 +277,7 @@ SECTIONS {
 . = 0x00007800; gUnknown_03007800 = .;
 . = 0x00007F00; gUnknown_03007F00 = .;
 . = 0x00007FA0; gUnknown_03007FA0 = .;
-. = 0x00007FF0; gUnknown_03007FF0 = .;
+. = 0x00007FF0; i_SOUND_AREA_ADR = .;
 . = 0x00007FF8; gUnknown_03007FF8 = .;
 . = 0x00007FFC; gUnknown_03007FFC = .;
 	} >iwram
@@ -288,8 +288,9 @@ SECTIONS {
 		asm/crt0.o(.text);
 		src/code_08000548.o(.text);
 		asm/code_08000AF4.o(.text);
-		asm/m4a_1.o(.text);
+		asm/m4a_asm.o(.text);
 		asm/m4a.o(.text);
+		src/code_08004588.o(.text);
 		asm/code_08004588.o(.text);
 		src/code_0800A3F0.o(.text);
 		asm/code_0800A3F0.o(.text);

@@ -5,9 +5,19 @@
 extern char gNumSongs[]; // 217
 #define NUM_SONGS ((u16)gNumSongs)
 
+void *sub_08000540(void) {
+	return __builtin_frame_address(0);
+}
+
+void *sub_08000544(void) {
+	void *lr;
+	asm("mov %0, lr" : "=r"(lr));
+	return lr;
+}
+
 void InitSound(void) {
 	m4aSoundInit();
-	SoundMode_rev01(0x60000);
+	SoundMode(SOUND_MODE_FREQ_18157);
 	SuspendSound();
 }
 
@@ -17,23 +27,23 @@ u16 GetNumSongs(void) {
 
 void SetSoundFrequency(u32 freq) {
 	if(freq == 0) {
-		SoundMode_rev01(SOUND_MODE_FREQ_18157);
+		SoundMode(SOUND_MODE_FREQ_18157);
 	} else {
-		SoundMode_rev01(SOUND_MODE_FREQ_10512);
+		SoundMode(SOUND_MODE_FREQ_10512);
 	}
 }
 
 void SuspendSound(void) {
-	gUnknown_02000024 = 1;
+	gSoundSuspended = 1;
 	gUnknown_02000034 = REG_SOUNDCNT_L;
-	SoundVSyncOff_rev01();
+	SoundVSyncOff();
 	REG_SOUNDCNT_L = 0;
 }
 
 void ResumeSound(void) {
 	REG_SOUNDCNT_L = gUnknown_02000034;
-	SoundVSyncOn_rev01();
-	gUnknown_02000024 = 0;
+	SoundVSyncOn();
+	gSoundSuspended = 0;
 }
 
 void StartSong(u16 songNum) {
@@ -54,11 +64,11 @@ void FadeOutSongPlayer(u32 songNum, u32 speed) {
 }
 
 void StartSongOnPlayer(u32 playerNum, u32 songNum) {
-	MPlayStart_rev01(gMusicPlayerTable[playerNum].ma, gSongTable[songNum].header);
+	MPlayStart(gMusicPlayerTable[playerNum].ma, gSongTable[songNum].header);
 }
 
 void StopMusicPlayer(u32 playerNum) {
-	MPlayStop_rev01(gMusicPlayerTable[playerNum].ma);
+	MPlayStop(gMusicPlayerTable[playerNum].ma);
 }
 
 void ContinueMusicPlayer(u32 playerNum) {
@@ -70,7 +80,7 @@ void FadeOutMusicPlayer(u32 playerNum, u32 speed) {
 }
 
 void SetMusicPlayerVolume(u32 playerNum, u32 volume) {
-	MPlayVolumeControl(gMusicPlayerTable[playerNum].ma, 0xFFFF, volume);
+	MPlayVolumeControl(gMusicPlayerTable[playerNum].ma, MUSICPLAYER_STATUS_TRACK, volume);
 }
 
 u32 sub_080006DC(u32 arg0) {
@@ -215,7 +225,7 @@ void sub_080008FC(u32 arg0) {
 }
 
 void sub_08000908(void) {
-	SoundVSync_rev01();
+	SoundVSync();
 	sub_0800142C();
 
 	if(gUnknown_03000B54 != 0) {
@@ -224,7 +234,7 @@ void sub_08000908(void) {
 
 	gUnknown_0300136C++;
 
-	if(gUnknown_02000024 == 0) {
+	if(gSoundSuspended == 0) {
 		u16 keys = REG_KEYINPUT ^ 0x3FF; // Invert button bits
 
 		// Check for A+B+Select+Start
@@ -252,9 +262,9 @@ void sub_08000990(void) {
 	u32 size;
 	u32 src;
 
-	gUnknown_02000024 = 1;
+	gSoundSuspended = 1;
 
-	src = (u32)sub_080000F0;			 // arm function
+	src = (u32)IntrMain;				 // arm function
 	size = (u32)gRamCodeBlock1End - src; // 0x08000540 - 0x080000F0
 	CpuCopy32((void *)src, &gUnknown_03002BF0, size);
 
@@ -262,7 +272,7 @@ void sub_08000990(void) {
 	size = (u32)gRamCodeBlock2End - src; // 0x080023D4 - 0x08001A18
 	CpuCopy32((void *)src, &gUnknown_03003040, size);
 
-	gUnknown_03007FFC = (u32)sub_080000F0;
+	gUnknown_03007FFC = (u32)IntrMain;
 
 	gUnknown_0300136C = 0;
 	*gUnknown_03000B54 = 0;
