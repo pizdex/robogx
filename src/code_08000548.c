@@ -123,6 +123,6 @@ _08000734: .4byte gUnknown_08045158");
 #endif // NONMATCHING
 
 void sub_08000738(void) {
-	sub_0803D388(0x40);
-	sub_0803D3F0(3, gUnknown_03001370);
+	IdentifyEeprom(0x40);
+	SetEepromTimerIntr(3, gUnknown_03001370);
 }

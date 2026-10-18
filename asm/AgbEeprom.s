@@ -1,8 +1,8 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_0803D388
-sub_0803D388: @ 0x0803D388
+	thumb_func_start IdentifyEeprom
+IdentifyEeprom: @ 0x0803D388
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	movs r2, #0
@@ -37,8 +37,8 @@ _0803D3C0:
 _0803D3C4: .4byte gUnknown_0203C560
 _0803D3C8: .4byte gUnknown_083D4774
 
-	thumb_func_start sub_0803D3CC
-sub_0803D3CC: @ 0x0803D3CC
+	thumb_func_start EepromTimerIntr
+EepromTimerIntr: @ 0x0803D3CC
 	ldr r1, _0803D3E8 @ =gUnknown_0203C47A
 	ldrh r0, [r1]
 	cmp r0, #0
@@ -58,8 +58,8 @@ _0803D3E6:
 _0803D3E8: .4byte gUnknown_0203C47A
 _0803D3EC: .4byte gUnknown_0203C47C
 
-	thumb_func_start sub_0803D3F0
-sub_0803D3F0: @ 0x0803D3F0
+	thumb_func_start SetEepromTimerIntr
+SetEepromTimerIntr: @ 0x0803D3F0
 	adds r2, r1, #0
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
@@ -73,7 +73,7 @@ sub_0803D3F0: @ 0x0803D3F0
 	ldr r3, _0803D41C @ =0x04000100
 	adds r0, r0, r3
 	str r0, [r1]
-	ldr r0, _0803D420 @ =sub_0803D3CC+1
+	ldr r0, _0803D420 @ =EepromTimerIntr+1
 	str r0, [r2]
 	movs r0, #0
 	b _0803D426
@@ -81,14 +81,14 @@ sub_0803D3F0: @ 0x0803D3F0
 _0803D414: .4byte gUnknown_0203C478
 _0803D418: .4byte gUnknown_0203C480
 _0803D41C: .4byte 0x04000100
-_0803D420: .4byte sub_0803D3CC+1
+_0803D420: .4byte EepromTimerIntr+1
 _0803D424:
 	movs r0, #1
 _0803D426:
 	bx lr
 
-	thumb_func_start sub_0803D428
-sub_0803D428: @ 0x0803D428
+	thumb_func_start StartEepromTimer
+StartEepromTimer: @ 0x0803D428
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -151,8 +151,8 @@ _0803D4A4: .4byte gUnknown_0203C478
 _0803D4A8: .4byte gUnknown_0203C47C
 _0803D4AC: .4byte gUnknown_0203C47A
 
-	thumb_func_start sub_0803D4B0
-sub_0803D4B0: @ 0x0803D4B0
+	thumb_func_start StopEepromTimer
+StopEepromTimer: @ 0x0803D4B0
 	ldr r3, _0803D4E0 @ =0x04000208
 	movs r1, #0
 	strh r1, [r3]
@@ -183,8 +183,8 @@ _0803D4E8: .4byte 0x04000200
 _0803D4EC: .4byte gUnknown_0203C478
 _0803D4F0: .4byte gUnknown_0203C484
 
-	thumb_func_start sub_0803D4F4
-sub_0803D4F4: @ 0x0803D4F4
+	thumb_func_start Dma3Transmit
+Dma3Transmit: @ 0x0803D4F4
 	push {r4, r5, r6, lr}
 	lsls r2, r2, #0x10
 	lsrs r2, r2, #0x10
@@ -244,8 +244,8 @@ _0803D568: .4byte 0x040000D8
 _0803D56C: .4byte 0x040000DC
 _0803D570: .4byte 0x040000DE
 
-	thumb_func_start sub_0803D574
-sub_0803D574: @ 0x0803D574
+	thumb_func_start ReadEepromDword
+ReadEepromDword: @ 0x0803D574
 	push {r4, r5, r6, lr}
 	sub sp, #0x88
 	adds r5, r1, #0
@@ -297,11 +297,11 @@ _0803D5BE:
 	adds r2, #3
 	mov r0, sp
 	adds r1, r4, #0
-	bl sub_0803D4F4
+	bl Dma3Transmit
 	adds r0, r4, #0
 	mov r1, sp
 	movs r2, #0x44
-	bl sub_0803D4F4
+	bl Dma3Transmit
 	add r2, sp, #8
 	adds r5, #6
 	movs r4, #0
@@ -337,8 +337,8 @@ _0803D616:
 	.align 2, 0
 _0803D620: .4byte gUnknown_0203C560
 
-	thumb_func_start sub_0803D624
-sub_0803D624: @ 0x0803D624
+	thumb_func_start ProgramEepromDword
+ProgramEepromDword: @ 0x0803D624
 	push {r4, r5, lr}
 	sub sp, #0xa4
 	adds r5, r1, #0
@@ -415,9 +415,9 @@ _0803D696:
 	ldrb r2, [r0, #8]
 	adds r2, #0x43
 	mov r0, sp
-	bl sub_0803D4F4
+	bl Dma3Transmit
 	ldr r0, _0803D6F4 @ =gUnknown_083D478C
-	bl sub_0803D428
+	bl StartEepromTimer
 	movs r4, #0
 	movs r1, #0xd0
 	lsls r1, r1, #0x14
@@ -438,7 +438,7 @@ _0803D6C8:
 	bne _0803D6E2
 	ldr r4, _0803D6FC @ =0x0000C001
 _0803D6E2:
-	bl sub_0803D4B0
+	bl StopEepromTimer
 	adds r0, r4, #0
 _0803D6E8:
 	add sp, #0xa4
@@ -451,8 +451,8 @@ _0803D6F4: .4byte gUnknown_083D478C
 _0803D6F8: .4byte gUnknown_0203C47C
 _0803D6FC: .4byte 0x0000C001
 
-	thumb_func_start sub_0803D700
-sub_0803D700: @ 0x0803D700
+	thumb_func_start VerifyEepromDword
+VerifyEepromDword: @ 0x0803D700
 	push {r4, r5, lr}
 	sub sp, #8
 	adds r4, r1, #0
@@ -472,7 +472,7 @@ _0803D720: .4byte 0x000080FF
 _0803D724:
 	adds r0, r1, #0
 	mov r1, sp
-	bl sub_0803D574
+	bl ReadEepromDword
 	mov r2, sp
 	movs r3, #0
 	b _0803D73C
@@ -500,8 +500,8 @@ _0803D74E:
 	bx r1
 	.align 2, 0
 
-	thumb_func_start sub_0803D758
-sub_0803D758: @ 0x0803D758
+	thumb_func_start ProgramEepromDwordEx
+ProgramEepromDwordEx: @ 0x0803D758
 	push {r4, r5, r6, lr}
 	adds r5, r1, #0
 	lsls r0, r0, #0x10
@@ -517,14 +517,14 @@ _0803D76A:
 	bhi _0803D78E
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_0803D624
+	bl ProgramEepromDword
 	lsls r0, r0, #0x10
 	lsrs r2, r0, #0x10
 	cmp r2, #0
 	bne _0803D764
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_0803D700
+	bl VerifyEepromDword
 	lsls r0, r0, #0x10
 	lsrs r2, r0, #0x10
 	cmp r2, #0

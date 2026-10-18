@@ -292,8 +292,8 @@ SECTIONS {
 		src/code_0800A3F0.o(.text);
 		asm/code_0800A3F0.o(.text);
 
-		asm/syscall.o(.text);
-		asm/code_0803D388.o(.text);
+		asm/libagbsyscall.o(.text);
+		asm/AgbEeprom.o(.text);
 
 		*libgcc.a:_call_via_rX.o(.text);
 		*libgcc.a:_divsi3.o(.text);
