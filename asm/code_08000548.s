@@ -277,7 +277,7 @@ _0800091E:
 	movs r0, #2
 	bl sub_08000C90
 	movs r0, #0xff
-	bl sub_0803D364
+	bl SoftReset
 _0800095C:
 	ldr r1, _08000980 @ =gUnknown_03007FF8
 	movs r0, #1
@@ -318,7 +318,7 @@ sub_08000990: @ 0x08000990
 	lsls r4, r4, #0x13
 	orrs r2, r4
 	adds r0, r3, #0
-	bl sub_0803D348
+	bl CpuSet
 	ldr r3, _08000A08 @ =0x08001A18
 	ldr r0, _08000A0C @ =0x080023D4
 	subs r0, r0, r3
@@ -327,7 +327,7 @@ sub_08000990: @ 0x08000990
 	ands r2, r5
 	orrs r2, r4
 	adds r0, r3, #0
-	bl sub_0803D348
+	bl CpuSet
 	ldr r1, _08000A14 @ =gUnknown_03007FFC
 	ldr r0, _080009F8 @ =sub_080000F0
 	str r0, [r1]
