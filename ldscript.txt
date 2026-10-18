@@ -302,6 +302,10 @@ SECTIONS {
 		asm/crt0.o(.text);
 		src/code_08000548.o(.text);
 		asm/code_08000548.o(.text);
+		src/code_08000AF4.o(.text);
+		asm/code_08000AF4.o(.text);
+		src/code_0800A3F0.o(.text);
+		asm/code_0800A3F0.o(.text);
 	} >rom
 
 	. = 0x08080000;

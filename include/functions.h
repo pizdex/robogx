@@ -3,29 +3,12 @@
 
 // Place all external function declarations in this file
 
-// src/code_08000548.s
+// src/code_08000548.c
 
-extern void sub_08000548(void);
-extern u16 sub_08000560(void);
-extern void sub_0800056C(u32 arg0);
+extern void sub_08000588(void);
 
 // asm/code_08000548.s
 
-extern void sub_08000588(void);
-//extern ? sub_080005B4(?);
-//extern ? sub_080005D8(?);
-//extern ? sub_080005E8(?);
-//extern ? sub_080005F8(?);
-//extern ? sub_08000608(?);
-//extern ? sub_08000634(?);
-//extern ? sub_0800065C(?);
-//extern ? sub_08000678(?);
-//extern ? sub_08000694(?);
-//extern ? sub_080006B4(?);
-//extern ? sub_080006DC(?);
-//extern ? sub_080006F8(?);
-//extern ? sub_08000704(?);
-//extern ? sub_08000738(?);
 //extern ? sub_08000750(?);
 //extern ? sub_080007A8(?);
 //extern ? sub_08000800(?);
@@ -38,23 +21,13 @@ extern void sub_08000588(void);
 //extern ? sub_08000984(?);
 //extern ? sub_08000990(?);
 //extern ? sub_08000A34(?);
-//extern ? sub_08000A5C(?);
-//extern ? sub_08000AF4(?);
-//extern ? sub_08000B00(?);
-//extern ? sub_08000B1C(?);
-//extern ? sub_08000B38(?);
-//extern ? sub_08000B68(?);
-//extern ? sub_08000B84(?);
-//extern ? sub_08000BC0(?);
-//extern ? sub_08000C5C(?);
-//extern ? sub_08000C90(?);
-//extern ? sub_08000CC0(?);
-//extern ? sub_08000CDC(?);
-//extern ? sub_08000D04(?);
-//extern ? sub_08000D48(?);
-//extern ? sub_08000D68(?);
-//extern ? sub_08000D80(?);
-//extern ? sub_08000DA4(?);
+extern void sub_08000A5C(void);
+
+// src/code_08000AF4.c
+
+
+// asm/code_08000AF4.s
+
 //extern ? sub_08000DDC(?);
 //extern ? sub_08000E14(?);
 //extern ? sub_08000E54(?);
@@ -139,15 +112,15 @@ extern void sub_08000588(void);
 //extern ? sub_08003074(?);
 extern void sub_08003094(void);
 //extern ? sub_0800310C(?);
-//extern ? sub_08003118(?);
+extern void sub_08003118(u32 arg0);
 //extern ? sub_08003144(?);
 //extern ? sub_08003190(?);
-//extern ? sub_080031E4(?);
+extern void sub_080031E4(u32 arg0);
 //extern ? sub_08003218(?);
-//extern ? sub_0800324C(?);
-//extern ? sub_08003278(?);
+extern void sub_0800324C(void);
+extern void sub_08003278(struct Unk08045158 *arg0);
 //extern ? sub_08003284(?);
-//extern ? sub_080032B0(?);
+extern void sub_080032B0(struct Unk08045158 *arg0, u16 arg1);
 //extern ? sub_080032C0(?);
 //extern ? sub_080032E0(?);
 //extern ? sub_08003308(?);
@@ -158,17 +131,17 @@ extern void sub_08003094(void);
 //extern ? sub_0800358C(?);
 extern void sub_08003630(u32 arg0);
 //extern ? sub_080036C8(?);
-//extern ? sub_0800371C(?);
-//extern ? sub_08003798(?);
+extern void sub_0800371C(void);
+extern void sub_08003798(void);
 //extern ? sub_080037D4(?);
-//extern ? sub_0800384C(?);
-//extern ? sub_08003930(?);
+extern void sub_0800384C(struct Unk08045158 *arg0, u32 arg1); // Probably wrong
+extern void sub_08003930(struct Unk08045158 *arg0);
 //extern ? sub_08003970(?);
 //extern ? sub_08003A38(?);
 //extern ? sub_08003B94(?);
 //extern ? sub_08003BE4(?);
 //extern ? sub_08003C4C(?);
-//extern ? sub_080040C0(?);
+extern void sub_080040C0(struct Unk08045158 *arg0, u32 arg1, u16 arg2);
 //extern ? sub_08004128(?);
 //extern ? sub_0800419C(?);
 //extern ? sub_08004204(?);
@@ -218,7 +191,7 @@ extern void sub_08003630(u32 arg0);
 //extern ? sub_08004EC0(?);
 //extern ? sub_08004F68(?);
 //extern ? sub_08005028(?);
-//extern ? sub_080050A8(?);
+extern void sub_080050A8(u8 *arg0);
 //extern ? sub_080050B8(?);
 //extern ? sub_080050C4(?);
 //extern ? sub_080050E4(?);
@@ -227,7 +200,7 @@ extern void sub_08003630(u32 arg0);
 //extern ? sub_08005148(?);
 //extern ? sub_08005170(?);
 //extern ? sub_08005198(?);
-//extern ? sub_080051B0(?);
+extern void sub_080051B0(u32 arg0);
 //extern ? sub_080051F4(?);
 //extern ? sub_08005214(?);
 //extern ? sub_08005234(?);
@@ -441,6 +414,12 @@ extern void sub_08003630(u32 arg0);
 //extern ? sub_0800A358(?);
 //extern ? sub_0800A37C(?);
 //extern ? sub_0800A3BC(?);
+
+// src/code_0800A3F0.c
+
+
+// asm/code_0800A3F0.s
+
 //extern ? sub_0800A410(?);
 //extern ? sub_0800A444(?);
 //extern ? sub_0800A474(?);
@@ -1245,23 +1224,23 @@ extern void sub_08003630(u32 arg0);
 //extern ? sub_0803D28C(?);
 //extern ? sub_0803D2B0(?);
 //extern ? sub_0803D2D8(?);
-//extern ? sub_0803D308(?);
+extern void sub_0803D308(void);
 //extern ? sub_0803D31C(?);
 //extern ? sub_0803D320(?);
 //extern ? sub_0803D328(?);
 //extern ? sub_0803D340(?);
 //extern ? sub_0803D344(?);
 //extern ? sub_0803D348(?);
-//extern ? sub_0803D34C(?);
-//extern ? sub_0803D350(?);
+extern u32 sub_0803D34C(u32 arg0, u32 arg1);
+extern u32 sub_0803D350(u32 arg0, u32 arg1);
 //extern ? sub_0803D358(?);
 //extern ? sub_0803D35C(?);
 //extern ? sub_0803D360(?);
 //extern ? sub_0803D364(?);
 //extern ? sub_0803D37C(?);
-//extern ? sub_0803D380(?);
-//extern ? sub_0803D388(?);
-//extern ? sub_0803D3F0(?);
+extern void sub_0803D380(void);
+extern void sub_0803D388(u16 arg0);
+extern void sub_0803D3F0(u8 arg0, u32 *arg1);
 //extern ? sub_0803D428(?);
 //extern ? sub_0803D4B0(?);
 //extern ? sub_0803D4F4(?);

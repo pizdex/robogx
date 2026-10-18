@@ -2,6 +2,7 @@
 #define GUARD_GLOBAL_H
 
 #include "gba/types.h"
+#include "variables.h"
 #include "functions.h"
 
 // to help in decompiling
