@@ -71,7 +71,7 @@ SetEepromTimerIntr: @ 0x0803D3F0
 	ldr r1, _0803D418 @ =gUnknown_0203C480
 	ldrb r0, [r0]
 	lsls r0, r0, #2
-	ldr r3, _0803D41C @ =REG_TM0CNT_L
+	ldr r3, _0803D41C @ =0x04000100
 	adds r0, r0, r3
 	str r0, [r1]
 	ldr r0, _0803D420 @ =EepromTimerIntr
@@ -81,8 +81,9 @@ SetEepromTimerIntr: @ 0x0803D3F0
 	.align 2, 0
 _0803D414: .4byte gUnknown_0203C478
 _0803D418: .4byte gUnknown_0203C480
-_0803D41C: .4byte REG_TM0CNT_L
+_0803D41C: .4byte 0x04000100
 _0803D420: .4byte EepromTimerIntr
+
 _0803D424:
 	movs r0, #1
 _0803D426:

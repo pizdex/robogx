@@ -107,7 +107,7 @@ _08002484:
 	strb r0, [r5], #1
 	subs r4, r4, #1
 	bgt _08002484
-	add r0, pc, #0x2F @ =sub_080024F6
+	add r0, pc, #0x2F @ =_080024F6
 	bx r0
 	.thumb
 SoundMainRAM_NoReverb: @ 0x080024C8

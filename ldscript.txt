@@ -8,6 +8,7 @@ MEMORY {
 
 gNumSongs = 217;
 gNumMusicPlayers = 8;
+gMaxLines = 0;
 
 SECTIONS {
 	ewram (NOLOAD) : ALIGN(4) {
@@ -289,7 +290,7 @@ SECTIONS {
 		src/code_08000548.o(.text);
 		asm/code_08000AF4.o(.text);
 		asm/m4a_asm.o(.text);
-		asm/m4a.o(.text);
+		src/m4a.o(.text);
 		src/code_08004588.o(.text);
 		asm/code_08004588.o(.text);
 		src/code_0800A3F0.o(.text);

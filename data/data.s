@@ -8,12 +8,12 @@ gUnknown_08043864:
 gUnknown_08043FAC:
 	.incbin "baserom.gba", 0x00043FAC, 0x90
 
-	.global gUnknown_0804403C
-gUnknown_0804403C:
+	.global ScaleTable
+ScaleTable:
 	.incbin "baserom.gba", 0x0004403C, 0xB4
 
-	.global gUnknown_080440F0
-gUnknown_080440F0:
+	.global FreqTable
+FreqTable:
 	.incbin "baserom.gba", 0x000440F0, 0x30
 
 	.global gUnknown_08044120
@@ -26,7 +26,11 @@ gUnknown_08044138:
 
 	.global gUnknown_080441BC
 gUnknown_080441BC:
-	.incbin "baserom.gba", 0x000441BC, 0x54
+	.incbin "baserom.gba", 0x000441BC, 0x18
+
+	.global gUnknown_080441D4
+gUnknown_080441D4:
+	.incbin "baserom.gba", 0x000441D4, 0x3C
 
 	.global gUnknown_08044210
 gUnknown_08044210:
