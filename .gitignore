@@ -13,7 +13,8 @@
 *.sa1
 *.sgm
 *.sg1
+*.dump
 tools/agbcc
 build/
 .vscode/
-*.dump
+scratch/

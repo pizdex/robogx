@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gba/io_reg.h"
+#include "code_08000548.h"
 #include "AgbSound.h"
 
 extern char gNumSongs[]; // 217
@@ -866,4 +867,65 @@ u32 sub_08001138(void) {
 	}
 
 	return 0;
+}
+
+void sub_08001160(struct LinkState *link) {
+    u32 temp;
+    u16 temp2;
+	u16 temp3;
+	u32 temp4;
+	u32 zero;
+
+    u32 start;
+	u32 now;
+	u32 prevBusy;
+	u32 busy;
+	u32 siocnt;
+    
+	start = REG_VCOUNT;
+	if(start < 160) {
+		start += 228;
+	}
+	temp4 = start;
+	prevBusy = (REG_SIOCNT >> 7) & 1;
+	zero = 0;
+	for(;; prevBusy = busy) {
+		now = REG_VCOUNT;
+		if(now < 160) {
+			now += 228;
+		}
+		if((now - temp4) > 9) {
+			link->timedOut = 1;
+			if(1) {
+				return;
+			}
+			start += 228;
+		}
+		link->recv[0] = REG_SIOMULTI0;
+		link->recv[1] = REG_SIOMULTI1;
+		link->recv[2] = REG_SIOMULTI2;
+		link->recv[3] = REG_SIOMULTI3;
+		siocnt = REG_SIOCNT << 16;
+		temp3 = siocnt >> 18;
+		temp2 = temp3 & 3;
+		link->sioTerminals = temp2;
+		link->playerId = (siocnt >> 20) & 3;
+		temp = (siocnt >> 22) & 1;
+		link->sioError = temp;
+		start = siocnt;
+		busy = (start >> 23) & 1;
+		if((prevBusy == 0) && (busy == 0)) {
+			break;
+		}
+	}
+
+	link->timedOut = zero;
+	if(link->sioError) {
+		link->recv[0] = (link->recv[1] = (link->recv[2] = (link->recv[3] = 0xFFFE)));
+	}
+	if((link->recv[2] == 0xFFFF) && (link->recv[3] == 0xFFFF)) {
+		link->flag = busy;
+	} else {
+		link->flag = 1;
+	}
 }
