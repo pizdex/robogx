@@ -1,6 +1,8 @@
 #ifndef GUARD_VARIABLES_H
 #define GUARD_VARIABLES_H
 
+#include "code_08004588.h"
+
 // Place all external variable declarations in this file
 
 extern u16 gUnknown_02000000;
@@ -11,8 +13,10 @@ extern u16 gUnknown_02000020;
 extern u16 gSoundSuspended;
 extern u16 gUnknown_02000034;
 extern u16 gUnknown_02000038;
+extern struct UnkStruct_08004588 gUnknown_02001D20;
+extern struct UnkStruct_08004588 gUnknown_02001D70;
 
-extern u8 gUnknown_02001CC0[];
+extern struct UnkStruct_08004588 gUnknown_02001CC0;
 
 struct Unk0200C1A0 {
 	u8 pad0[0xc24];
@@ -47,6 +51,10 @@ struct Unk0200E930 {
 };
 extern struct Unk0200E930 gUnknown_0200E930;
 
+extern u8 gUnknown_02017AF0[];
+extern u8 gUnknown_020292F0[];
+extern u8 gUnknown_020332F0[];
+
 extern u32 gUnknown_03000B50;
 extern void **gUnknown_03000B54;
 extern u32 gUnknown_03000B58;
@@ -59,6 +67,8 @@ extern u8 gUnknown_03007700[];
 extern u16 gUnknown_03007FF8;
 extern u32 gUnknown_03007FFC;
 
+extern const char gUnknown_08308C44[];
+extern const char gUnknown_08308C6C[];
 extern const char gUnknown_0831AFA0[];
 extern const char gUnknown_0831AFB8[];
 extern const char gUnknown_0831AFD8[];
@@ -73,6 +83,7 @@ extern const char gUnknown_0831B7F0[];
 extern const char gUnknown_0831B80C[];
 extern const char gUnknown_0831B830[];
 
+extern const u16 gUnknown_083D4B68[];
 extern const u8 gUnknown_084B5FA0[];
 extern const u8 gUnknown_085371D8[];
 

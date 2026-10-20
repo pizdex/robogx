@@ -300,8 +300,8 @@ gUnknown_083E41B4:
 gUnknown_083E4268:
 	.incbin "baserom.gba", 0x003E4268, 0x20
 
-	.global gUnknown_083E4288
-gUnknown_083E4288:
+	.global BuildDateTime
+BuildDateTime:
 	.incbin "baserom.gba", 0x003E4288, 0x18
 
 	.global gUnknown_083E42A0

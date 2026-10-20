@@ -2,79 +2,6 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_0800459C
-sub_0800459C: @ 0x0800459C
-	push {r4, r5, lr}
-	adds r3, r0, #0
-	adds r5, r1, #0
-	ldrh r4, [r3, #8]
-	cmp r4, #8
-	bne _080045B0
-	ldr r0, _080045AC @ =gUnknown_08308C44
-	b _080045F2
-	.align 2, 0
-_080045AC: .4byte gUnknown_08308C44
-_080045B0:
-	cmp r4, #0
-	bne _080045B8
-	ldr r2, [r3]
-	b _080045CE
-_080045B8:
-	subs r1, r4, #1
-	lsls r1, r1, #2
-	adds r2, r3, #0
-	adds r2, #0xc
-	adds r2, r2, r1
-	adds r0, r3, #0
-	adds r0, #0x2c
-	adds r0, r0, r1
-	ldr r1, [r2]
-	ldr r0, [r0]
-	adds r2, r1, r0
-_080045CE:
-	adds r1, r2, r5
-	ldr r0, [r3, #4]
-	cmp r1, r0
-	bhi _080045F0
-	lsls r0, r4, #2
-	adds r1, r3, #0
-	adds r1, #0xc
-	adds r1, r1, r0
-	str r2, [r1]
-	adds r1, r3, #0
-	adds r1, #0x2c
-	adds r1, r1, r0
-	str r5, [r1]
-	adds r4, #1
-	strh r4, [r3, #8]
-	adds r0, r2, #0
-	b _080045F8
-_080045F0:
-	ldr r0, _08004600 @ =gUnknown_08308C6C
-_080045F2:
-	bl sub_080052CC
-	movs r0, #0
-_080045F8:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_08004600: .4byte gUnknown_08308C6C
-
-	thumb_func_start sub_08004604
-sub_08004604: @ 0x08004604
-	push {lr}
-	adds r1, r0, #0
-	ldrh r0, [r1, #8]
-	cmp r0, #0
-	beq _08004612
-	subs r0, #1
-	strh r0, [r1, #8]
-_08004612:
-	pop {r0}
-	bx r0
-	.align 2, 0
-
 	thumb_func_start sub_08004618
 sub_08004618: @ 0x08004618
 	push {r4, r5, r6, r7, lr}
@@ -3479,7 +3406,7 @@ _08005F28: .4byte gUnknown_02001D70
 _08005F2C:
 	ldr r0, _08005F68 @ =gUnknown_02001D20
 _08005F2E:
-	bl sub_0800459C
+	bl RamAllocPush
 	str r0, [r4, #0x10]
 	ldr r1, [r4, #0x10]
 	ldrb r2, [r4, #9]
@@ -9872,7 +9799,7 @@ sub_080090A8: @ 0x080090A8
 	movs r1, #0x90
 	lsls r1, r1, #7
 	adds r0, r4, #0
-	bl sub_0800459C
+	bl RamAllocPush
 	movs r2, #0xc5
 	lsls r2, r2, #3
 	adds r1, r5, r2
@@ -9880,7 +9807,7 @@ sub_080090A8: @ 0x080090A8
 	movs r1, #0x90
 	lsls r1, r1, #6
 	adds r0, r4, #0
-	bl sub_0800459C
+	bl RamAllocPush
 	movs r2, #0xc6
 	lsls r2, r2, #3
 	adds r1, r5, r2
@@ -11889,7 +11816,7 @@ _0800A018:
 	lsls r6, r6, #5
 	ldr r0, _0800A08C @ =gUnknown_02001CC0
 	adds r1, r6, #0
-	bl sub_0800459C
+	bl RamAllocPush
 	adds r4, r0, #0
 	mov r0, sb
 	adds r1, r4, #0

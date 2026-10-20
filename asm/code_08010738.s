@@ -282,7 +282,7 @@ sub_08010F64: @ 0x08010F64
 	ldr r0, _08010FD0 @ =gUnknown_02001CC0
 	mov r8, r0
 	adds r1, r5, #0
-	bl sub_0800459C
+	bl RamAllocPush
 	adds r4, r0, #0
 	adds r1, r5, #0
 	movs r2, #0
@@ -1791,12 +1791,12 @@ sub_08011B84: @ 0x08011B84
 _08011B90: .4byte gUnknown_0200C1A0
 _08011B94: .4byte 0x00000C24
 
-	thumb_func_start sub_08011B98
-sub_08011B98: @ 0x08011B98
-	ldr r0, _08011B9C @ =gUnknown_083E4288
+	thumb_func_start GetBuildDateTime
+GetBuildDateTime: @ 0x08011B98
+	ldr r0, _08011B9C @ =BuildDateTime
 	bx lr
 	.align 2, 0
-_08011B9C: .4byte gUnknown_083E4288
+_08011B9C: .4byte BuildDateTime
 
 	thumb_func_start sub_08011BA0
 sub_08011BA0: @ 0x08011BA0
@@ -3363,7 +3363,7 @@ _08012AF8:
 	bl sub_08011B84
 	b _08012380
 _08012AFE:
-	bl sub_08011B98
+	bl GetBuildDateTime
 	bl sub_0800A474
 	bl _08011EC6
 _08012B0A:

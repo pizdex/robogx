@@ -2,11 +2,12 @@
 #define GUARD_FUNCTIONS_H
 
 #include "AgbSound.h"
+#include "code_08004588.h"
 
 // Place all external function declarations in this file
 
 extern void IntrMain(void);
-extern void sub_080002C4(void *src, void *dest, u32 size);
+extern void sub_080002C4(void *dest, const void *src, u32 size);
 extern void sub_08000498(void *arg0, u32 arg1, u32 arg2);
 
 // src/code_08000548.c
@@ -97,7 +98,7 @@ extern void ply_endtie(MusicPlayerArea *ma, MusicPlayerTrack *tp);
 extern void ply_lfos(MusicPlayerArea *ma, MusicPlayerTrack *tp);
 extern void ply_mod(MusicPlayerArea *ma, MusicPlayerTrack *tp);
 
-// asm/m4a.s
+// src/m4a.c
 
 extern u32 MidiKey2fr(WaveData *wa, u8 mk, u8 fp);
 extern void MPlayContinue(MusicPlayerArea *ma);
@@ -157,19 +158,24 @@ extern void ply_xleng(MusicPlayerArea *ma, MusicPlayerTrack *tp);
 extern void ply_xswee(MusicPlayerArea *ma, MusicPlayerTrack *tp);
 extern void DummyFunc(void);
 
+// src/code_08004588.c
+
+extern void sub_08004588(struct UnkStruct_08004588 *arg0, u32 arg1, u32 arg2);
+extern void sub_08004594(struct UnkStruct_08004588 *arg0);
+extern u32 RamAllocPush(struct UnkStruct_08004588 *arg0, u32 arg1);
+extern void sub_08004604(struct UnkStruct_08004588 *arg0);
+extern void sub_08004618(struct UnkStruct_08004588 *arg0, u32 arg1);
+extern u32 sub_08004670(struct UnkStruct_08004588 *arg0);
+extern void sub_0800469C(void);
+extern void sub_080046B8(void);
+extern void sub_080046D4(void);
+extern u32 sub_080046F0(void);
+extern u32 sub_08004714(u8 arg0);
+extern u32 sub_08004788(u8 arg0);
+extern void sub_080047F8(void);
+
 // asm/code_08004588.s
 
-// extern ? sub_08004588(?);
-// extern ? sub_08004594(?);
-extern void *sub_0800459C(void *arg0, u32 arg1);
-extern void sub_08004604(void *arg0);
-// extern ? sub_0800469C(?);
-// extern ? sub_080046B8(?);
-// extern ? sub_080046D4(?);
-// extern ? sub_080046F0(?);
-// extern ? sub_08004714(?);
-// extern ? sub_08004788(?);
-// extern ? sub_080047F8(?);
 // extern ? sub_08004824(?);
 // extern ? sub_08004918(?);
 // extern ? sub_08004954(?);
@@ -203,7 +209,7 @@ extern void sub_080051B0(u32 arg0);
 // extern ? sub_08005214(?);
 // extern ? sub_08005234(?);
 // extern ? sub_080052AC(?);
-// extern ? sub_080052CC(?);
+extern void sub_080052CC(const char *msg);
 // extern ? sub_080052D8(?);
 // extern ? sub_08005398(?);
 // extern ? sub_080053D8(?);

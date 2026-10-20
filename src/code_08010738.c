@@ -274,7 +274,7 @@ void sub_08010B8C(u32 src, u32 dst, u32 type) {
 	u32 tmp2;
 
 	size = SceEeprom_GetSubFileSize(type);
-	buf = sub_0800459C(&gUnknown_02001CC0, size);
+	buf = (u32 *)RamAllocPush(&gUnknown_02001CC0, size);
 
 	tmp2 = SceEeprom_GetSubFileAdr(src, type);
 	tmp1 = buf;

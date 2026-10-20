@@ -102,7 +102,7 @@ void FadeOutAllMusicPlayers(u32 speed) {
 }
 
 void sub_08000738(void) {
-	IdentifyEeprom(0x40);
+	IdentifyEeprom(64);
 	SetEepromTimerIntr(3, gUnknown_03001370);
 }
 

@@ -9091,7 +9091,7 @@ _0800E87C:
 	movs r1, #0xc3
 	lsls r1, r1, #7
 	ldr r0, _0800E8B8 @ =gUnknown_02001CC0
-	bl sub_0800459C
+	bl RamAllocPush
 	adds r5, r0, #0
 	adds r0, r6, #0
 	bl sub_0800E6E8
@@ -9291,7 +9291,7 @@ _0800E9FE:
 	muls r1, r0, r1
 	ldr r0, _0800EA4C @ =gUnknown_02001CC0
 	mov sb, r0
-	bl sub_0800459C
+	bl RamAllocPush
 	adds r4, r0, #0
 	mov r0, r8
 	bl sub_0800E8F4
@@ -9616,7 +9616,7 @@ _0800EC70:
 	adds r1, r7, #0
 	muls r1, r0, r1
 	ldr r0, _0800ECC0 @ =gUnknown_02001CC0
-	bl sub_0800459C
+	bl RamAllocPush
 	adds r4, r0, #0
 	mov r0, sl
 	adds r1, r4, #0
@@ -13068,7 +13068,7 @@ _0801059A:
 	movs r1, #0xb8
 	lsls r1, r1, #2
 	ldr r0, _080105E4 @ =gUnknown_02001CC0
-	bl sub_0800459C
+	bl RamAllocPush
 	mov r8, r0
 	bl SuspendSound
 	ldr r0, [sp]
