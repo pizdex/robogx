@@ -4560,7 +4560,6 @@ _080137B6:
 	adds r0, r4, #0
 	bl sub_080050A8
 
-	non_word_aligned_thumb_func_start sub_080137D6
 sub_080137D6: @ 0x080137D6
 	ldr r0, _080137FC @ =gUnknown_0200C1A0
 	ldr r1, _08013800 @ =0x00002344
@@ -4570,7 +4569,6 @@ sub_080137D6: @ 0x080137D6
 	ldr r0, _08013804 @ =gUnknown_0831AF54
 	bl sub_080117CC
 
-	non_word_aligned_thumb_func_start sub_080137E6
 sub_080137E6: @ 0x080137E6
 	ldr r2, _080137F0 @ =0x00000C28
 	adds r1, r7, r2
@@ -35217,7 +35215,6 @@ _080226E8:
 	lsls r0, r0, #4
 	str r0, [sp, #0x18]
 
-	non_word_aligned_thumb_func_start sub_0802271A
 sub_0802271A: @ 0x0802271A
 	ldr r3, [sp, #0x24]
 	ldrh r0, [r3, #0x1c]
@@ -36860,7 +36857,6 @@ _08023420:
 	lsls r0, r0, #4
 	str r0, [sp, #0x108]
 
-	non_word_aligned_thumb_func_start sub_08023452
 sub_08023452: @ 0x08023452
 	ldr r0, _08023504 @ =gUnknown_0203A440
 	ldr r0, [r0]
@@ -41110,7 +41106,6 @@ _080256B4:
 	str r6, [sp, #0x3c]
 	str r7, [sp, #0x40]
 
-	thumb_func_start sub_080256B8
 sub_080256B8: @ 0x080256B8
 	ldr r0, _0802580C @ =gUnknown_0203A440
 	ldr r0, [r0]
@@ -42571,7 +42566,6 @@ _08026262:
 	ldr r6, [sp, #0x28]
 	str r6, [sp, #0x38]
 
-	thumb_func_start sub_08026298
 sub_08026298: @ 0x08026298
 	ldr r7, [sp, #0x24]
 	ldrh r0, [r7, #0x1c]
@@ -54538,7 +54532,6 @@ _0802C008:
 	adds r0, r3, r0
 	str r0, [sp, #0x2c]
 
-	non_word_aligned_thumb_func_start sub_0802C022
 sub_0802C022: @ 0x0802C022
 	ldr r2, [sp, #0x14]
 	lsls r0, r2, #3
@@ -56423,7 +56416,6 @@ _0802CE70:
 	adds r0, #0xac
 	strh r5, [r0]
 
-	non_word_aligned_thumb_func_start sub_0802CE7E
 sub_0802CE7E: @ 0x0802CE7E
 	add sp, #0x48
 	pop {r3, r4, r5}
@@ -56490,7 +56482,6 @@ _0802CEEA:
 	adds r4, r1, r4
 	str r4, [sp, #0x50]
 
-	non_word_aligned_thumb_func_start sub_0802CEFE
 sub_0802CEFE: @ 0x0802CEFE
 	ldr r5, [sp, #0x14]
 	lsls r5, r5, #6
@@ -58582,7 +58573,6 @@ _0802DF56:
 	adds r0, r0, r2
 	strh r3, [r0]
 
-	thumb_func_start sub_0802DF68
 sub_0802DF68: @ 0x0802DF68
 	add sp, #0x6c
 	pop {r3, r4, r5}
@@ -58654,7 +58644,6 @@ _0802DFD0:
 	adds r0, r0, r5
 	str r0, [sp, #0x90]
 
-	thumb_func_start sub_0802DFF4
 sub_0802DFF4: @ 0x0802DFF4
 	ldr r7, [sp, #0x10]
 	subs r0, r1, r7
@@ -61997,7 +61986,6 @@ _0802FA72:
 	adds r2, r1, r2
 	str r2, [sp, #0x30]
 
-	non_word_aligned_thumb_func_start sub_0802FA86
 sub_0802FA86: @ 0x0802FA86
 	ldr r4, [sp, #0x14]
 	lsls r2, r4, #2
@@ -78063,7 +78051,6 @@ sub_08037978: @ 0x08037978
 	movs r4, #0
 	str r4, [sp]
 
-	non_word_aligned_thumb_func_start sub_080379EA
 sub_080379EA: @ 0x080379EA
 	ldr r1, [sp]
 	lsls r0, r1, #1
